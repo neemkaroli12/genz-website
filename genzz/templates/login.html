@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login — GENZZ</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background: #FBF8FC;
+
+            font-family: Arial, sans-serif;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 25px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 480px;
+
+            background: white;
+
+            padding: 50px;
+
+            border-radius: 30px;
+
+            box-shadow:
+                0 30px 80px
+                rgba(94,3,90,.10);
+        }
+
+        .logo {
+            color: #5E035A;
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+            margin-bottom: 60px;
+        }
+
+        .label {
+            color: #5E035A;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 4px;
+        }
+
+        h1 {
+            margin-top: 15px;
+
+            font-size: 55px;
+
+            line-height: .95;
+
+            letter-spacing: -3px;
+        }
+
+        h1 span {
+            color: #5E035A;
+        }
+
+        .subtitle {
+            margin-top: 15px;
+
+            color: #807781;
+
+            font-size: 14px;
+        }
+
+        .error {
+            margin-top: 25px;
+
+            padding: 13px 16px;
+
+            border-radius: 12px;
+
+            background: #F7E8F6;
+
+            color: #5E035A;
+
+            font-size: 13px;
+        }
+
+        .field {
+            margin-top: 25px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #5E035A;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+        }
+
+        input {
+            width: 100%;
+
+            height: 58px;
+
+            border: 1px solid #E2DCE3;
+
+            border-radius: 15px;
+
+            padding: 0 18px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #5E035A;
+
+            box-shadow:
+                0 0 0 4px #EEE2F0;
+        }
+
+        button {
+            width: 100%;
+
+            height: 56px;
+
+            margin-top: 30px;
+
+            border: none;
+
+            border-radius: 50px;
+
+            background: #5E035A;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+        }
+
+        .join-text {
+            margin-top: 25px;
+
+            text-align: center;
+
+            color: #756D76;
+
+            font-size: 13px;
+        }
+
+        .join-text a {
+            color: #5E035A;
+
+            font-weight: 800;
+
+            text-decoration: none;
+        }
+
+        @media(max-width:500px) {
+
+            .login-box {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 45px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-box">
+
+    <div class="logo">
+        GENZ.
+    </div>
+
+
+    <div class="label">
+        WELCOME BACK
+    </div>
+
+
+    <h1>
+        Login<br>
+        <span>to your space.</span>
+    </h1>
+
+
+    <p class="subtitle">
+        Your people are waiting.
+    </p>
+
+
+    {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <form
+        method="POST"
+    >
+
+        {% csrf_token %}
+
+
+        <div class="field">
+
+            <label>
+                EMAIL
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                PASSWORD
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Your password"
+                required
+            >
+
+        </div>
+
+
+        <button type="submit">
+            Login →
+        </button>
+
+    </form>
+
+
+    <div class="join-text">
+
+        New to GENZ?
+
+        <a href="{% url 'join' %}">
+            Join GENZ
+        </a>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

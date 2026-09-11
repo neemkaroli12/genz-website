@@ -1,0 +1,913 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Events | Group</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --purple: #5E035A;
+            --dark-purple: #42033F;
+            --light-purple: #EEE2F0;
+            --soft-bg: #F8F2F8;
+            --text: #241D27;
+            --muted: #827887;
+            --white: #ffffff;
+            --border: #eadfea;
+            --green: #2f7d55;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--soft-bg);
+            color: var(--text);
+            font-family: "DM Sans", sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .navbar {
+            height: 78px;
+            padding: 0 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, .92);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--purple);
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .logo-mark {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: var(--purple);
+            color: white;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-btn {
+            padding: 11px 17px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            color: var(--purple);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .hero {
+            margin: 30px 6% 0;
+            padding: 55px;
+            min-height: 330px;
+            border-radius: 32px;
+            position: relative;
+            overflow: hidden;
+            background: var(--dark-purple);
+            color: white;
+        }
+
+        .hero::before {
+            content: "";
+            width: 350px;
+            height: 350px;
+            position: absolute;
+            right: -100px;
+            top: -150px;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: "";
+            width: 230px;
+            height: 230px;
+            position: absolute;
+            right: 30px;
+            bottom: -150px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .eyebrow {
+            color: #e5bde3;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(38px, 5vw, 66px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #e7aee3;
+        }
+
+        .hero p {
+            max-width: 500px;
+            color: #d9c9d9;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            position: absolute;
+            z-index: 2;
+            right: 55px;
+            bottom: 50px;
+            display: flex;
+            gap: 14px;
+        }
+
+        .stat {
+            min-width: 115px;
+            padding: 17px;
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 18px;
+            background: rgba(255,255,255,.08);
+            backdrop-filter: blur(8px);
+        }
+
+        .stat strong {
+            display: block;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 27px;
+            margin-bottom: 4px;
+        }
+
+        .stat span {
+            color: #d9c9d9;
+            font-size: 11px;
+        }
+
+        .page-content {
+            padding: 55px 6% 70px;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .section-head h2 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 29px;
+            letter-spacing: -.8px;
+        }
+
+        .section-head p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .featured {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 25px;
+            margin-bottom: 55px;
+        }
+
+        .featured-image {
+            min-height: 270px;
+            border-radius: 25px;
+            background: var(--light-purple);
+            display: grid;
+            place-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image::before {
+            content: "";
+            width: 250px;
+            height: 250px;
+            border: 35px solid rgba(94, 3, 90, .08);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+        }
+
+        .featured-emoji {
+            font-size: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-info {
+            padding: 15px 5px;
+        }
+
+        .featured-label {
+            color: var(--purple);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .featured-info h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 32px;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .featured-info p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .event-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .detail {
+            padding: 10px 13px;
+            border-radius: 10px;
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            border: none;
+            border-radius: 12px;
+            padding: 13px 20px;
+            background: var(--purple);
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .primary-btn:hover {
+            background: var(--dark-purple);
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .filter-btn {
+            padding: 10px 17px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            background: white;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--purple);
+            border-color: var(--purple);
+            color: white;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .event-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 23px;
+            overflow: hidden;
+            transition: .3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 45px rgba(94, 3, 90, .09);
+        }
+
+        .event-cover {
+            height: 160px;
+            position: relative;
+            display: grid;
+            place-items: center;
+            background: var(--light-purple);
+            overflow: hidden;
+        }
+
+        .event-cover:nth-child(2n) {
+            background: #e7e9fa;
+        }
+
+        .event-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .event-cover span {
+            font-size: 52px;
+        }
+
+        .date {
+            position: absolute;
+            left: 17px;
+            top: 17px;
+            width: 49px;
+            padding: 7px 3px;
+            text-align: center;
+            background: white;
+            border-radius: 11px;
+        }
+
+        .date strong {
+            display: block;
+            color: var(--purple);
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 21px;
+            line-height: 21px;
+        }
+
+        .date small {
+            color: var(--muted);
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .type {
+            position: absolute;
+            right: 15px;
+            top: 17px;
+            padding: 7px 10px;
+            border-radius: 20px;
+            background: rgba(255,255,255,.85);
+            color: var(--purple);
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .event-body {
+            padding: 21px;
+        }
+
+        .event-body h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 19px;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .event-body p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 17px;
+        }
+
+        .meta {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .meta span {
+            display: flex;
+            gap: 8px;
+        }
+
+        .register-form button {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 13px;
+            background: var(--purple);
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .register-form button:hover {
+            background: var(--dark-purple);
+        }
+
+        .registered {
+            width: 100%;
+            display: block;
+            text-align: center;
+            padding: 13px;
+            border-radius: 12px;
+            background: #e3f2e9;
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .full {
+            width: 100%;
+            display: block;
+            text-align: center;
+            padding: 13px;
+            border-radius: 12px;
+            background: #f6e6e6;
+            color: #a13e3e;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .messages {
+            margin-bottom: 25px;
+        }
+
+        .message {
+            padding: 14px 18px;
+            border-radius: 12px;
+            background: var(--light-purple);
+            color: var(--purple);
+            font-size: 13px;
+        }
+
+        .empty {
+            padding: 50px;
+            text-align: center;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            color: var(--muted);
+        }
+
+        .empty strong {
+            display: block;
+            color: var(--purple);
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            padding: 25px 6%;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 1000px) {
+            .hero {
+                padding: 40px;
+            }
+
+            .hero-stats {
+                position: static;
+                margin-top: 30px;
+            }
+
+            .featured {
+                grid-template-columns: 1fr;
+            }
+
+            .events-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .back-btn {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+
+            .hero {
+                margin: 20px 5% 0;
+                padding: 30px 24px;
+                border-radius: 25px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero-stats {
+                gap: 8px;
+            }
+
+            .stat {
+                min-width: 95px;
+                padding: 13px;
+            }
+
+            .page-content {
+                padding: 40px 5% 55px;
+            }
+
+            .section-head {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image {
+                min-height: 220px;
+            }
+
+            .featured-info h3 {
+                font-size: 27px;
+            }
+        }
+        .logo img {
+
+            width: 190px;
+
+            height: auto;
+
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="logo">
+                 <img src="{% static 'images/image.png' %}"
+                 alt="GEN Z Group">
+
+        </a>
+
+        <div class="nav-actions">
+            <a href="{% url 'home' %}" class="back-btn">
+                ← Back Home
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="eyebrow">Connect · Learn · Grow</div>
+
+            <h1>
+                Your next<br>
+                <span>big moment.</span>
+            </h1>
+
+            <p>
+                Discover workshops, meetups and community experiences
+                that help you learn, connect and grow together.
+            </p>
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat">
+                <strong>{{ events|length }}</strong>
+                <span>Upcoming events</span>
+            </div>
+
+            <div class="stat">
+                <strong>∞</strong>
+                <span>New connections</span>
+            </div>
+        </div>
+    </section>
+
+    <main class="page-content">
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if featured_event %}
+            <div class="section-head">
+                <div>
+                    <h2>Featured event</h2>
+                    <p>Something special is waiting for you.</p>
+                </div>
+            </div>
+
+            <section class="featured">
+
+                <div class="featured-image">
+                    {% if featured_event.image %}
+                        <img src="{{ featured_event.image.url }}" alt="{{ featured_event.title }}">
+                    {% else %}
+                        <div class="featured-emoji">✨</div>
+                    {% endif %}
+                </div>
+
+                <div class="featured-info">
+                    <div class="featured-label">
+                        {{ featured_event.get_event_type_display }}
+                    </div>
+
+                    <h3>{{ featured_event.title }}</h3>
+
+                    <p>
+                        {{ featured_event.description|truncatewords:35 }}
+                    </p>
+
+                    <div class="event-details">
+                        <span class="detail">
+                            📅 {{ featured_event.event_date|date:"d M Y" }}
+                        </span>
+
+                        <span class="detail">
+                            🕒 {{ featured_event.start_time|time:"g:i A" }}
+                        </span>
+
+                        <span class="detail">
+                            📍 {{ featured_event.location|default:"Online" }}
+                        </span>
+                    </div>
+
+                    {% if featured_event.id in registered_event_ids %}
+                        <span class="registered">
+                            ✓ You are registered
+                        </span>
+                    {% elif featured_event.is_full %}
+                        <span class="full">
+                            Event is full
+                        </span>
+                    {% else %}
+                        <form method="POST"
+                              action="{% url 'register_event' featured_event.id %}"
+                              class="register-form">
+
+                            {% csrf_token %}
+
+                            <button type="submit">
+                                Register for Event →
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+
+            </section>
+        {% endif %}
+
+        <div class="section-head">
+            <div>
+                <h2>Explore events</h2>
+                <p>Find something that matches your interests.</p>
+            </div>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">
+                All Events
+            </button>
+
+            <button class="filter-btn" data-filter="workshop">
+                Workshops
+            </button>
+
+            <button class="filter-btn" data-filter="meetup">
+                Meetups
+            </button>
+
+            <button class="filter-btn" data-filter="talk">
+                Talks
+            </button>
+
+            <button class="filter-btn" data-filter="career">
+                Career
+            </button>
+
+            <button class="filter-btn" data-filter="community">
+                Community
+            </button>
+        </div>
+
+        {% if events %}
+
+            <div class="events-grid">
+
+                {% for event in events %}
+
+                    <article class="event-card"
+                             data-type="{{ event.event_type }}">
+
+                        <div class="event-cover">
+
+                            <div class="date">
+                                <strong>{{ event.event_date|date:"d" }}</strong>
+                                <small>{{ event.event_date|date:"M" }}</small>
+                            </div>
+
+                            <div class="type">
+                                {{ event.get_event_type_display }}
+                            </div>
+
+                            {% if event.image %}
+                                <img src="{{ event.image.url }}" alt="{{ event.title }}">
+                            {% else %}
+                                <span>
+                                    {% if event.event_type == "workshop" %}
+                                        🎨
+                                    {% elif event.event_type == "meetup" %}
+                                        🤝
+                                    {% elif event.event_type == "talk" %}
+                                        🎤
+                                    {% elif event.event_type == "career" %}
+                                        🚀
+                                    {% else %}
+                                        ✨
+                                    {% endif %}
+                                </span>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="event-body">
+
+                            <h3>{{ event.title }}</h3>
+
+                            <p>
+                                {{ event.description|truncatewords:22 }}
+                            </p>
+
+                            <div class="meta">
+                                <span>
+                                    📅 {{ event.event_date|date:"d F Y" }}
+                                </span>
+
+                                <span>
+                                    🕒 {{ event.start_time|time:"g:i A" }}
+                                    {% if event.end_time %}
+                                        – {{ event.end_time|time:"g:i A" }}
+                                    {% endif %}
+                                </span>
+
+                                <span>
+                                    {% if event.mode == "online" %}
+                                        💻 Online
+                                    {% else %}
+                                        📍 {{ event.location|default:"Offline" }}
+                                    {% endif %}
+                                </span>
+
+                                <span>
+                                    👥 {{ event.available_seats }} seats left
+                                </span>
+                            </div>
+
+                            {% if event.id in registered_event_ids %}
+
+                                <span class="registered">
+                                    ✓ You are registered
+                                </span>
+
+                            {% elif event.is_full %}
+
+                                <span class="full">
+                                    Event is full
+                                </span>
+
+                            {% else %}
+
+                                <form method="POST"
+                                      action="{% url 'register_event' event.id %}"
+                                      class="register-form">
+
+                                    {% csrf_token %}
+
+                                    <button type="submit">
+                                        Register Now →
+                                    </button>
+                                </form>
+
+                            {% endif %}
+
+                        </div>
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty">
+                <strong>No upcoming events yet</strong>
+                <p>New events will appear here soon.</p>
+            </div>
+
+        {% endif %}
+
+    </main>
+
+    <footer>
+        © 2026 Group. Built for curious minds.
+    </footer>
+
+    <script>
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const eventCards = document.querySelectorAll(".event-card");
+
+        filterButtons.forEach(button => {
+            button.addEventListener("click", () => {
+
+                filterButtons.forEach(btn => {
+                    btn.classList.remove("active");
+                });
+
+                button.classList.add("active");
+
+                const filter = button.dataset.filter;
+
+                eventCards.forEach(card => {
+                    const type = card.dataset.type;
+
+                    if (filter === "all" || type === filter) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

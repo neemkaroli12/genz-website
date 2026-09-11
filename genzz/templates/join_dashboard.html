@@ -1,0 +1,2258 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GEN Z Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        :root {
+            --purple: #5E035A;
+            --purple-light: #EEE2F0;
+            --purple-soft: #F8F0F8;
+            --pink: #C98BC5;
+            --dark: #19151A;
+            --text: #282229;
+            --muted: #625B63;
+            --white: #fff;
+            --bg: #FFF9FC;
+            --border: #EDE5EE;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-right: 1px solid var(--border);
+            padding: 28px 18px;
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 12px;
+            margin-bottom: 40px;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            background: var(--purple);
+            color: white;
+            border-radius: 13px;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .logo-text {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: var(--purple);
+        }
+
+        .logo img {
+            width: 150px;
+            height: auto;
+            display: block;
+        }
+
+        .menu-label {
+            color: #A99DAA;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin: 0 13px 12px;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 14px;
+            border-radius: 14px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--purple-light);
+            color: var(--purple);
+        }
+
+        .nav-icon {
+            font-size: 18px;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            color: white;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+        }
+
+        .profile-mini strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .profile-mini small {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            width: calc(100% - 250px);
+            margin-left: 250px;
+            padding: 30px 42px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-box {
+            width: 300px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 13px 18px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            outline: none;
+            background: white;
+            color: var(--text);
+            transition: 0.2s ease;
+        }
+
+        .search-box input::placeholder {
+            color: #999;
+        }
+
+        .search-box input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px var(--purple-light);
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 43px;
+            height: 43px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            color: var(--purple);
+            font-size: 18px;
+        }
+
+        /* ================= WELCOME ================= */
+
+        .welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px 38px;
+            margin-bottom: 28px;
+            border-radius: 25px;
+            background: linear-gradient(110deg, #F1E7F2, #FFF4FA);
+            border: 1px solid #F0E5F0;
+        }
+
+        .welcome small {
+            color: var(--purple);
+            font-weight: 700;
+        }
+
+        .welcome h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 31px;
+            margin: 8px 0;
+        }
+
+        .welcome p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .welcome-art {
+            font-size: 70px;
+        }
+
+        /* ================= GRID ================= */
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 310px;
+            gap: 27px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-heading h2,
+        .section-heading h3 {
+            font-family: "Space Grotesk", sans-serif;
+        }
+
+        .section-heading a {
+            color: var(--purple);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* ================= CARDS ================= */
+
+        .create-post,
+        .feed-post,
+        .side-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* ================= CREATE POST ================= */
+
+        .create-top {
+            display: flex;
+            gap: 12px;
+        }
+
+        .create-top textarea {
+            width: 100%;
+            min-height: 80px;
+            resize: vertical;
+            border: none;
+            outline: none;
+            background: var(--purple-soft);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .create-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .upload-label {
+            color: var(--purple);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .upload-label input {
+            display: none;
+        }
+
+        .post-btn {
+            background: var(--purple);
+            color: white;
+            padding: 11px 22px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .post-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* ================= POSTS ================= */
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .post-header strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .post-header small {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .post-text {
+            margin: 18px 0;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .post-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 15px;
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+        }
+
+        .action-btn {
+            background: transparent;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .action-btn:hover,
+        .action-btn.liked {
+            color: var(--purple);
+        }
+
+        .delete-btn {
+            margin-left: auto;
+            color: #B44;
+        }
+
+        /* ================= PEOPLE ================= */
+
+        .people-card {
+            overflow: hidden;
+        }
+
+        #peopleList {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .person {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .person.hidden {
+            display: none !important;
+        }
+
+        .person-info {
+            flex: 1;
+        }
+
+        .person-info strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .person-info span {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .follow-btn {
+            background: var(--purple-light);
+            color: var(--purple);
+            padding: 8px 12px;
+            border-radius: 9px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .follow-btn.following {
+            background: var(--purple);
+            color: white;
+        }
+
+        .no-people,
+        .no-search-results {
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+            padding: 15px 5px;
+        }
+
+        /* ================= TRENDING ================= */
+
+        .trending-item {
+            display: flex;
+            gap: 13px;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .trend-number {
+            color: var(--pink);
+            font-weight: 800;
+        }
+
+        .trending-item strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .trending-item span {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* ================= EVENTS ================= */
+
+        .event-card {
+            background: var(--purple-soft);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .event-date {
+            color: var(--purple);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .event-card h4 {
+            margin: 8px 0;
+        }
+
+        .event-card p {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .event-btn {
+            background: var(--purple);
+            color: white;
+            padding: 9px 14px;
+            border-radius: 9px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* ================= TOAST ================= */
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            background: var(--purple);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 12px;
+            display: none;
+            z-index: 100;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                width: 100%;
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .top-actions {
+                justify-content: flex-end;
+            }
+
+            .welcome {
+                padding: 25px;
+            }
+
+            .welcome h1 {
+                font-size: 24px;
+            }
+
+            .welcome-art {
+                font-size: 45px;
+            }
+
+            .create-top {
+                align-items: flex-start;
+            }
+
+            .post-actions {
+                flex-wrap: wrap;
+            }
+
+        }
+        .notification-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+#notificationBadge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 5px;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    background: #5E035A;
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.messages-page {
+    min-height: 100vh;
+    padding: 35px;
+    background:
+        radial-gradient(circle at top left, #f4e5f5 0%, transparent 35%),
+        #fff9fc;
+}
+
+.messages-container {
+    width: 100%;
+    max-width: 1100px;
+    min-height: 650px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #eee2f0;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 15px 45px rgba(94, 3, 90, 0.08);
+}
+
+/* Header */
+
+.messages-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 35px;
+    background: linear-gradient(135deg, #5e035a, #8b3c86);
+    color: #ffffff;
+}
+
+.messages-header h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.messages-header p {
+    margin: 7px 0 0;
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.messages-header a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: 0.25s ease;
+}
+
+.messages-header a:hover {
+    background: #ffffff;
+    color: #5e035a;
+}
+
+/* Search */
+
+.messages-search {
+    padding: 22px 35px;
+    border-bottom: 1px solid #f1e8f2;
+    background: #ffffff;
+}
+
+.messages-search input {
+    width: 100%;
+    height: 48px;
+    padding: 0 18px;
+    border: 1px solid #eaddec;
+    border-radius: 14px;
+    outline: none;
+    background: #fcf8fc;
+    color: #32102f;
+    font-size: 14px;
+    transition: 0.25s ease;
+}
+
+.messages-search input:focus {
+    border-color: #b879b3;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(94, 3, 90, 0.06);
+}
+
+.messages-search input::placeholder {
+    color: #a18fa0;
+}
+
+/* Message List */
+
+.messages-list {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+}
+
+.message-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 19px 35px;
+    border-bottom: 1px solid #f4edf5;
+    color: inherit;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+.message-item:last-child {
+    border-bottom: none;
+}
+
+.message-item:hover {
+    background: #fcf5fd;
+    padding-left: 40px;
+}
+
+.message-item.unread {
+    background: #faf0fb;
+}
+
+.message-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #5e035a, #c98bc5);
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 5px 14px rgba(94, 3, 90, 0.15);
+}
+
+.message-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.message-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.message-name strong {
+    color: #32102f;
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.message-preview {
+    max-width: 600px;
+    overflow: hidden;
+    color: #8e7c8d;
+    font-size: 13px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.message-time {
+    align-self: flex-start;
+    margin-top: 5px;
+    color: #ad9aac;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.unread-dot {
+    width: 9px;
+    height: 9px;
+    min-width: 9px;
+    border-radius: 50%;
+    background: #5e035a;
+    box-shadow: 0 0 0 4px #eee0f0;
+}
+
+/* Empty State */
+
+.no-messages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 350px;
+    padding: 30px;
+    color: #978697;
+    text-align: center;
+    font-size: 14px;
+}
+
+.no-messages::before {
+    content: "💬";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75px;
+    height: 75px;
+    margin-bottom: 18px;
+    border-radius: 50%;
+    background: #f3e8f4;
+    font-size: 32px;
+}
+
+/* Back Button */
+
+.back-dashboard {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    color: #5e035a;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.back-dashboard:hover {
+    color: #8b3c86;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .messages-page {
+        padding: 15px;
+    }
+
+    .messages-container {
+        min-height: calc(100vh - 30px);
+        border-radius: 20px;
+    }
+
+    .messages-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+        padding: 23px 20px;
+    }
+
+    .messages-header h1 {
+        font-size: 24px;
+    }
+
+    .messages-header a {
+        width: 100%;
+    }
+
+    .messages-search {
+        padding: 18px 20px;
+    }
+
+    .message-item {
+        gap: 12px;
+        padding: 16px 20px;
+    }
+
+    .message-item:hover {
+        padding-left: 20px;
+    }
+
+    .message-avatar {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+        border-radius: 15px;
+        font-size: 17px;
+    }
+
+    .message-name strong {
+        font-size: 14px;
+    }
+
+    .message-preview {
+        max-width: 210px;
+        font-size: 12px;
+    }
+
+    .message-time {
+        display: none;
+    }
+}
+
+@media (max-width: 420px) {
+    .messages-page {
+        padding: 8px;
+    }
+
+    .messages-container {
+        border-radius: 16px;
+    }
+
+    .messages-header {
+        padding: 20px 16px;
+    }
+
+    .messages-search {
+        padding: 15px 16px;
+    }
+
+    .message-item {
+        padding: 14px 16px;
+    }
+
+    .message-preview {
+        max-width: 170px;
+    }
+}
+.icon-btn {
+    position: relative;
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eee2f0;
+    border-radius: 16px;
+    background: #ffffff;
+    color: #5e035a;
+    text-decoration: none;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.icon-btn:hover {
+    background: #f8eef9;
+    border-color: #d9b8d8;
+    transform: translateY(-2px);
+}
+
+
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <a href="/" class="logo">
+
+            <img
+                src="{% static 'images/image.png' %}"
+                alt="GEN Z Group"
+            >
+
+        </a>
+
+        <div class="menu-label">
+            Menu
+        </div>
+
+        <div class="nav-menu">
+
+            <a href="{% url 'join_dashboard' %}"
+               class="nav-item active">
+
+                <span class="nav-icon">⌂</span>
+                Home
+
+            </a>
+
+            <a href="#" class="nav-item">
+
+                <span class="nav-icon">♧</span>
+                Discover
+
+            </a>
+
+            <a href="{% url 'messages' %}" class="nav-item">
+                <span class="nav-icon">💬</span>
+                Messages
+            </a>
+
+            <a href="#" class="nav-item">
+
+                <span class="nav-icon">◷</span>
+                Events
+
+            </a>
+
+            <a href="#" class="nav-item">
+
+                <span class="nav-icon">⚙</span>
+                Settings
+
+            </a>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+            <div class="profile-mini">
+
+                <div class="avatar">
+                    {{ member.name|first|upper }}
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ member.name }}
+                    </strong>
+
+                    <small>
+                        {{ member.city }}
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="memberSearch"
+                    placeholder="Search people..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+            <div class="top-actions">
+
+                <a
+    href="{% url 'notifications' %}"
+    class="icon-btn notification-btn"
+    title="Notifications"
+>
+    🔔
+    <span id="notificationBadge">0</span>
+</a>
+
+<a
+    href="{% url 'messages' %}"
+    class="icon-btn"
+    title="Messages"
+>
+    💬
+</a>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= WELCOME ================= -->
+
+        <section class="welcome">
+
+            <div>
+
+                <small>
+                    WELCOME BACK ✨
+                </small>
+
+                <h1>
+                    Hey {{ member.name }}!
+                </h1>
+
+                <p>
+                    Connect, create and share your vibe with your people.
+                </p>
+
+            </div>
+
+            <div class="welcome-art">
+                ✦
+            </div>
+
+        </section>
+
+
+        <!-- ================= CONTENT GRID ================= -->
+
+        <div class="content-grid">
+
+
+            <!-- ================= LEFT COLUMN ================= -->
+
+            <section>
+
+                <div class="section-heading">
+
+                    <h2>
+                        Your feed
+                    </h2>
+
+                    <a href="#">
+                        Latest ↗
+                    </a>
+
+                </div>
+
+
+                <!-- ================= CREATE POST ================= -->
+
+                <div class="create-post">
+
+                    <form
+                        id="postForm"
+                        action="{% url 'create_post' %}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+
+                        {% csrf_token %}
+
+                        <div class="create-top">
+
+                            <div class="avatar">
+                                {{ member.name|first|upper }}
+                            </div>
+
+                            <textarea
+                                id="postInput"
+                                name="content"
+                                placeholder="What's on your mind?"
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="create-bottom">
+
+                            <label class="upload-label">
+
+                                📷 Add photo
+
+                                <input
+                                    type="file"
+                                    name="image"
+                                    accept="image/*"
+                                >
+
+                            </label>
+
+
+                            <button
+                                class="post-btn"
+                                type="submit"
+                            >
+                                Post ✨
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- ================= POSTS ================= -->
+
+                <div id="postsContainer">
+
+                    {% for post in posts %}
+
+                    <article
+                        class="feed-post"
+                        id="post-{{ post.id }}"
+                    >
+
+                        <div class="post-header">
+
+                            <div class="avatar">
+                                {{ post.member.name|first|upper }}
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    {{ post.member.name }}
+                                </strong>
+
+                                <small>
+                                    {{ post.created_at|timesince }} ago
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        {% if post.content %}
+
+                        <p class="post-text">
+                            {{ post.content }}
+                        </p>
+
+                        {% endif %}
+
+
+                        {% if post.image %}
+
+                        <img
+                            src="{{ post.image.url }}"
+                            class="post-image"
+                            alt="Post image"
+                        >
+
+                        {% endif %}
+
+
+                        <div class="post-actions">
+
+                            <button
+                                class="action-btn like-btn"
+                                type="button"
+                                onclick="likePost(this, {{ post.id }})"
+                            >
+                                ♡
+                                <span>
+                                    {{ post.likes.count }}
+                                </span>
+                            </button>
+
+
+                            <button
+                                class="action-btn"
+                                type="button"
+                                onclick="showToast('Comments coming soon 💬')"
+                            >
+                                ◌ Comments
+                            </button>
+
+
+                            <button
+                                class="action-btn"
+                                type="button"
+                                onclick="showToast('Post shared ✨')"
+                            >
+                                ↗ Share
+                            </button>
+
+
+                            {% if post.member.id == member.id %}
+
+                            <button
+                                class="action-btn delete-btn"
+                                type="button"
+                                onclick="deletePost({{ post.id }})"
+                            >
+                                Delete
+                            </button>
+
+                            {% endif %}
+
+                        </div>
+
+                    </article>
+
+                    {% empty %}
+
+                    <div class="feed-post">
+
+                        <p class="post-text">
+                            No posts yet.
+                            Be the first to share something ✨
+                        </p>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= RIGHT COLUMN ================= -->
+
+            <aside>
+
+
+                <!-- ================= MY PEOPLE ================= -->
+
+                <div class="side-card people-card">
+
+                    <div class="section-heading">
+
+                        <h3>
+                            My people
+                        </h3>
+
+                        <a href="#">
+                            See all
+                        </a>
+
+                    </div>
+
+
+                    <div id="peopleList">
+
+                        {% for person in people %}
+
+                        <div
+                            class="person"
+                            data-name="{{ person.name|default:''|lower }}"
+                            data-city="{{ person.city|default:''|lower }}"
+                        >
+
+                            <div class="avatar">
+                                {{ person.name|first|upper }}
+                            </div>
+
+
+                            <div class="person-info">
+
+                                <strong>
+                                    {{ person.name }}
+                                </strong>
+
+                                {% if person.city %}
+
+                                <span>
+                                    {{ person.city }}
+                                </span>
+
+                                {% else %}
+
+                                <span>
+                                    Member
+                                </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <button
+                                class="follow-btn"
+                                type="button"
+                                data-member-id="{{ person.id }}"
+                                onclick="followPerson(this)"
+                            >
+                                Follow
+                            </button>
+
+                        </div>
+
+                        {% empty %}
+
+                        <p class="no-people">
+                            No people to show yet.
+                        </p>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <p
+                        id="noSearchResults"
+                        class="no-search-results"
+                        style="display: none;"
+                    >
+                        No people found 🔍
+                    </p>
+
+                </div>
+
+
+                <!-- ================= TRENDING ================= -->
+
+                <div class="side-card">
+
+                    <div class="section-heading">
+
+                        <h3>
+                            Trending now
+                        </h3>
+
+                        <a href="#">
+                            Explore
+                        </a>
+
+                    </div>
+
+
+                    <div class="trending-item">
+
+                        <div class="trend-number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                #CollegeLife
+                            </strong>
+
+                            <span>
+                                2.4k posts
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="trending-item">
+
+                        <div class="trend-number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                #BuildInPublic
+                            </strong>
+
+                            <span>
+                                1.8k posts
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="trending-item">
+
+                        <div class="trend-number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                #MentalReset
+                            </strong>
+
+                            <span>
+                                956 posts
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= EVENTS ================= -->
+
+                <div class="side-card">
+
+                    <div class="section-heading">
+
+                        <h3>
+                            Upcoming events
+                        </h3>
+
+                        <a href="#">
+                            All
+                        </a>
+
+                    </div>
+
+
+                    <div class="event-card">
+
+                        <div class="event-date">
+                            This Friday · 6:00 PM
+                        </div>
+
+                        <h4>
+                            Design & Chill 🎨
+                        </h4>
+
+                        <p>
+                            A casual online meetup for creative minds.
+                        </p>
+
+                        <button
+                            class="event-btn"
+                            type="button"
+                            onclick="showToast('You joined the event 🎉')"
+                        >
+                            Join event
+                        </button>
+
+                    </div>
+
+
+                    <div class="event-card">
+
+                        <div class="event-date">
+                            Next Sunday · 4:00 PM
+                        </div>
+
+                        <h4>
+                            Project Hangout 💻
+                        </h4>
+
+                        <p>
+                            Find teammates and share your project ideas.
+                        </p>
+
+                        <button
+                            class="event-btn"
+                            type="button"
+                            onclick="showToast('You joined the event 🎉')"
+                        >
+                            Join event
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById("toast");
+
+        if (!toast) return;
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(function () {
+
+            toast.classList.remove("show");
+
+        }, 2500);
+    }
+
+
+    /* =====================================================
+       CSRF COOKIE
+    ===================================================== */
+
+    function getCookie(name) {
+
+        let cookieValue = null;
+
+        if (document.cookie) {
+
+            document.cookie
+                .split(";")
+                .forEach(function (cookie) {
+
+                    cookie = cookie.trim();
+
+                    if (
+                        cookie.startsWith(
+                            name + "="
+                        )
+                    ) {
+
+                        cookieValue =
+                            decodeURIComponent(
+                                cookie.substring(
+                                    name.length + 1
+                                )
+                            );
+                    }
+
+                });
+        }
+
+        return cookieValue;
+    }
+
+
+    /* =====================================================
+       SEARCH PEOPLE
+    ===================================================== */
+
+    const memberSearch =
+        document.getElementById("memberSearch");
+
+    if (memberSearch) {
+
+        memberSearch.addEventListener(
+            "input",
+            function () {
+
+                const searchValue =
+                    this.value
+                        .toLowerCase()
+                        .trim();
+
+                const people =
+                    document.querySelectorAll(
+                        "#peopleList .person"
+                    );
+
+                const noSearchResults =
+                    document.getElementById(
+                        "noSearchResults"
+                    );
+
+                let visiblePeople = 0;
+
+
+                people.forEach(
+                    function (person) {
+
+                        const name =
+                            (
+                                person.dataset.name ||
+                                ""
+                            ).toLowerCase();
+
+                        const city =
+                            (
+                                person.dataset.city ||
+                                ""
+                            ).toLowerCase();
+
+
+                        const matches =
+                            name.includes(
+                                searchValue
+                            ) ||
+                            city.includes(
+                                searchValue
+                            );
+
+
+                        if (matches) {
+
+                            person.classList.remove(
+                                "hidden"
+                            );
+
+                            visiblePeople++;
+
+                        } else {
+
+                            person.classList.add(
+                                "hidden"
+                            );
+                        }
+
+                    }
+                );
+
+
+                if (noSearchResults) {
+
+                    if (
+                        searchValue &&
+                        visiblePeople === 0
+                    ) {
+
+                        noSearchResults.style.display =
+                            "block";
+
+                    } else {
+
+                        noSearchResults.style.display =
+                            "none";
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       LIKE POST
+    ===================================================== */
+
+    function likePost(button, postId) {
+
+        fetch(
+            `/profile/post/${postId}/like/`,
+            {
+                method: "POST",
+
+                headers: {
+                    "X-CSRFToken":
+                        getCookie("csrftoken"),
+
+                    "X-Requested-With":
+                        "XMLHttpRequest"
+                }
+            }
+        )
+
+        .then(function (response) {
+
+            return response.json();
+
+        })
+
+        .then(function (data) {
+
+            if (!data.success) {
+
+                showToast(
+                    data.message ||
+                    "Please login first"
+                );
+
+                return;
+            }
+
+
+            const count =
+                button.querySelector("span");
+
+            if (count) {
+
+                count.textContent =
+                    data.likes_count;
+            }
+
+
+            button.classList.toggle(
+                "liked",
+                data.liked
+            );
+
+
+            if (data.liked) {
+
+                button.firstChild.textContent =
+                    "♥ ";
+
+            } else {
+
+                button.firstChild.textContent =
+                    "♡ ";
+            }
+
+        })
+
+        .catch(function (error) {
+
+            console.error(
+                "Like error:",
+                error
+            );
+
+            showToast(
+                "Something went wrong"
+            );
+
+        });
+
+    }
+
+
+    /* =====================================================
+       FOLLOW PERSON
+    ===================================================== */
+
+    function followPerson(button) {
+
+        const memberId =
+            button.dataset.memberId;
+
+        if (!memberId) {
+
+            showToast(
+                "Member not found"
+            );
+
+            return;
+        }
+
+
+        fetch(
+            `/profile/${memberId}/follow/`,
+            {
+                method: "POST",
+
+                headers: {
+                    "X-CSRFToken":
+                        getCookie("csrftoken"),
+
+                    "X-Requested-With":
+                        "XMLHttpRequest"
+                }
+            }
+        )
+
+        .then(function (response) {
+
+            return response.json();
+
+        })
+
+        .then(function (data) {
+
+            if (!data.success) {
+
+                showToast(
+                    data.message ||
+                    "Something went wrong"
+                );
+
+                return;
+            }
+
+
+            button.textContent =
+                data.following
+                    ? "Following"
+                    : "Follow";
+
+
+            button.classList.toggle(
+                "following",
+                data.following
+            );
+
+
+            showToast(
+                data.following
+                    ? "Following now ✨"
+                    : "Unfollowed"
+            );
+
+        })
+
+        .catch(function (error) {
+
+            console.error(
+                "Follow error:",
+                error
+            );
+
+            showToast(
+                "Something went wrong"
+            );
+
+        });
+
+    }
+
+
+    /* =====================================================
+       CREATE POST
+    ===================================================== */
+
+    const postForm =
+        document.getElementById(
+            "postForm"
+        );
+
+
+    if (postForm) {
+
+        postForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const form = this;
+
+
+                const contentInput =
+                    document.getElementById(
+                        "postInput"
+                    );
+
+
+                const imageInput =
+                    form.querySelector(
+                        'input[name="image"]'
+                    );
+
+
+                const content =
+                    contentInput.value.trim();
+
+
+                const image =
+                    imageInput &&
+                    imageInput.files
+                        ? imageInput.files.length
+                        : 0;
+
+
+                if (!content && !image) {
+
+                    showToast(
+                        "Write something or add an image ✍️"
+                    );
+
+                    return;
+                }
+
+
+                const postButton =
+                    form.querySelector(
+                        'button[type="submit"]'
+                    );
+
+
+                postButton.disabled = true;
+
+                postButton.textContent =
+                    "Posting...";
+
+
+                fetch(
+                    form.action,
+                    {
+                        method: "POST",
+
+                        body:
+                            new FormData(form),
+
+                        headers: {
+                            "X-CSRFToken":
+                                getCookie(
+                                    "csrftoken"
+                                ),
+
+                            "X-Requested-With":
+                                "XMLHttpRequest"
+                        }
+                    }
+                )
+
+                .then(function (response) {
+
+                    const contentType =
+                        response.headers.get(
+                            "content-type"
+                        ) || "";
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Post request failed"
+                        );
+                    }
+
+
+                    if (
+                        !contentType.includes(
+                            "application/json"
+                        )
+                    ) {
+
+                        throw new Error(
+                            "Server did not return JSON"
+                        );
+                    }
+
+
+                    return response.json();
+
+                })
+
+                .then(function (data) {
+
+                    if (data.success) {
+
+                        showToast(
+                            "Your post is live 🎉"
+                        );
+
+
+                        setTimeout(
+                            function () {
+
+                                location.reload();
+
+                            },
+                            500
+                        );
+
+                    } else {
+
+                        showToast(
+                            data.message ||
+                            "Could not create post"
+                        );
+
+
+                        postButton.disabled =
+                            false;
+
+                        postButton.textContent =
+                            "Post ✨";
+                    }
+
+                })
+
+                .catch(function (error) {
+
+                    console.error(
+                        "Post error:",
+                        error
+                    );
+
+
+                    showToast(
+                        "Post nahi hui. Please try again."
+                    );
+
+
+                    postButton.disabled =
+                        false;
+
+                    postButton.textContent =
+                        "Post ✨";
+
+                });
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       DELETE POST
+    ===================================================== */
+
+    function deletePost(postId) {
+
+        if (
+            !confirm(
+                "Delete this post?"
+            )
+        ) {
+
+            return;
+        }
+
+
+        fetch(
+            `/profile/post/${postId}/delete/`,
+            {
+                method: "POST",
+
+                headers: {
+                    "X-CSRFToken":
+                        getCookie("csrftoken"),
+
+                    "X-Requested-With":
+                        "XMLHttpRequest"
+                }
+            }
+        )
+
+        .then(function (response) {
+
+            return response.json();
+
+        })
+
+        .then(function (data) {
+
+            if (data.success) {
+
+                const post =
+                    document.getElementById(
+                        `post-${postId}`
+                    );
+
+
+                if (post) {
+
+                    post.remove();
+                }
+
+
+                showToast(
+                    "Post deleted"
+                );
+
+            } else {
+
+                showToast(
+                    data.message ||
+                    "Could not delete post"
+                );
+            }
+
+        })
+
+        .catch(function (error) {
+
+            console.error(
+                "Delete error:",
+                error
+            );
+
+            showToast(
+                "Something went wrong"
+            );
+
+        });
+
+    }
+
+</script>
+<script>
+    /* =====================================================
+   NOTIFICATION COUNT
+===================================================== */
+
+function loadNotificationCount() {
+
+    fetch("{% url 'notifications' %}")
+
+        .then(function(response) {
+            return response.json();
+        })
+
+        .then(function(data) {
+
+            const badge =
+                document.getElementById(
+                    "notificationBadge"
+                );
+
+            if (!badge) return;
+
+            if (data.count > 0) {
+
+                badge.textContent =
+                    data.count > 99
+                        ? "99+"
+                        : data.count;
+
+                badge.style.display =
+                    "flex";
+
+            } else {
+
+                badge.style.display =
+                    "none";
+            }
+
+        })
+
+        .catch(function(error) {
+
+            console.error(
+                "Notification error:",
+                error
+            );
+
+        });
+}
+
+
+/* Load when page opens */
+loadNotificationCount();
+
+
+/* Check every 10 seconds */
+setInterval(
+    loadNotificationCount,
+    10000
+);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1920 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Education | Group</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --purple: #5E035A;
+            --dark-purple: #42033F;
+            --light-purple: #EEE2F0;
+            --soft-purple: #F8F2F8;
+            --black: #19151A;
+            --text: #282229;
+            --muted: #716873;
+            --white: #fff;
+            --border: #eadfea;
+            --shadow: 0 18px 45px rgba(94, 3, 90, .08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: var(--soft-purple);
+            color: var(--text);
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1180px, 92%);
+            margin: auto;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 82px;
+            background: rgba(255, 255, 255, .94);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+        }
+
+        .nav-inner {
+            width: min(1180px, 92%);
+            height: 100%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 25px;
+            font-weight: 700;
+            color: var(--purple);
+        }
+
+        .logo-mark {
+            width: 39px;
+            height: 39px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            background: var(--purple);
+            color: white;
+            font-size: 21px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            padding: 10px 13px;
+        }
+
+        .nav-link.active,
+        .nav-link:hover {
+            color: var(--purple);
+        }
+
+        .nav-btn {
+            border: 1px solid var(--purple);
+            background: var(--purple);
+            color: white;
+            padding: 11px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .menu-btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 50%;
+            font-size: 19px;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 82px 0 auto 0;
+            background: white;
+            padding: 25px;
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            z-index: 99;
+        }
+
+        .mobile-menu.show {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 82px 0 65px;
+            background:
+                radial-gradient(circle at 85% 10%, #ead5eb 0, transparent 30%),
+                radial-gradient(circle at 5% 90%, #f0dff0 0, transparent 25%),
+                var(--soft-purple);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--light-purple);
+            color: var(--purple);
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(42px, 5vw, 70px);
+            line-height: 1.04;
+            letter-spacing: -2.5px;
+            color: var(--black);
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: var(--purple);
+        }
+
+        .hero-text {
+            max-width: 540px;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .main-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 22px;
+            border-radius: 12px;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .25s;
+        }
+
+        .main-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .main-btn.purple {
+            background: var(--purple);
+            color: white;
+        }
+
+        .main-btn.white {
+            background: white;
+            color: var(--purple);
+            border: 1px solid var(--border);
+        }
+
+        /* HERO VISUAL */
+
+        .hero-visual {
+            position: relative;
+            min-height: 405px;
+        }
+
+        .floating-tag {
+            position: absolute;
+            z-index: 3;
+            background: white;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 12px 15px;
+            border-radius: 13px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .tag-one {
+            top: 20px;
+            right: -10px;
+        }
+
+        .tag-two {
+            bottom: 28px;
+            left: -22px;
+        }
+
+        .hero-main-card {
+            position: absolute;
+            inset: 30px 25px 20px 25px;
+            background: var(--purple);
+            border-radius: 30px;
+            padding: 30px;
+            overflow: hidden;
+            color: white;
+        }
+
+        .hero-main-card::before,
+        .hero-main-card::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 50%;
+        }
+
+        .hero-main-card::before {
+            width: 280px;
+            height: 280px;
+            top: -130px;
+            right: -90px;
+        }
+
+        .hero-main-card::after {
+            width: 220px;
+            height: 220px;
+            bottom: -140px;
+            left: -100px;
+        }
+
+        .hero-main-card h3,
+        .hero-main-card p,
+        .learning-box,
+        .stats-row {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-main-card h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .hero-main-card p {
+            color: #ead9e9;
+            font-size: 13px;
+            line-height: 1.7;
+            max-width: 280px;
+        }
+
+        .learning-box {
+            background: white;
+            color: var(--text);
+            border-radius: 17px;
+            padding: 18px;
+            margin-top: 35px;
+        }
+
+        .learning-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 13px;
+        }
+
+        .learning-top strong {
+            font-size: 13px;
+        }
+
+        .learning-top span {
+            color: var(--purple);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .progress {
+            height: 8px;
+            background: var(--light-purple);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 68%;
+            height: 100%;
+            background: var(--purple);
+            border-radius: 10px;
+            transition: width .4s;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .stat {
+            background: rgba(255,255,255,.13);
+            border-radius: 12px;
+            padding: 12px 5px;
+            text-align: center;
+            font-size: 11px;
+            color: #ead9e9;
+        }
+
+        .stat strong {
+            display: block;
+            color: white;
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        /* SEARCH */
+
+        .search-section {
+            margin-top: -5px;
+            padding-bottom: 65px;
+        }
+
+        .search-wrapper {
+            background: white;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            border-radius: 18px;
+            padding: 10px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-icon {
+            font-size: 22px;
+            padding-left: 12px;
+            color: var(--muted);
+        }
+
+        .search-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            padding: 14px 5px;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .search-box button {
+            border: none;
+            background: var(--purple);
+            color: white;
+            border-radius: 12px;
+            padding: 13px 22px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin-top: 13px;
+            padding: 0 7px 3px;
+        }
+
+        .filter-btn {
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--muted);
+            padding: 8px 13px;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--purple);
+            color: white;
+            border-color: var(--purple);
+        }
+
+        /* COMMON SECTION */
+
+        .section {
+            padding-bottom: 78px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 26px;
+        }
+
+        .section-heading h2 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 32px;
+            color: var(--black);
+            margin-bottom: 7px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .view-link {
+            color: var(--purple);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* TOPICS */
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .category-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 19px;
+            padding: 23px;
+            transition: .25s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--purple);
+        }
+
+        .category-icon {
+            width: 49px;
+            height: 49px;
+            display: grid;
+            place-items: center;
+            background: var(--light-purple);
+            border-radius: 14px;
+            font-size: 23px;
+            margin-bottom: 18px;
+        }
+
+        .category-card h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .category-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 17px;
+        }
+
+        .category-card button {
+            border: none;
+            background: none;
+            color: var(--purple);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 0;
+        }
+
+        /* LEARNING PATHS */
+
+        .path-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .path-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            transition: .25s;
+        }
+
+        .path-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .path-label {
+            display: inline-block;
+            background: var(--light-purple);
+            color: var(--purple);
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .path-card h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .path-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .path-progress {
+            height: 6px;
+            background: var(--light-purple);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .path-progress div {
+            height: 100%;
+            background: var(--purple);
+            border-radius: 10px;
+        }
+
+        .path-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .path-meta button {
+            border: none;
+            background: none;
+            color: var(--purple);
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        /* RESOURCES */
+
+        .resource-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .resource-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 19px;
+            overflow: hidden;
+            transition: .25s;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .resource-card.hidden {
+            display: none;
+        }
+
+        .resource-image {
+            height: 150px;
+            background: var(--light-purple);
+            display: grid;
+            place-items: center;
+            font-size: 48px;
+        }
+
+        .resource-content {
+            padding: 22px;
+        }
+
+        .resource-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .resource-type {
+            color: var(--purple);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .5px;
+        }
+
+        .save-btn {
+            width: 31px;
+            height: 31px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 50%;
+            font-size: 15px;
+        }
+
+        .save-btn.saved {
+            background: var(--purple);
+            color: white;
+            border-color: var(--purple);
+        }
+
+        .resource-content h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 18px;
+            margin: 12px 0 9px;
+        }
+
+        .resource-content p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 17px;
+        }
+
+        .resource-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .resource-footer span {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .read-btn {
+            border: none;
+            background: none;
+            color: var(--purple);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .empty-state {
+            display: none;
+            text-align: center;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 35px;
+            color: var(--muted);
+        }
+
+        .empty-state.show {
+            display: block;
+        }
+
+        /* CTA */
+
+        .cta {
+            background: var(--purple);
+            border-radius: 26px;
+            padding: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 75px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cta::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 50%;
+            right: -70px;
+            bottom: -120px;
+        }
+
+        .cta h2 {
+            position: relative;
+            z-index: 1;
+            font-family: "Space Grotesk", sans-serif;
+            color: white;
+            font-size: 31px;
+            margin-bottom: 10px;
+        }
+
+        .cta p {
+            position: relative;
+            z-index: 1;
+            color: #ead9e9;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 550px;
+        }
+
+        .cta .main-btn {
+            position: relative;
+            z-index: 2;
+            background: white;
+            color: var(--purple);
+            white-space: nowrap;
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(25, 21, 26, .55);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: min(520px, 100%);
+            background: white;
+            border-radius: 22px;
+            padding: 28px;
+            position: relative;
+            animation: popup .25s ease;
+        }
+
+        @keyframes popup {
+            from {
+                opacity: 0;
+                transform: translateY(15px) scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .modal-icon {
+            width: 55px;
+            height: 55px;
+            display: grid;
+            place-items: center;
+            background: var(--light-purple);
+            border-radius: 15px;
+            font-size: 27px;
+            margin-bottom: 18px;
+        }
+
+        .modal-box h2 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .modal-box p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: white;
+            border-top: 1px solid var(--border);
+            padding: 28px 0;
+        }
+
+        .footer-inner {
+            width: min(1180px, 92%);
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        footer p,
+        .footer-links {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .footer-links a:hover {
+            color: var(--purple);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 950px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-visual {
+                max-width: 600px;
+                width: 100%;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .path-grid,
+            .resource-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                height: 72px;
+            }
+
+            .mobile-menu {
+                inset: 72px 0 auto 0;
+            }
+
+            .nav-link,
+            .nav-btn {
+                display: none;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .logo-mark {
+                width: 35px;
+                height: 35px;
+            }
+
+            .hero {
+                padding: 50px 0 45px;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+                letter-spacing: -1.5px;
+            }
+
+            .hero-text {
+                font-size: 15px;
+            }
+
+            .hero-visual {
+                min-height: 355px;
+            }
+
+            .hero-main-card {
+                inset: 25px 8px 15px 8px;
+                padding: 24px;
+            }
+
+            .floating-tag {
+                font-size: 10px;
+                padding: 10px;
+            }
+
+            .tag-one {
+                right: -3px;
+            }
+
+            .tag-two {
+                left: -3px;
+            }
+
+            .search-box button {
+                padding: 12px 14px;
+                font-size: 12px;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .section-heading h2 {
+                font-size: 27px;
+            }
+
+            .category-grid,
+            .path-grid,
+            .resource-list {
+                grid-template-columns: 1fr;
+            }
+
+            .cta {
+                padding: 30px 24px;
+                margin-bottom: 55px;
+            }
+
+            .cta h2 {
+                font-size: 27px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+.logo img {
+
+    width: 190px;
+
+    height: auto;
+
+    display: block;
+}
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-inner">
+
+            <a href="{% url 'home' %}" class="logo">
+                 <img src="{% static 'images/image.png' %}"
+                 alt="GEN Z Group">
+
+            </a>
+
+            <nav class="nav-actions">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/education/" class="nav-link active">Education</a>
+                <a href="/join/" class="nav-btn">Join GenZ</a>
+
+                <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+                    ☰
+                </button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="/">Home</a>
+        <a href="/education/">Education</a>
+        <a href="/join/">Join GenZ</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container hero-grid">
+
+            <div>
+                <div class="eyebrow">✦ Learn. Build. Grow.</div>
+
+                <h1>
+                    Learn something<br>
+                    <span>worth sharing.</span>
+                </h1>
+
+                <p class="hero-text">
+                    Explore practical resources, learning paths, and useful
+                    knowledge shared by people who are learning, building,
+                    and growing together.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#topics" class="main-btn purple">
+                        Explore Topics →
+                    </a>
+
+                    <a href="#resources" class="main-btn white">
+                        Browse Resources
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+
+                <div class="floating-tag tag-one">
+                    ✨ Learn at your pace
+                </div>
+
+                <div class="floating-tag tag-two">
+                    📚 150+ resources
+                </div>
+
+                <div class="hero-main-card">
+                    <h3>Your learning space</h3>
+
+                    <p>
+                        Discover new skills and keep track of your
+                        learning journey.
+                    </p>
+
+                    <div class="learning-box">
+                        <div class="learning-top">
+                            <strong>Frontend Development</strong>
+                            <span id="progressText">68% complete</span>
+                        </div>
+
+                        <div class="progress">
+                            <div class="progress-bar" id="mainProgress"></div>
+                        </div>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat">
+                            <strong>24</strong>
+                            Topics
+                        </div>
+
+                        <div class="stat">
+                            <strong>12</strong>
+                            Paths
+                        </div>
+
+                        <div class="stat">
+                            <strong>150+</strong>
+                            Resources
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="search-section">
+        <div class="container">
+
+            <div class="search-wrapper">
+
+                <div class="search-box">
+                    <span class="search-icon">⌕</span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search topics, skills, courses..."
+                    >
+
+                    <button id="searchBtn">Search</button>
+                </div>
+
+                <div class="filter-row">
+                    <button class="filter-btn active" data-filter="all">
+                        All
+                    </button>
+
+                    <button class="filter-btn" data-filter="technology">
+                        Technology
+                    </button>
+
+                    <button class="filter-btn" data-filter="design">
+                        Design
+                    </button>
+
+                    <button class="filter-btn" data-filter="business">
+                        Business
+                    </button>
+
+                    <button class="filter-btn" data-filter="career">
+                        Career
+                    </button>
+
+                    <button class="filter-btn" data-filter="productivity">
+                        Productivity
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- TOPICS -->
+    <section class="section" id="topics">
+        <div class="container">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Explore by topic</h2>
+                    <p>Find something useful for your next learning goal.</p>
+                </div>
+
+                <a href="#resources" class="view-link">View resources →</a>
+            </div>
+
+            <div class="category-grid">
+
+                <div class="category-card">
+                    <div class="category-icon">💻</div>
+                    <h3>Technology</h3>
+                    <p>
+                        Programming, development, tools, and the latest
+                        tech skills.
+                    </p>
+
+                    <button class="topic-btn" data-topic="technology">
+                        Explore topic →
+                    </button>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">🎨</div>
+                    <h3>Design</h3>
+                    <p>
+                        UI/UX, Figma, branding, creativity, and visual thinking.
+                    </p>
+
+                    <button class="topic-btn" data-topic="design">
+                        Explore topic →
+                    </button>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">📈</div>
+                    <h3>Business</h3>
+                    <p>
+                        Marketing, entrepreneurship, productivity,
+                        and business skills.
+                    </p>
+
+                    <button class="topic-btn" data-topic="business">
+                        Explore topic →
+                    </button>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">🧠</div>
+                    <h3>Personal Growth</h3>
+                    <p>
+                        Career, communication, confidence, and
+                        everyday learning.
+                    </p>
+
+                    <button class="topic-btn" data-topic="career">
+                        Explore topic →
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- LEARNING PATHS -->
+    <section class="section" id="paths">
+        <div class="container">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Learning paths</h2>
+                    <p>Follow a simple path instead of feeling lost.</p>
+                </div>
+
+                <a href="#resources" class="view-link">See all paths →</a>
+            </div>
+
+            <div class="path-grid">
+
+                <div class="path-card">
+                        <span class="path-label">STARTER</span>
+
+                        <h3>Become a Frontend Developer</h3>
+
+                        <p>
+                            Learn HTML, CSS, JavaScript, responsive design,
+                            and build your first real website.
+                        </p>
+
+                        <div class="path-progress">
+                            <div style="width: 68%;"></div>
+                        </div>
+
+                        <div class="path-meta">
+                            <span>8 Modules · Beginner</span>
+
+                            <a href="/education/frontend/" class="path-btn">
+                                Study Now →
+                            </a>
+                        </div>
+                    </div>
+                
+
+                <div class="path-card">
+                    <span class="path-label">CREATIVE</span>
+
+                    <h3>Learn UI/UX Design</h3>
+
+                    <p>
+                        Understand design basics, user experience,
+                        wireframes, and modern interfaces.
+                    </p>
+
+                    <div class="path-progress">
+                        <div style="width: 42%;"></div>
+                    </div>
+
+                    <div class="path-meta">
+                        <span>6 Modules · Beginner</span>
+                         <a href="{% url 'uiux_course' %}" class="learning-card">
+                            Study Now→
+                         </a>
+                    </div>
+                </div>
+
+                <div class="path-card">
+                    <span class="path-label">CAREER</span>
+
+                    <h3>Build Your Career Skills</h3>
+
+                    <p>
+                        Improve communication, resume building,
+                        interviews, networking, and confidence.
+                    </p>
+
+                    <div class="path-progress">
+                        <div style="width: 25%;"></div>
+                    </div>
+
+                    <div class="path-meta">
+                        <span>5 Modules · All levels</span>
+
+                        <a href="{% url 'career_skills' %}" class="learning-card">
+                            Study Now →
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- RESOURCES -->
+    <section class="section" id="resources">
+        <div class="container">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Featured resources</h2>
+                    <p>Useful content shared by the community.</p>
+                </div>
+
+                <span class="view-link" id="resultCount">
+                    6 resources
+                </span>
+            </div>
+
+            <div class="resource-list" id="resourceList">
+
+                <!-- RESOURCE 1 -->
+                <article
+                    class="resource-card"
+                    data-category="technology"
+                    data-search="coding programming technology frontend html css javascript"
+                >
+                    <div class="resource-image">💻</div>
+
+                    <div class="resource-content">
+                        <div class="resource-top">
+                            <span class="resource-type">TECHNOLOGY</span>
+
+                            <button class="save-btn" aria-label="Save resource">
+                                ♡
+                            </button>
+                        </div>
+
+                        <h3>How to start learning coding</h3>
+
+                        <p>
+                            A simple beginner-friendly guide to start
+                            your coding journey without confusion.
+                        </p>
+
+                        <div class="resource-footer">
+                            <span>8 min read</span>
+
+                            <a href="/education/frontend/" class="path-btn">
+                                Read resource →
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- RESOURCE 2 -->
+                <article
+                    class="resource-card"
+                    data-category="career"
+                    data-search="resume career job interview professional skills"
+                >
+                    <div class="resource-image">🎯</div>
+
+                    <div class="resource-content">
+                        <div class="resource-top">
+                            <span class="resource-type">CAREER</span>
+
+                            <button class="save-btn" aria-label="Save resource">
+                                ♡
+                            </button>
+                        </div>
+
+                        <h3>How to create a better resume</h3>
+
+                        <p>
+                            Learn how to present your skills, projects,
+                            and experience in a clear way.
+                        </p>
+
+                        <div class="resource-footer">
+                            <span>6 min read</span>
+                             <a href="{% url 'career_skills' %}" class="learning-card">
+                                Read resource →
+                             </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- RESOURCE 3 -->
+                <article
+                    class="resource-card"
+                    data-category="productivity"
+                    data-search="productivity learning habit consistency time management"
+                >
+                    <div class="resource-image">✨</div>
+
+                    <div class="resource-content">
+                        <div class="resource-top">
+                            <span class="resource-type">PRODUCTIVITY</span>
+
+                            <button class="save-btn" aria-label="Save resource">
+                                ♡
+                            </button>
+                        </div>
+
+                        <h3>Build a consistent learning habit</h3>
+
+                        <p>
+                            Small practical ways to learn regularly
+                            and make progress every week.
+                        </p>
+
+                        <div class="resource-footer">
+                            <span>5 min read</span>
+
+                        <a href="{% url 'career_skills' %}" class="learning-card">
+                                Read resource →
+                        </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- RESOURCE 4 -->
+                <article
+                    class="resource-card"
+                    data-category="design"
+                    data-search="design ui ux figma interface creativity"
+                >
+                    <div class="resource-image">🎨</div>
+
+                    <div class="resource-content">
+                        <div class="resource-top">
+                            <span class="resource-type">DESIGN</span>
+
+                            <button class="save-btn" aria-label="Save resource">
+                                ♡
+                            </button>
+                        </div>
+
+                        <h3>Design your first modern interface</h3>
+
+                        <p>
+                            Understand spacing, typography, colors,
+                            and visual hierarchy.
+                        </p>
+
+                        <div class="resource-footer">
+                            <span>9 min read</span>
+
+                        <a href="{% url 'uiux_course' %}" class="learning-card"> 
+                                Read resource →
+                        </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- RESOURCE 5 -->
+                <article
+                    class="resource-card"
+                    data-category="business"
+                    data-search="business marketing entrepreneurship startup business skills"
+                >
+                    <div class="resource-image">📈</div>
+
+                    <div class="resource-content">
+                        <div class="resource-top">
+                            <span class="resource-type">BUSINESS</span>
+
+                            <button class="save-btn" aria-label="Save resource">
+                                ♡
+                            </button>
+                        </div>
+
+                        <h3>Understand the basics of marketing</h3>
+
+                        <p>
+                            Learn how brands reach people and build
+                            meaningful connections.
+                        </p>
+
+                        <div class="resource-footer">
+                            <span>7 min read</span>
+
+                        <a href="https://academy.hubspot.com/courses/digital-marketing"
+                        target="_blank"
+                        class="learning-card">
+                                Read resource →
+                        </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- RESOURCE 6 -->
+                <article
+                    class="resource-card"
+                    data-category="technology"
+                    data-search="django python web development backend programming"
+                >
+                    <div class="resource-image">🐍</div>
+
+                    <div class="resource-content">
+                        <div class="resource-top">
+                            <span class="resource-type">TECHNOLOGY</span>
+
+                            <button class="save-btn" aria-label="Save resource">
+                                ♡
+                            </button>
+                        </div>
+
+                        <h3>Understand how websites work</h3>
+
+                        <p>
+                            Learn the basics of frontend, backend,
+                            databases, and hosting.
+                        </p>
+
+                        <div class="resource-footer">
+                            <span>10 min read</span>
+
+                            <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development"
+                            target="_blank"
+                            class="learning-card">
+                                Read resource →
+                        </a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="empty-state" id="emptyState">
+                <h3>No resources found</h3>
+                <p>Try another keyword or select a different topic.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="container">
+        <div class="cta">
+
+            <div>
+                <h2>Have something useful to share?</h2>
+
+                <p>
+                    Share your knowledge, resources, notes, or learning
+                    experience and help someone grow.
+                </p>
+            </div>
+
+            <a href="/join/" class="main-btn">
+                Join the community →
+            </a>
+
+        </div>
+    </section>
+
+    <!-- RESOURCE MODAL -->
+    <div class="modal" id="resourceModal">
+        <div class="modal-box">
+
+            <button class="close-modal" id="closeResourceModal">
+                ×
+            </button>
+
+            <div class="modal-icon" id="modalIcon">📚</div>
+
+            <h2 id="modalTitle">Resource title</h2>
+
+            <p id="modalDescription">
+                Resource description.
+            </p>
+
+            <div class="modal-actions">
+                <button class="main-btn purple" id="markCompleteBtn">
+                    Mark as completed
+                </button>
+
+                <button class="main-btn white" id="closeModalBtn">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PATH MODAL -->
+    <div class="modal" id="pathModal">
+        <div class="modal-box">
+
+            <button class="close-modal" id="closePathModal">
+                ×
+            </button>
+
+            <div class="modal-icon">🚀</div>
+
+            <h2 id="pathModalTitle">Learning Path</h2>
+
+            <p>
+                Your progress is saved on this browser.
+                Continue learning and complete the next module.
+            </p>
+
+            <div class="progress">
+                <div class="progress-bar" id="pathModalProgress"></div>
+            </div>
+
+            <br>
+
+            <div class="modal-actions">
+                <button class="main-btn purple" id="updateProgressBtn">
+                    Update progress
+                </button>
+
+                <button class="main-btn white" id="closePathBtn">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+
+            <p>© 2026 Group. Learn and grow together.</p>
+
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/education/">Education</a>
+                <a href="/join/">Join</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        const searchBtn = document.getElementById("searchBtn");
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const resourceCards = document.querySelectorAll(".resource-card");
+        const resultCount = document.getElementById("resultCount");
+        const emptyState = document.getElementById("emptyState");
+
+        let selectedFilter = "all";
+
+        /* SEARCH + FILTER */
+
+        function filterResources() {
+            const searchValue = searchInput.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            resourceCards.forEach(card => {
+                const category = card.dataset.category;
+                const searchableText = card.dataset.search.toLowerCase();
+
+                const matchesSearch =
+                    searchableText.includes(searchValue);
+
+                const matchesFilter =
+                    selectedFilter === "all" ||
+                    category === selectedFilter;
+
+                if (matchesSearch && matchesFilter) {
+                    card.classList.remove("hidden");
+                    visibleCount++;
+                } else {
+                    card.classList.add("hidden");
+                }
+            });
+
+            resultCount.textContent = visibleCount + " resources";
+
+            if (visibleCount === 0) {
+                emptyState.classList.add("show");
+            } else {
+                emptyState.classList.remove("show");
+            }
+        }
+
+        searchInput.addEventListener("input", filterResources);
+        searchBtn.addEventListener("click", filterResources);
+
+        filterButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove("active");
+                });
+
+                button.classList.add("active");
+                selectedFilter = button.dataset.filter;
+
+                filterResources();
+
+                document.getElementById("resources")
+                    .scrollIntoView({ behavior: "smooth" });
+            });
+        });
+
+        /* TOPIC BUTTONS */
+
+        document.querySelectorAll(".topic-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                selectedFilter = button.dataset.topic;
+
+                filterButtons.forEach(btn => {
+                    btn.classList.toggle(
+                        "active",
+                        btn.dataset.filter === selectedFilter
+                    );
+                });
+
+                filterResources();
+
+                document.getElementById("resources")
+                    .scrollIntoView({ behavior: "smooth" });
+            });
+        });
+
+        /* SAVE RESOURCE */
+
+        document.querySelectorAll(".save-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                button.classList.toggle("saved");
+
+                if (button.classList.contains("saved")) {
+                    button.textContent = "♥";
+                    button.title = "Saved";
+                } else {
+                    button.textContent = "♡";
+                    button.title = "Save resource";
+                }
+            });
+        });
+
+        /* RESOURCE MODAL */
+
+        const resourceModal = document.getElementById("resourceModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalDescription = document.getElementById("modalDescription");
+        const modalIcon = document.getElementById("modalIcon");
+
+        document.querySelectorAll(".read-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                modalTitle.textContent = button.dataset.title;
+                modalDescription.textContent = button.dataset.description;
+                modalIcon.textContent = button.dataset.icon;
+
+                resourceModal.classList.add("show");
+                document.body.classList.add("menu-open");
+            });
+        });
+
+        function closeResourceModal() {
+            resourceModal.classList.remove("show");
+            document.body.classList.remove("menu-open");
+        }
+
+        document.getElementById("closeResourceModal")
+            .addEventListener("click", closeResourceModal);
+
+        document.getElementById("closeModalBtn")
+            .addEventListener("click", closeResourceModal);
+
+        document.getElementById("markCompleteBtn")
+            .addEventListener("click", () => {
+                alert("Resource marked as completed!");
+                closeResourceModal();
+            });
+
+        /* LEARNING PATH MODAL */
+
+        const pathModal = document.getElementById("pathModal");
+        const pathModalTitle = document.getElementById("pathModalTitle");
+        const pathModalProgress = document.getElementById("pathModalProgress");
+
+        let currentProgress = 0;
+
+        document.querySelectorAll(".path-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                pathModalTitle.textContent = button.dataset.title;
+
+                currentProgress = Number(button.dataset.progress);
+                pathModalProgress.style.width = currentProgress + "%";
+
+                pathModal.classList.add("show");
+                document.body.classList.add("menu-open");
+            });
+        });
+
+        function closePathModal() {
+            pathModal.classList.remove("show");
+            document.body.classList.remove("menu-open");
+        }
+
+        document.getElementById("closePathModal")
+            .addEventListener("click", closePathModal);
+
+        document.getElementById("closePathBtn")
+            .addEventListener("click", closePathModal);
+
+        document.getElementById("updateProgressBtn")
+            .addEventListener("click", () => {
+                currentProgress += 10;
+
+                if (currentProgress > 100) {
+                    currentProgress = 100;
+                }
+
+                pathModalProgress.style.width = currentProgress + "%";
+
+                document.getElementById("mainProgress").style.width =
+                    currentProgress + "%";
+
+                document.getElementById("progressText").textContent =
+                    currentProgress + "% complete";
+
+                alert("Progress updated to " + currentProgress + "%");
+            });
+
+        /* CLOSE MODAL WHEN CLICKING OUTSIDE */
+
+        window.addEventListener("click", event => {
+            if (event.target === resourceModal) {
+                closeResourceModal();
+            }
+
+            if (event.target === pathModal) {
+                closePathModal();
+            }
+        });
+
+        /* MOBILE MENU */
+
+        const menuBtn = document.getElementById("menuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("show");
+            document.body.classList.toggle("menu-open");
+
+            menuBtn.textContent =
+                mobileMenu.classList.contains("show") ? "×" : "☰";
+        });
+
+        document.querySelectorAll(".mobile-menu a").forEach(link => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.remove("show");
+                document.body.classList.remove("menu-open");
+                menuBtn.textContent = "☰";
+            });
+        });
+    </script>
+
+</body>
+</html>

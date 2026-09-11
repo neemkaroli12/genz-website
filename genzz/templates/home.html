@@ -1,0 +1,5829 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>GEN-Z</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+
+<style>
+
+/* =====================================================
+   ROOT
+===================================================== */
+
+:root {
+
+    --purple: #5E035A;
+    --purple-dark: #42033F;
+
+    --purple-light: #EEE2F0;
+    --purple-soft: #F7EFF7;
+
+    --black: #19151A;
+    --text: #282229;
+    --muted: #625B63;
+
+    --white: #FFFFFF;
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    margin: 0;
+
+    font-family:
+        "DM Sans",
+        sans-serif;
+
+    color:
+        var(--text);
+
+    background:
+        #FFF9FC;
+
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   HERO
+   ONE COMPLETE SCREEN
+===================================================== */
+
+.hero {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100vh;
+
+    min-height: 580px;
+
+    overflow: hidden;
+
+    isolation: isolate;
+}
+
+
+/* =====================================================
+   JANTAR MANTAR BACKGROUND
+===================================================== */
+
+.hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+
+        linear-gradient(
+            90deg,
+
+            rgba(255,255,255,.94) 0%,
+
+            rgba(255,255,255,.83) 28%,
+
+            rgba(255,255,255,.48) 52%,
+
+            rgba(255,255,255,.30) 100%
+        ),
+
+        url("/static/images/image-1.png");
+
+    background-size: cover;
+
+    background-position: center center;
+
+    background-repeat: no-repeat;
+
+    filter:
+        grayscale(100%);
+
+    z-index: -2;
+}
+
+
+/* =====================================================
+   VERY SOFT PURPLE LIGHT
+===================================================== */
+
+.hero::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        radial-gradient(
+            circle at 72% 54%,
+            rgba(94,3,90,.13),
+            transparent 34%
+        );
+
+    z-index: -1;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   TOP HEADER
+   NO NAVBAR
+===================================================== */
+
+.top-header {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    padding:
+        25px 48px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    z-index: 9999;
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo-area img {
+
+    width: 190px;
+
+    height: auto;
+
+    display: block;
+}
+
+
+/* =====================================================
+   HEADER RIGHT
+===================================================== */
+
+.header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* =====================================================
+   JOIN BUTTON
+===================================================== */
+
+.join-button {
+
+    height: 54px;
+
+    padding:
+        0 25px;
+
+    border-radius:
+        50px;
+
+    background:
+        var(--purple);
+
+    color:
+        white;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    font-size:
+        14px;
+
+    font-weight:
+        700;
+
+    box-shadow:
+        0 12px 30px
+        rgba(94,3,90,.18);
+
+    transition:
+        .3s ease;
+}
+
+.join-button:hover {
+
+    background:
+        var(--purple-dark);
+
+    transform:
+        translateY(-3px);
+}
+
+
+/* =====================================================
+   ROUND BUTTONS
+===================================================== */
+
+.search-button,
+.menu-button {
+
+    position: relative;
+
+    width: 54px;
+
+    height: 54px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.94);
+
+    box-shadow:
+        0 10px 30px
+        rgba(30,20,30,.10);
+
+    backdrop-filter:
+        blur(15px);
+
+    transition:
+        .3s ease;
+}
+
+.search-button:hover,
+.menu-button:hover {
+
+    transform:
+        translateY(-3px);
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-button::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 17px;
+    height: 17px;
+
+    border:
+        2px solid
+        var(--purple);
+
+    border-radius: 50%;
+
+    left: 16px;
+    top: 14px;
+}
+
+.search-button::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 8px;
+    height: 2px;
+
+    background:
+        var(--purple);
+
+    transform:
+        rotate(45deg);
+
+    left: 31px;
+    top: 31px;
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+.menu-button {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        5px;
+}
+
+.menu-button span {
+
+    width:
+        21px;
+
+    height:
+        2px;
+
+    border-radius:
+        10px;
+
+    background:
+        var(--purple);
+
+    transition:
+        .3s ease;
+}
+
+
+/* =====================================================
+   MENU OPEN
+===================================================== */
+
+.menu-button.open span:nth-child(1) {
+
+    transform:
+        translateY(7px)
+        rotate(45deg);
+}
+
+.menu-button.open span:nth-child(2) {
+
+    opacity: 0;
+}
+
+.menu-button.open span:nth-child(3) {
+
+    transform:
+        translateY(-7px)
+        rotate(-45deg);
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+.mobile-menu {
+
+    position: fixed;
+
+    top: 95px;
+
+    right: 30px;
+
+    width: 280px;
+
+    padding: 20px;
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.97);
+
+    box-shadow:
+        0 25px 70px
+        rgba(30,20,30,.18);
+
+    backdrop-filter:
+        blur(20px);
+
+    z-index: 10000;
+
+    display: none;
+}
+
+.mobile-menu.show {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        6px;
+}
+
+.mobile-menu a {
+
+    padding:
+        12px 14px;
+
+    border-radius:
+        12px;
+
+    font-size:
+        14px;
+
+    font-weight:
+        600;
+}
+
+.mobile-menu a:hover {
+
+    background:
+        var(--purple-soft);
+
+    color:
+        var(--purple);
+}
+
+
+/* =====================================================
+   HERO CONTAINER
+===================================================== */
+
+.hero-container {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 1500px;
+
+    height: 100%;
+
+    margin: auto;
+
+    padding:
+        105px 55px 35px;
+
+    display: grid;
+
+    grid-template-columns:
+        42% 58%;
+
+    align-items:
+        center;
+}
+
+
+/* =====================================================
+   LEFT CONTENT
+===================================================== */
+
+.hero-content {
+
+    position:
+        relative;
+
+    z-index:
+        100;
+
+    padding-left:
+        15px;
+
+    margin-top:
+        10px;
+}
+
+
+/* =====================================================
+   EYEBROW
+===================================================== */
+
+.eyebrow {
+
+    color:
+        var(--purple);
+
+    font-size:
+        13px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        4px;
+}
+
+.eyebrow-line {
+
+    width:
+        48px;
+
+    height:
+        3px;
+
+    margin-top:
+        12px;
+
+    border-radius:
+        10px;
+
+    background:
+        var(--purple);
+}
+
+
+/* =====================================================
+   MAIN HEADING
+===================================================== */
+
+.hero-content h1 {
+
+    margin-top:
+        24px;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        clamp(
+            62px,
+            6vw,
+            90px
+        );
+
+    line-height:
+        .88;
+
+    letter-spacing:
+        -5px;
+
+    color:
+        var(--black);
+}
+
+.hero-content h1 span {
+
+    display:
+        block;
+
+    color:
+        var(--purple);
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.hero-description {
+
+    max-width:
+        425px;
+
+    margin-top:
+        28px;
+
+    font-size:
+        16px;
+
+    line-height:
+        1.65;
+
+    color:
+        #403940;
+
+    font-weight:
+        500;
+}
+
+
+/* =====================================================
+   PEOPLE CARD
+===================================================== */
+
+.people-counter {
+
+    width:
+        fit-content;
+
+    margin-top:
+        25px;
+
+    padding:
+        8px 20px 8px 8px;
+
+    border-radius:
+        50px;
+
+    background:
+        rgba(255,255,255,.91);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    box-shadow:
+        0 12px 30px
+        rgba(30,20,30,.10);
+
+    backdrop-filter:
+        blur(15px);
+}
+
+.avatar-list {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+}
+
+.avatar,
+.avatar-more {
+
+    width:
+        37px;
+
+    height:
+        37px;
+
+    border-radius:
+        50%;
+
+    border:
+        3px solid white;
+
+    margin-right:
+        -8px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        16px;
+}
+
+.avatar:nth-child(1) {
+
+    background:
+        #F1DDE5;
+}
+
+.avatar:nth-child(2) {
+
+    background:
+        #DCE8F0;
+}
+
+.avatar:nth-child(3) {
+
+    background:
+        #E7DCF0;
+}
+
+.avatar:nth-child(4) {
+
+    background:
+        #DCE9D8;
+}
+
+.avatar-more {
+
+    background:
+        var(--purple);
+
+    color:
+        white;
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+}
+
+.people-counter > span {
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    white-space:
+        nowrap;
+}
+
+
+/* =====================================================
+   VIBE CARD
+===================================================== */
+
+.vibe-card {
+
+    width:
+        400px;
+
+    margin-top:
+        20px;
+
+    padding:
+        16px 20px;
+
+    border-radius:
+        22px;
+
+    background:
+        rgba(255,255,255,.89);
+
+    box-shadow:
+        0 15px 35px
+        rgba(30,20,30,.09);
+
+    backdrop-filter:
+        blur(18px);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+}
+
+.vibe-icon {
+
+    width:
+        52px;
+
+    height:
+        52px;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--purple-soft);
+
+    color:
+        var(--purple);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        22px;
+}
+
+.vibe-content {
+
+    flex:
+        1;
+}
+
+.vibe-content small {
+
+    color:
+        var(--purple);
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+}
+
+.vibe-content p {
+
+    margin-top:
+        5px;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.45;
+}
+
+.heart-button {
+
+    background:
+        transparent;
+
+    color:
+        var(--purple);
+
+    font-size:
+        28px;
+}
+
+
+/* =====================================================
+   RIGHT VISUAL
+===================================================== */
+
+.hero-visual {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    z-index:
+        5;
+}
+
+
+/* =====================================================
+   NETWORK
+===================================================== */
+
+.network {
+
+    position:
+        relative;
+
+    width:
+        570px;
+
+    height:
+        570px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+}
+
+
+/* =====================================================
+   SOFT NETWORK BACKGROUND
+===================================================== */
+
+.network::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        485px;
+
+    height:
+        485px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(153,110,158,.12);
+
+    filter:
+        blur(3px);
+
+    z-index:
+        0;
+}
+
+
+/* =====================================================
+   ORBITS
+===================================================== */
+
+.orbit {
+
+    position:
+        absolute;
+
+    border-radius:
+        50%;
+
+    border:
+        1px solid
+        rgba(94,3,90,.25);
+
+    z-index:
+        3;
+}
+
+.orbit-one {
+
+    width:
+        550px;
+
+    height:
+        550px;
+}
+
+.orbit-two {
+
+    width:
+        405px;
+
+    height:
+        405px;
+
+    border-color:
+        rgba(94,3,90,.20);
+}
+
+.orbit-three {
+
+    width:
+        275px;
+
+    height:
+        275px;
+
+    border-color:
+        rgba(94,3,90,.15);
+}
+
+
+/* =====================================================
+   DASHED ORBIT
+===================================================== */
+
+.orbit-one::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        18px;
+
+    border-radius:
+        50%;
+
+    border:
+        1px dashed
+        rgba(255,255,255,.75);
+}
+
+.orbit-two::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        14px;
+
+    border-radius:
+        50%;
+
+    border:
+        1px dashed
+        rgba(255,255,255,.72);
+}
+
+
+/* =====================================================
+   CENTER HUB
+===================================================== */
+
+.center-hub {
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: rgba(255,255,255,.94);
+
+    border-radius: 46% 54% 51% 49% /
+                 51% 45% 55% 49%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    z-index: 100;
+
+    box-shadow:
+        0 22px 55px rgba(55,20,60,.14);
+}
+.center-hub:hover {
+
+    transform:
+        translate(-50%, -50%)
+        scale(1.025);
+
+    box-shadow:
+        0 28px 65px
+        rgba(94,3,90,.18);
+}
+
+
+/* =====================================================
+   CENTER LOGO CIRCLE
+===================================================== */
+
+/* ================================
+   CENTER LOGO — CLEAN
+================================ */
+
+.center-logo-circle {
+    width: 82px;
+    height: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+    border-radius: 50%;
+    overflow: visible;
+
+    margin-bottom: 14px;
+    padding: 0;
+}
+
+.center-logo-circle img {
+    width: 150px;
+    height: 150px;
+
+    display: block;
+
+    object-fit: contain;
+
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+    padding: 0;
+    margin: 0;
+}
+
+
+/* =====================================================
+   NETWORK LABEL
+===================================================== */
+
+.network-label {
+
+    position:
+        absolute;
+
+    min-width:
+        145px;
+
+    min-height:
+        58px;
+
+    padding:
+        9px 14px;
+
+    border-radius:
+        18px;
+
+    background:
+        rgba(255,255,255,.96);
+
+    box-shadow:
+        0 12px 30px
+        rgba(30,20,30,.11);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    z-index:
+        200;
+
+    transition:
+        .3s ease;
+}
+
+.network-label:hover {
+
+    transform:
+        translateY(-5px)
+        scale(1.03);
+
+    box-shadow:
+        0 18px 40px
+        rgba(94,3,90,.16);
+}
+
+.network-label strong {
+
+    display:
+        block;
+
+    font-size:
+        13px;
+
+    font-weight:
+        800;
+}
+
+.network-label small {
+
+    display:
+        block;
+
+    margin-top:
+        3px;
+
+    color:
+        var(--purple);
+
+    font-size:
+        8px;
+
+    font-weight:
+        700;
+}
+
+
+/* =====================================================
+   LABEL ICON
+===================================================== */
+
+.network-icon {
+
+    width:
+        36px;
+
+    height:
+        36px;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        12px;
+
+    background:
+        var(--purple-soft);
+
+    color:
+        var(--purple);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        17px;
+}
+
+
+/* =====================================================
+   LABEL POSITIONS
+===================================================== */
+
+.label-education {
+
+    top:
+        32px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+}
+
+.label-education:hover {
+
+    transform:
+        translateX(-50%)
+        translateY(-5px)
+        scale(1.03);
+}
+
+
+.label-medical {
+
+    top:
+        148px;
+
+    left:
+        8px;
+}
+
+
+.label-profile {
+
+    top:
+        148px;
+
+    right:
+        5px;
+}
+
+
+.label-home {
+
+    bottom:
+        125px;
+
+    left:
+        10px;
+}
+
+
+.label-events {
+
+    bottom:
+        125px;
+
+    right:
+        0;
+}
+
+
+.label-challenges {
+    bottom: 38px;
+    right: 200px;
+}
+
+/* =====================================================
+   CONNECTOR LINES
+===================================================== */
+
+.connector {
+
+    position:
+        absolute;
+
+    height:
+        1px;
+
+    background:
+        rgba(94,3,90,.27);
+
+    transform-origin:
+        left center;
+
+    z-index:
+        5;
+}
+
+.connector-education {
+
+    width:
+        110px;
+
+    top:
+        158px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%)
+        rotate(90deg);
+}
+
+.connector-medical {
+
+    width:
+        120px;
+
+    top:
+        194px;
+
+    left:
+        130px;
+
+    transform:
+        rotate(27deg);
+}
+
+.connector-profile {
+
+    width:
+        120px;
+
+    top:
+        194px;
+
+    right:
+        120px;
+
+    transform:
+        rotate(-27deg);
+}
+
+.connector-home {
+
+    width:
+        125px;
+
+    bottom:
+        190px;
+
+    left:
+        130px;
+
+    transform:
+        rotate(-27deg);
+}
+
+.connector-events {
+
+    width:
+        125px;
+
+    bottom:
+        190px;
+
+    right:
+        115px;
+
+    transform:
+        rotate(27deg);
+}
+
+
+/* =====================================================
+   ORBIT DOTS
+===================================================== */
+
+.network::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        9px;
+
+    height:
+        9px;
+
+    border-radius:
+        50%;
+
+    background:
+        white;
+
+    border:
+        3px solid
+        var(--purple);
+
+    top:
+        174px;
+
+    left:
+        154px;
+
+    z-index:
+        30;
+
+    box-shadow:
+        0 0 0 5px
+        rgba(94,3,90,.08);
+}
+
+
+/* =====================================================
+   PLANES
+===================================================== */
+
+.plane {
+
+    position:
+        absolute;
+
+    color:
+        var(--purple);
+
+    font-size:
+        22px;
+
+    z-index:
+        30;
+
+    animation:
+        floatingPlane
+        4s
+        ease-in-out
+        infinite;
+}
+
+.plane-one {
+
+    right:
+        38px;
+
+    top:
+        105px;
+
+    transform:
+        rotate(-25deg);
+}
+
+.plane-two {
+
+    left:
+        92px;
+
+    bottom:
+        145px;
+
+    font-size:
+        16px;
+
+    animation-delay:
+        1.5s;
+}
+
+@keyframes floatingPlane {
+
+    0%,
+    100% {
+
+        translate:
+            0 0;
+    }
+
+    50% {
+
+        translate:
+            0 -9px;
+    }
+}
+
+
+/* =====================================================
+   NEXT SECTION
+===================================================== */
+
+.discover-section {
+
+    position:
+        relative;
+
+    min-height:
+        100vh;
+
+    padding:
+        110px 8%;
+
+    background:
+        #FFF9FC;
+}
+
+.discover-inner {
+
+    max-width:
+        1300px;
+
+    margin:
+        auto;
+}
+
+.section-label {
+
+    color:
+        var(--purple);
+
+    font-size:
+        13px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        3px;
+}
+
+.discover-section h2 {
+
+    margin-top:
+        18px;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        clamp(
+            50px,
+            6vw,
+            82px
+        );
+
+    line-height:
+        .9;
+
+    letter-spacing:
+        -5px;
+
+    color:
+        var(--black);
+}
+
+.discover-section h2 span {
+
+    color:
+        var(--purple);
+}
+
+.discover-section p {
+
+    max-width:
+        520px;
+
+    margin-top:
+        25px;
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.7;
+
+    font-size:
+        16px;
+}
+
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.discover-grid {
+
+    margin-top:
+        55px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:
+        22px;
+}
+
+.discover-card {
+
+    position:
+        relative;
+
+    min-height:
+        280px;
+
+    padding:
+        30px;
+
+    border-radius:
+        28px;
+
+    background:
+        #F2DCE5;
+
+    transition:
+        .3s ease;
+
+    overflow:
+        hidden;
+}
+
+.discover-card:nth-child(2) {
+
+    background:
+        #E6DDF0;
+}
+
+.discover-card:nth-child(3) {
+
+    background:
+        #DCE8D7;
+}
+
+.discover-card:hover {
+
+    transform:
+        translateY(-8px);
+}
+
+.discover-card > span {
+
+    font-size:
+        38px;
+}
+
+.discover-card small {
+
+    display:
+        block;
+
+    margin-top:
+        20px;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        2px;
+
+    font-weight:
+        800;
+}
+
+.discover-card h3 {
+
+    margin-top:
+        7px;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        32px;
+}
+
+.discover-card p {
+
+    max-width:
+        270px;
+
+    margin-top:
+        10px;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.6;
+
+    color:
+        #5D555D;
+}
+
+.discover-card b {
+
+    position:
+        absolute;
+
+    right:
+        25px;
+
+    bottom:
+        25px;
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--purple);
+
+    color:
+        white;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+}
+.vibe-wall-section {
+    min-height: 100vh;
+    background: #FBF8FC;
+    padding: 90px 7vw;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* subtle background */
+
+.vibe-wall-section::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    right: -180px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #EEE2F0;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .55;
+}
+
+
+/* MAIN */
+
+.vibe-wall-content {
+    width: 100%;
+    max-width: 1450px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+
+/* LEFT */
+
+.vibe-wall-left {
+    max-width: 560px;
+}
+
+.section-number {
+    color: #5E035A;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+.section-line {
+    width: 58px;
+    height: 5px;
+    background: #5E035A;
+    border-radius: 20px;
+    margin: 18px 0 34px;
+}
+
+
+.vibe-wall-left h2 {
+    font-size: clamp(70px, 7vw, 115px);
+    line-height: .88;
+    letter-spacing: -6px;
+    margin: 0;
+    font-weight: 800;
+    color: #19151A;
+}
+
+.vibe-wall-left h2 span {
+    color: #5E035A;
+    display: block;
+}
+
+
+.vibe-wall-left p {
+    margin-top: 38px;
+    max-width: 440px;
+    font-size: 19px;
+    line-height: 1.6;
+    color: #625B63;
+}
+
+
+.vibe-btn {
+    margin-top: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 23px;
+    background: #5E035A;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 700;
+    transition: .3s ease;
+}
+
+.vibe-btn span {
+    font-size: 20px;
+    transition: .3s ease;
+}
+
+.vibe-btn:hover {
+    background: #42033F;
+    transform: translateY(-3px);
+}
+
+.vibe-btn:hover span {
+    transform: translate(3px,-3px);
+}
+
+
+/* RIGHT WORD WALL */
+
+.vibe-wall-right {
+    min-height: 650px;
+    position: relative;
+}
+
+
+/* WORDS */
+
+.vibe-word {
+    position: absolute;
+    font-weight: 800;
+    letter-spacing: -2px;
+    transition:
+        transform .4s ease,
+        color .4s ease,
+        background .4s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+/* individual positions */
+
+.creative {
+    top: 8%;
+    left: 15%;
+    font-size: 48px;
+    color: #5E035A;
+}
+
+.tech {
+    top: 1%;
+    right: 5%;
+    font-size: 62px;
+    color: #19151A;
+}
+
+.music {
+    top: 28%;
+    left: 3%;
+    font-size: 58px;
+    color: #19151A;
+}
+
+.gaming {
+    top: 31%;
+    right: 14%;
+    font-size: 43px;
+    color: #5E035A;
+}
+
+.startups {
+    top: 49%;
+    left: 20%;
+    font-size: 72px;
+    color: #19151A;
+}
+
+.fitness {
+    top: 53%;
+    right: 0;
+    font-size: 45px;
+    color: #5E035A;
+}
+
+.content {
+    bottom: 15%;
+    left: 4%;
+    font-size: 48px;
+    color: #19151A;
+}
+
+.design {
+    bottom: 7%;
+    left: 35%;
+    font-size: 63px;
+    color: #5E035A;
+}
+
+.travel {
+    bottom: 25%;
+    right: 20%;
+    font-size: 40px;
+    color: #19151A;
+}
+
+.business {
+    bottom: 1%;
+    right: 0;
+    font-size: 55px;
+    color: #5E035A;
+}
+
+
+/* HOVER */
+
+.vibe-word:hover {
+    transform: scale(1.12) rotate(-2deg);
+    color: #5E035A;
+}
+
+
+/* small text */
+
+.vibe-small-text {
+    position: absolute;
+    top: 42%;
+    left: 47%;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    line-height: 1.5;
+    color: #9A8F9B;
+    text-align: center;
+}
+
+
+/* decorative dots */
+
+.vibe-wall-right::before {
+    content: "✦";
+    position: absolute;
+    top: 20%;
+    right: 35%;
+    font-size: 22px;
+    color: #5E035A;
+}
+
+.vibe-wall-right::after {
+    content: "✦";
+    position: absolute;
+    bottom: 22%;
+    left: 42%;
+    font-size: 15px;
+    color: #5E035A;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+
+    .vibe-wall-content {
+        grid-template-columns: 1fr;
+    }
+
+    .vibe-wall-left {
+        max-width: 700px;
+    }
+
+    .vibe-wall-right {
+        min-height: 500px;
+        margin-top: 20px;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .vibe-wall-section {
+        min-height: auto;
+        padding: 75px 25px;
+    }
+
+    .vibe-wall-left h2 {
+        font-size: 65px;
+        letter-spacing: -4px;
+    }
+
+    .vibe-wall-left p {
+        font-size: 16px;
+    }
+
+    .vibe-wall-right {
+        min-height: 470px;
+        margin-top: 20px;
+    }
+
+    .creative {
+        font-size: 32px;
+        left: 2%;
+    }
+
+    .tech {
+        font-size: 40px;
+        right: 2%;
+    }
+
+    .music {
+        font-size: 38px;
+        left: 0;
+        top: 27%;
+    }
+
+    .gaming {
+        font-size: 30px;
+        right: 4%;
+    }
+
+    .startups {
+        font-size: 45px;
+        left: 12%;
+    }
+
+    .fitness {
+        font-size: 30px;
+        right: 0;
+    }
+
+    .content {
+        font-size: 34px;
+        left: 0;
+    }
+
+    .design {
+        font-size: 42px;
+        left: 25%;
+    }
+
+    .travel {
+        font-size: 28px;
+        right: 10%;
+    }
+
+    .business {
+        font-size: 35px;
+        right: 0;
+    }
+
+    .vibe-small-text {
+        left: 42%;
+        top: 43%;
+        font-size: 9px;
+    }
+
+}
+
+/* =====================================================
+   DESKTOP HEIGHT FIX
+===================================================== */
+
+@media (min-width: 1200px) and (max-height: 800px) {
+
+    .hero-container {
+
+        padding-top:
+            95px;
+
+        padding-bottom:
+            20px;
+    }
+
+    .hero-content h1 {
+
+        font-size:
+            72px;
+
+        margin-top:
+            19px;
+    }
+
+    .hero-description {
+
+        margin-top:
+            20px;
+    }
+
+    .people-counter {
+
+        margin-top:
+            18px;
+    }
+
+    .vibe-card {
+
+        margin-top:
+            15px;
+
+        padding:
+            13px 18px;
+    }
+
+    .hero-visual {
+
+        transform:
+            scale(.91);
+    }
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .hero-container {
+
+        grid-template-columns:
+            40% 60%;
+
+        padding-left:
+            30px;
+
+        padding-right:
+            30px;
+    }
+
+    .hero-content h1 {
+
+        font-size:
+            68px;
+    }
+
+    .network {
+
+        transform:
+            scale(.88);
+    }
+
+}
+
+
+/* =====================================================
+   TABLET / MOBILE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .hero {
+
+        height:
+            auto;
+
+        min-height:
+            100vh;
+
+        overflow:
+            hidden;
+    }
+
+    .hero-container {
+
+        min-height:
+            100vh;
+
+        height:
+            auto;
+
+        grid-template-columns:
+            1fr;
+
+        padding:
+            120px 25px 45px;
+    }
+
+    .hero-content {
+
+        text-align:
+            center;
+
+        padding:
+            0;
+    }
+
+    .hero-description {
+
+        margin-left:
+            auto;
+
+        margin-right:
+            auto;
+    }
+
+    .people-counter,
+    .vibe-card {
+
+        margin-left:
+            auto;
+
+        margin-right:
+            auto;
+    }
+
+    .hero-visual {
+
+        height:
+            570px;
+
+        margin-top:
+            5px;
+    }
+
+    .network {
+
+        transform:
+            scale(.80);
+    }
+
+    .discover-grid {
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .top-header {
+
+        padding:
+            18px;
+    }
+
+    .logo-area img {
+
+        width:
+            125px;
+    }
+
+    .join-button {
+
+        display:
+            none;
+    }
+
+    .search-button,
+    .menu-button {
+
+        width:
+            46px;
+
+        height:
+            46px;
+    }
+
+    .hero-container {
+
+        padding:
+            105px 18px 30px;
+    }
+
+    .hero-content h1 {
+
+        font-size:
+            55px;
+
+        letter-spacing:
+            -4px;
+    }
+
+    .hero-description {
+
+        font-size:
+            14px;
+    }
+
+    .vibe-card {
+
+        width:
+            100%;
+
+        max-width:
+            370px;
+    }
+
+    .hero-visual {
+
+        height:
+            460px;
+
+        overflow:
+            hidden;
+    }
+
+    .network {
+
+        width:
+            570px;
+
+        height:
+            570px;
+
+        transform:
+            scale(.62);
+    }
+
+    .discover-section {
+
+        padding:
+            80px 20px;
+    }
+
+    .discover-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+}
+@media (max-width: 600px) {
+
+    /* =========================
+       MOBILE HERO
+    ========================= */
+
+    .hero {
+        height: auto;
+        min-height: 100svh;
+        overflow: hidden;
+    }
+
+    .top-header {
+        padding: 16px 18px;
+    }
+
+    .logo-area img {
+        width: 120px;
+    }
+
+    .join-button {
+        display: none;
+    }
+
+    .search-button,
+    .menu-button {
+        width: 44px;
+        height: 44px;
+    }
+
+
+    /* =========================
+       HERO CONTAINER
+    ========================= */
+
+    .hero-container {
+        min-height: 100svh;
+        height: auto;
+
+        display: flex;
+        flex-direction: column;
+
+        padding: 105px 18px 25px;
+    }
+
+
+    /* =========================
+       HERO CONTENT
+    ========================= */
+
+    .hero-content {
+        width: 100%;
+        padding: 0;
+
+        text-align: center;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        margin: 0;
+    }
+
+    .eyebrow {
+        font-size: 10px;
+        letter-spacing: 3px;
+    }
+
+    .eyebrow-line {
+        margin: 10px auto 0;
+    }
+
+    .hero-content h1 {
+        margin-top: 20px;
+
+        font-size: 52px;
+        line-height: .9;
+        letter-spacing: -4px;
+    }
+
+    .hero-description {
+        max-width: 330px;
+
+        margin: 20px auto 0;
+
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+
+    /* =========================
+       PEOPLE COUNTER
+    ========================= */
+
+    .people-counter {
+        margin: 18px auto 0;
+
+        padding: 7px 15px 7px 7px;
+
+        gap: 9px;
+    }
+
+    .avatar,
+    .avatar-more {
+        width: 31px;
+        height: 31px;
+    }
+
+    .people-counter > span {
+        font-size: 10px;
+    }
+
+
+    /* =========================
+       VIBE CARD
+    ========================= */
+
+    .vibe-card {
+        width: 100%;
+        max-width: 330px;
+
+        margin: 14px auto 0;
+
+        padding: 12px 15px;
+
+        border-radius: 18px;
+    }
+
+    .vibe-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+
+    .vibe-content small {
+        font-size: 10px;
+    }
+
+    .vibe-content p {
+        font-size: 11px;
+    }
+
+    .heart-button {
+        font-size: 23px;
+    }
+
+
+    /* =========================
+       HERO VISUAL
+    ========================= */
+
+    .hero-visual {
+        width: 100%;
+        height: 390px;
+
+        margin-top: 5px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        overflow: hidden;
+    }
+
+
+    /* =========================
+       NETWORK
+    ========================= */
+
+    .network {
+        width: 570px;
+        height: 570px;
+
+        flex-shrink: 0;
+
+        transform: scale(.58);
+        transform-origin: center center;
+    }
+
+
+    /* =========================
+       CENTER HUB
+    ========================= */
+
+    .center-hub {
+        width: 190px;
+        height: 190px;
+    }
+
+    .center-logo-circle {
+        width: 70px;
+        height: 70px;
+    }
+
+    .center-logo-circle img {
+        width: 125px;
+        height: 125px;
+    }
+
+
+    /* =========================
+       NETWORK LABELS
+    ========================= */
+
+    .network-label {
+        min-width: 125px;
+        min-height: 50px;
+
+        padding: 7px 10px;
+
+        border-radius: 15px;
+
+        gap: 8px;
+    }
+
+    .network-icon {
+        width: 30px;
+        height: 30px;
+
+        border-radius: 9px;
+
+        font-size: 14px;
+    }
+
+    .network-label strong {
+        font-size: 11px;
+    }
+
+    .network-label small {
+        font-size: 7px;
+    }
+
+
+    /* =========================
+       LABEL POSITIONS
+    ========================= */
+
+    .label-education {
+        top: 48px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .label-medical {
+        top: 155px;
+        left: 32px;
+    }
+
+    .label-profile {
+        top: 155px;
+        right: 32px;
+    }
+
+    .label-home {
+        bottom: 125px;
+        left: 30px;
+    }
+
+    .label-events {
+        bottom: 125px;
+        right: 30px;
+    }
+
+    .label-challenges {
+        bottom: 45px;
+        right: 200px;
+    }
+
+
+    /* =========================
+       CONNECTORS
+    ========================= */
+
+    .connector-medical,
+    .connector-profile,
+    .connector-home,
+    .connector-events {
+        opacity: .65;
+    }
+
+
+    /* =========================
+       PLANES
+    ========================= */
+
+    .plane-one {
+        right: 55px;
+        top: 115px;
+    }
+
+    .plane-two {
+        left: 75px;
+        bottom: 135px;
+    }
+
+}
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 430px) {
+
+    .hero-content h1 {
+
+        font-size:
+            50px;
+    }
+
+    .hero-visual {
+
+        height:
+            410px;
+    }
+
+    .network {
+
+        transform:
+            scale(.55);
+    }
+
+    .mobile-menu {
+
+        left:
+            15px;
+
+        right:
+            15px;
+
+        width:
+            auto;
+    }
+
+}
+.people-section {
+    min-height: 100vh;
+    padding: 90px 7vw 45px;
+    background: #19151A;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* HEADER */
+
+.people-header {
+    max-width: 1450px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    z-index: 5;
+}
+
+
+.people-label {
+    color: #DDB9DC;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+
+.people-line {
+    width: 55px;
+    height: 4px;
+    background: #DDB9DC;
+    border-radius: 10px;
+    margin: 18px 0 25px;
+}
+
+
+.people-header h2 {
+    margin: 0;
+    font-size: clamp(60px, 7vw, 105px);
+    line-height: .88;
+    letter-spacing: -6px;
+    font-weight: 800;
+}
+
+
+.people-header h2 span {
+    color: #DDB9DC;
+}
+
+
+.people-intro {
+    width: 310px;
+    color: #B6ADB8;
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+}
+
+
+/* PEOPLE STAGE */
+
+.people-stage {
+    max-width: 1450px;
+    height: 510px;
+    margin: 35px auto 0;
+    position: relative;
+}
+
+
+/* PERSON */
+
+.person {
+    position: absolute;
+    transition: .45s ease;
+    z-index: 2;
+}
+
+
+.person-photo {
+    overflow: hidden;
+    background: #EEE2F0;
+}
+
+
+.person-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(.85);
+    transition: .5s ease;
+}
+
+
+.person-info {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+.person-info strong {
+    font-size: 15px;
+}
+
+
+.person-info span {
+    font-size: 12px;
+    color: #988E9A;
+}
+
+
+/* PERSON SHAPES */
+
+.person-one {
+    left: 2%;
+    top: 90px;
+}
+
+.person-one .person-photo {
+    width: 190px;
+    height: 245px;
+    border-radius: 100px 100px 12px 12px;
+}
+
+
+.person-two {
+    left: 25%;
+    top: 25px;
+}
+
+.person-two .person-photo {
+    width: 170px;
+    height: 220px;
+    border-radius: 15px 15px 90px 90px;
+}
+
+
+.person-three {
+    right: 26%;
+    top: 80px;
+}
+
+.person-three .person-photo {
+    width: 175px;
+    height: 235px;
+    border-radius: 90px 15px 90px 15px;
+}
+
+
+.person-four {
+    right: 4%;
+    top: 10px;
+}
+
+.person-four .person-photo {
+    width: 185px;
+    height: 250px;
+    border-radius: 15px 100px 15px 100px;
+}
+
+
+.person-five {
+    left: 43%;
+    bottom: 0;
+}
+
+.person-five .person-photo {
+    width: 165px;
+    height: 205px;
+    border-radius: 90px 90px 15px 15px;
+}
+
+
+/* HOVER */
+
+.person:hover {
+    transform: translateY(-12px) rotate(-2deg);
+    z-index: 10;
+}
+
+.person:hover img {
+    transform: scale(1.06);
+    filter: saturate(1);
+}
+
+
+/* CENTER */
+
+.people-center {
+    position: absolute;
+    left: 50%;
+    top: 53%;
+    transform: translate(-50%, -50%);
+    width: 175px;
+    height: 175px;
+    border: 1px solid rgba(221,185,220,.4);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 4;
+    background: #19151A;
+}
+
+
+.people-center::before {
+    content: "";
+    position: absolute;
+    inset: -18px;
+    border: 1px solid rgba(221,185,220,.12);
+    border-radius: 50%;
+}
+
+
+.people-dot {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #5E035A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 13px;
+    color: white;
+}
+
+
+.people-center span {
+    font-size: 11px;
+    letter-spacing: 2px;
+    line-height: 1.5;
+    font-weight: 800;
+    color: #DDB9DC;
+}
+
+
+.people-arrow {
+    margin-top: 10px;
+    color: #fff;
+}
+
+
+/* BOTTOM */
+
+.people-bottom {
+    max-width: 1450px;
+    margin: auto;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255,255,255,.12);
+    display: flex;
+    justify-content: space-between;
+    color: #716873;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+
+.people-bottom .active {
+    color: #DDB9DC;
+}
+
+
+/* TABLET */
+
+@media (max-width: 1000px) {
+
+    .people-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+    }
+
+    .people-intro {
+        width: 100%;
+    }
+
+    .people-stage {
+        height: 600px;
+    }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .people-section {
+        padding: 70px 25px 35px;
+    }
+
+    .people-header h2 {
+        font-size: 62px;
+        letter-spacing: -4px;
+    }
+
+    .people-stage {
+        height: 620px;
+        margin-top: 25px;
+    }
+
+    .person-one {
+        left: 0;
+        top: 40px;
+    }
+
+    .person-one .person-photo {
+        width: 130px;
+        height: 170px;
+    }
+
+    .person-two {
+        left: auto;
+        right: 0;
+        top: 0;
+    }
+
+    .person-two .person-photo {
+        width: 125px;
+        height: 160px;
+    }
+
+    .person-three {
+        right: 5px;
+        top: 260px;
+    }
+
+    .person-three .person-photo {
+        width: 125px;
+        height: 165px;
+    }
+
+    .person-four {
+        left: 0;
+        right: auto;
+        top: 300px;
+    }
+
+    .person-four .person-photo {
+        width: 125px;
+        height: 170px;
+    }
+
+    .person-five {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 20px;
+    }
+
+    .person-five .person-photo {
+        width: 130px;
+        height: 165px;
+    }
+
+    .people-center {
+        width: 125px;
+        height: 125px;
+        top: 48%;
+    }
+
+    .people-bottom span:nth-child(1),
+    .people-bottom span:nth-child(2) {
+        display: none;
+    }
+
+}
+/* =========================
+   SECTION
+========================= */
+
+.events-section {
+    min-height: 100vh;
+    background: #FBF8FC;
+    padding: 100px 7vw 55px;
+    overflow: hidden;
+    position: relative;
+    color: #19151A;
+}
+
+
+/* =========================
+   TOP
+========================= */
+
+.events-top {
+    max-width: 1450px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+
+.events-label {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: #5E035A;
+}
+
+
+.events-line {
+    width: 58px;
+    height: 5px;
+    background: #5E035A;
+    border-radius: 20px;
+    margin: 18px 0 28px;
+}
+
+
+.events-top h2 {
+    margin: 0;
+    font-size: clamp(65px, 7vw, 110px);
+    line-height: .87;
+    letter-spacing: -6px;
+    font-weight: 800;
+}
+
+
+.events-top h2 span {
+    color: #5E035A;
+    display: block;
+}
+
+
+.events-top > p {
+    max-width: 330px;
+    margin: 0 0 5px;
+    color: #625B63;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   MARQUEE
+========================= */
+
+.events-marquee {
+    margin-top: 70px;
+    margin-left: -7vw;
+    margin-right: -7vw;
+    border-top: 1px solid #E4DDE5;
+    border-bottom: 1px solid #E4DDE5;
+    overflow: hidden;
+    padding: 16px 0;
+}
+
+
+.marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    width: max-content;
+    animation: eventMarquee 22s linear infinite;
+}
+
+
+.marquee-track span {
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #5E035A;
+}
+
+
+.marquee-track i {
+    font-style: normal;
+    color: #BCA5BB;
+    font-size: 16px;
+}
+
+
+@keyframes eventMarquee {
+
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-35%);
+    }
+
+}
+
+
+/* =========================
+   EVENT LIST
+========================= */
+
+.event-list {
+    max-width: 1450px;
+    margin: 45px auto 0;
+}
+
+
+.event-row {
+    min-height: 125px;
+    border-bottom: 1px solid #DED7DF;
+
+    display: grid;
+    grid-template-columns: 7% 12% 1fr 16% 50px;
+    align-items: center;
+
+    text-decoration: none;
+    color: inherit;
+
+    transition: .35s ease;
+}
+
+
+.event-row:first-child {
+    border-top: 1px solid #DED7DF;
+}
+
+
+/* NUMBER */
+
+.event-number {
+    font-size: 13px;
+    font-weight: 800;
+    color: #A69BA7;
+}
+
+
+/* DATE */
+
+.event-date {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+
+.event-date strong {
+    font-size: 42px;
+    line-height: 1;
+    color: #19151A;
+}
+
+
+.event-date span {
+    font-size: 12px;
+    font-weight: 800;
+    color: #5E035A;
+}
+
+
+/* MAIN */
+
+.event-main {
+    padding: 20px 30px;
+}
+
+
+.event-type {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #5E035A;
+}
+
+
+.event-main h3 {
+    margin: 7px 0 5px;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+
+.event-main p {
+    margin: 0;
+    font-size: 13px;
+    color: #817781;
+}
+
+
+/* LOCATION */
+
+.event-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #625B63;
+}
+
+
+.event-location span {
+    font-size: 15px;
+}
+
+
+.event-arrow {
+    width: 42px;
+    height: 42px;
+    border: 1px solid #D5CDD6;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    transition: .35s ease;
+}
+
+
+/* HOVER */
+
+.event-row:hover {
+    padding-left: 15px;
+    background: #F4EDF5;
+}
+
+
+.event-row:hover .event-main h3 {
+    color: #5E035A;
+}
+
+
+.event-row:hover .event-arrow {
+    background: #5E035A;
+    color: white;
+    border-color: #5E035A;
+    transform: rotate(45deg);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.events-footer {
+    max-width: 1450px;
+    margin: 35px auto 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.events-footer > span {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #9A8F9B;
+}
+
+
+.events-footer a {
+    color: #5E035A;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+.events-footer b {
+    margin-left: 8px;
+    font-size: 18px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .events-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+    }
+
+    .events-top > p {
+        max-width: 500px;
+    }
+
+    .event-row {
+        grid-template-columns: 8% 15% 1fr 50px;
+    }
+
+    .event-location {
+        display: none;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .events-section {
+        padding: 75px 25px 40px;
+    }
+
+    .events-top h2 {
+        font-size: 60px;
+        letter-spacing: -4px;
+    }
+
+    .events-top > p {
+        font-size: 15px;
+    }
+
+    .events-marquee {
+        margin-left: -25px;
+        margin-right: -25px;
+        margin-top: 50px;
+    }
+
+    .event-row {
+        min-height: 145px;
+        grid-template-columns: 40px 70px 1fr 40px;
+    }
+
+    .event-number {
+        font-size: 10px;
+    }
+
+    .event-date strong {
+        font-size: 30px;
+    }
+
+    .event-date {
+        display: block;
+    }
+
+    .event-date span {
+        display: block;
+        margin-top: 3px;
+    }
+
+    .event-main {
+        padding: 15px 8px;
+    }
+
+    .event-main h3 {
+        font-size: 17px;
+    }
+
+    .event-main p {
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    .event-arrow {
+        width: 34px;
+        height: 34px;
+    }
+
+    .events-footer > span {
+        display: none;
+    }
+
+    .events-footer {
+        justify-content: flex-end;
+    }
+
+}
+/* =====================================
+   FINAL SECTION
+===================================== */
+
+.final-section {
+    min-height: 100vh;
+    background: #5E035A;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* BACKGROUND */
+
+.final-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 70px 70px;
+}
+
+
+.final-bg-text {
+    position: absolute;
+
+    left: -2%;
+    bottom: -10%;
+
+    font-size: 30vw;
+    line-height: .7;
+
+    font-weight: 900;
+    letter-spacing: -25px;
+
+    color: rgba(255,255,255,.035);
+
+    pointer-events: none;
+}
+
+
+/* =====================================
+   INNER
+===================================== */
+
+.final-inner {
+    min-height: 100vh;
+
+    padding: 38px 7vw 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =====================================
+   TOP
+===================================== */
+
+.final-top {
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.18);
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+
+    color: #E7D4E6;
+}
+
+
+/* =====================================
+   MAIN
+===================================== */
+
+.final-main {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: 1450px;
+    width: 100%;
+
+    margin: auto;
+}
+
+
+/* =====================================
+   HEADING
+===================================== */
+
+.final-heading {
+    max-width: 750px;
+}
+
+
+.final-small {
+    display: inline-flex;
+
+    padding: 8px 14px;
+
+    border: 1px solid
+        rgba(255,255,255,.3);
+
+    border-radius: 50px;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+
+    margin-bottom: 25px;
+}
+
+
+.final-heading h2 {
+    margin: 0;
+
+    font-size: clamp(
+        75px,
+        10vw,
+        150px
+    );
+
+    line-height: .78;
+
+    letter-spacing: -9px;
+
+    font-weight: 850;
+}
+
+
+.final-heading h2 em {
+    font-style: normal;
+
+    color: #E9BDE7;
+
+    position: relative;
+}
+
+
+.final-heading h2 em::after {
+    content: "";
+
+    position: absolute;
+
+    left: 5px;
+    right: -10px;
+    bottom: -8px;
+
+    height: 5px;
+
+    background: #E9BDE7;
+
+    border-radius: 20px;
+
+    transform: rotate(-2deg);
+}
+
+
+.final-heading p {
+    max-width: 430px;
+
+    margin-top: 38px;
+
+    color: #E2D0E1;
+
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+/* =====================================
+   CIRCLE CTA
+===================================== */
+
+.final-circle {
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background: #FBF8FC;
+
+    color: #5E035A;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    flex-shrink: 0;
+
+    margin-right: 8vw;
+
+    transition: .5s ease;
+}
+
+
+.circle-inner {
+    width: 205px;
+    height: 205px;
+
+    border: 1px solid #D7C3D6;
+
+    border-radius: 50%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    transition: .5s ease;
+}
+
+
+.circle-arrow {
+    font-size: 35px;
+
+    line-height: 1;
+
+    margin-bottom: 12px;
+
+    transition: .4s ease;
+}
+
+
+.circle-inner strong {
+    font-size: 22px;
+    line-height: .95;
+
+    letter-spacing: -1px;
+}
+
+
+/* ROTATING TEXT */
+
+.circle-text {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding-top: 13px;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    animation:
+        circleRotate 18s linear infinite;
+}
+
+
+.circle-text span {
+    display: block;
+}
+
+
+@keyframes circleRotate {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* HOVER */
+
+.final-circle:hover {
+    transform: scale(1.06) rotate(-3deg);
+}
+
+
+.final-circle:hover .circle-inner {
+    background: #5E035A;
+    color: white;
+    border-color: #5E035A;
+}
+
+
+.final-circle:hover .circle-arrow {
+    transform: translate(6px,-6px);
+}
+
+
+/* =====================================
+   BOTTOM
+===================================== */
+
+.final-strip {
+    border-top:
+        1px solid
+        rgba(255,255,255,.18);
+
+    padding-top: 20px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr;
+
+    align-items: center;
+}
+
+
+.final-logo img {
+    width: 125px;
+    height: auto;
+    filter: none;
+    object-fit: contain;
+}
+
+.final-links {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 30px;
+}
+
+
+.final-links a {
+    color: #D9C4D8;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    transition: .25s ease;
+}
+
+
+.final-links a:hover {
+    color: white;
+}
+
+
+.final-copy {
+    text-align: right;
+
+    color: #C6ADC4;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 900px) {
+
+    .final-main {
+        gap: 40px;
+    }
+
+    .final-circle {
+        width: 230px;
+        height: 230px;
+
+        margin-right: 0;
+    }
+
+    .circle-inner {
+        width: 160px;
+        height: 160px;
+    }
+
+    .final-heading h2 {
+        font-size: 80px;
+    }
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .final-inner {
+        min-height: 100svh;
+
+        padding:
+            22px 20px
+            20px;
+    }
+
+
+    .final-top {
+        font-size: 8px;
+
+        letter-spacing: 2px;
+    }
+
+
+    .final-top span:last-child {
+        display: none;
+    }
+
+
+    .final-main {
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: flex-start;
+
+        gap: 45px;
+    }
+
+
+    .final-small {
+        font-size: 8px;
+
+        padding: 7px 11px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .final-heading h2 {
+        font-size: 63px;
+
+        letter-spacing: -5px;
+
+        line-height: .82;
+    }
+
+
+    .final-heading h2 em::after {
+        height: 3px;
+
+        bottom: -5px;
+    }
+
+
+    .final-heading p {
+        margin-top: 25px;
+
+        max-width: 310px;
+
+        font-size: 14px;
+
+        line-height: 1.5;
+    }
+
+
+    /* CTA */
+
+    .final-circle {
+        width: 190px;
+        height: 190px;
+
+        align-self: center;
+
+        margin: 0;
+    }
+
+
+    .circle-inner {
+        width: 135px;
+        height: 135px;
+    }
+
+
+    .circle-arrow {
+        font-size: 25px;
+
+        margin-bottom: 7px;
+    }
+
+
+    .circle-inner strong {
+        font-size: 16px;
+    }
+
+
+    .circle-text {
+        font-size: 7px;
+
+        padding-top: 9px;
+    }
+
+
+    /* FOOTER */
+
+    .final-strip {
+        grid-template-columns: 1fr auto;
+
+        padding-top: 15px;
+    }
+
+
+    .final-logo img {
+        width: 95px;
+    }
+
+
+    .final-links {
+        display: none;
+    }
+
+
+    .final-copy {
+        font-size: 8px;
+    }
+
+
+    .final-bg-text {
+        font-size: 50vw;
+
+        bottom: 5%;
+    }
+
+}
+
+/* =========================
+   SEARCH OVERLAY
+========================= */
+
+.search-overlay {
+    position: fixed;
+    inset: 0;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding-top: 110px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: .3s ease;
+
+    z-index: 10000;
+}
+
+.search-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.search-modal {
+    width: min(700px, calc(100% - 35px));
+
+    background: #FBF8FC;
+
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.3);
+}
+
+
+.search-top {
+    padding: 12px;
+
+    display: flex;
+    gap: 10px;
+
+    border-bottom: 1px solid #E5DDE6;
+}
+
+
+.search-input-wrap {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 15px;
+
+    background: white;
+
+    border-radius: 15px;
+}
+
+
+.search-input-wrap span {
+    color: #5E035A;
+    font-size: 25px;
+}
+
+
+.search-input-wrap input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    padding: 15px 0;
+
+    font-size: 16px;
+
+    color: #19151A;
+}
+
+
+.search-input-wrap input::placeholder {
+    color: #9B929D;
+}
+
+
+#searchClose {
+    width: 50px;
+    height: 50px;
+
+    border: none;
+    border-radius: 15px;
+
+    background: #EEE2F0;
+
+    color: #5E035A;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+
+/* RESULTS */
+
+.search-results {
+    max-height: 400px;
+
+    overflow-y: auto;
+
+    padding: 10px;
+}
+
+
+.search-placeholder {
+    min-height: 180px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #8C828E;
+}
+
+
+.search-placeholder span {
+    color: #5E035A;
+    font-size: 28px;
+}
+
+
+.search-placeholder p {
+    font-size: 14px;
+}
+
+
+/* RESULT */
+
+.search-result {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    text-decoration: none;
+
+    color: #19151A;
+
+    transition: .25s ease;
+}
+
+
+.search-result:hover {
+    background: #EEE2F0;
+}
+
+
+.search-result-icon {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 13px;
+
+    background: #EEE2F0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+}
+
+
+.search-result-content strong {
+    display: block;
+
+    font-size: 14px;
+}
+
+
+.search-result-content small {
+    color: #8A808B;
+
+    font-size: 11px;
+}
+
+
+.no-results {
+    padding: 50px 20px;
+
+    text-align: center;
+
+    color: #8A808B;
+}
+
+
+@media (max-width:600px) {
+
+    .search-overlay {
+        padding-top: 85px;
+    }
+
+    .search-modal {
+        width: calc(100% - 25px);
+        border-radius: 20px;
+    }
+
+}
+.profile-button {
+    height: 54px;
+    padding: 5px 10px 5px 6px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: rgba(255,255,255,.95);
+    border-radius: 50px;
+
+    color: #19151A;
+
+    box-shadow:
+        0 10px 30px rgba(30,20,30,.12);
+
+    transition: .3s ease;
+}
+
+.profile-button:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 15px 35px rgba(94,3,90,.18);
+}
+
+.profile-avatar,
+.profile-avatar-image {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    object-fit: cover;
+
+    background: #5E035A;
+    color: white;
+
+    font-weight: 800;
+    font-size: 15px;
+}
+
+.profile-name {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.profile-arrow {
+    color: #5E035A;
+    font-size: 18px;
+    margin-left: 3px;
+}
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="top-header">
+
+    <a href="/"
+       class="logo-area">
+
+        <img src="{% static 'images/image.png' %}"
+             alt="GEN Z Group">
+
+    </a>
+<!-- =========================
+     SEARCH
+========================= -->
+
+<div class="search-overlay" id="searchOverlay">
+
+    <div class="search-modal">
+
+        <div class="search-top">
+
+            <div class="search-input-wrap">
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search people, vibes, events..."
+                    autocomplete="off"
+                >
+            </div>
+
+            <button id="searchClose">×</button>
+
+        </div>
+
+
+        <div class="search-results" id="searchResults">
+
+            <div class="search-placeholder">
+                <span>✦</span>
+                <p>Start typing to explore GENZ</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    <div class="header-actions">
+
+       {% if member %}
+
+            <a href="{% url 'join_dashboard' %}" class="profile-button">
+                {% if member.profile_photo %}
+                    <img
+                        src="{{ member.profile_photo.url }}"
+                        class="profile-avatar-image"
+                    >
+                {% else %}
+                    <span class="profile-avatar">
+                        {{ member.name|first|upper }}
+                    </span>
+                {% endif %}
+
+                <span>{{ member.name }}</span>
+                <span>↗</span>
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}" class="login-button">
+                Login
+            </a>
+
+            <a href="{% url 'join' %}" class="join-button">
+                Join GENZ <span>↗</span>
+            </a>
+
+        {% endif %}
+
+        <button
+            class="search-button"
+            id="searchButton">
+        </button>
+
+
+        <button class="menu-button"
+                id="menuButton"
+                aria-label="Menu">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MOBILE MENU
+===================================================== -->
+
+<div class="mobile-menu" id="mobileMenu">
+
+    <a href="/">🏠 Home</a>
+
+    <a href="#vibe">✨ Find your Vibe</a>
+
+    <a href="#people">👥 Meet your Mate</a>
+
+    <a href="#events">📅 What's Happening</a>
+
+    <a href="#challenges">🎯 Challenges</a>
+
+    <a href="#join">💜 Join GENZ</a>
+
+</div>
+
+<!-- =====================================================
+     FIRST SECTION
+===================================================== -->
+
+<section class="hero">
+
+
+    <div class="hero-container">
+
+
+        <!-- =================================================
+             LEFT CONTENT
+        ================================================= -->
+
+        <div class="hero-content">
+
+
+            <div class="eyebrow">
+
+                WELCOME TO YOUR SPACE
+
+            </div>
+
+
+            <div class="eyebrow-line"></div>
+
+
+            <h1>
+
+                Find your
+
+                <span>
+                    Ally.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                A space to discover your vibe,
+                meet people, build cool things,
+                take on challenges and create
+                your own path.
+
+            </p>
+
+
+            <!-- PEOPLE -->
+
+            <div class="people-counter">
+
+                <div class="avatar-list">
+
+                    <div class="avatar">
+                        👩🏻
+                    </div>
+
+                    <div class="avatar">
+                        👨🏽
+                    </div>
+
+                    <div class="avatar">
+                        👩🏽
+                    </div>
+
+                    <div class="avatar">
+                        👨🏻
+                    </div>
+
+                    <div class="avatar-more">
+                        8K+
+                    </div>
+
+                </div>
+
+
+                <span>
+                    People already here
+                </span>
+
+            </div>
+
+
+            <!-- VIBE -->
+
+            <div class="vibe-card">
+
+                <div class="vibe-icon">
+                    ✦
+                </div>
+
+
+                <div class="vibe-content">
+
+                    <small>
+                        Vibe of the day
+                    </small>
+
+                    <p>
+                        “Surround yourself with
+                        people who get your vibe.”
+                    </p>
+
+                </div>
+
+
+                <button class="heart-button">
+                    ♡
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT NETWORK
+        ================================================= -->
+
+        <div class="hero-visual">
+
+
+            <div class="network">
+
+
+                <!-- ORBITS -->
+
+                <div class="orbit orbit-one"></div>
+
+                <div class="orbit orbit-two"></div>
+
+                <div class="orbit orbit-three"></div>
+
+
+                <!-- CONNECTORS -->
+
+                <div class="connector connector-education"></div>
+
+                <div class="connector connector-medical"></div>
+
+                <div class="connector connector-profile"></div>
+
+                <div class="connector connector-home"></div>
+
+                <div class="connector connector-events"></div>
+
+
+                <!-- PLANES -->
+
+                <div class="plane plane-one">
+                    ➤
+                </div>
+
+                <div class="plane plane-two">
+                    ➤
+                </div>
+
+
+                <!-- =================================================
+                     CENTER HUB
+                ================================================= -->
+
+                <div class="center-hub">
+
+
+                    <div class="center-logo-circle">
+
+                        <img src="{% static 'images/image-2.png' %}"
+                             alt="GEN Z">
+
+                    </div>
+
+
+
+
+                </div>
+
+
+                <!-- =================================================
+                     EDUCATION
+                ================================================= -->
+
+                <a href="/education/"
+                   class="network-label label-education">
+
+                    <div class="network-icon">
+                        🎓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            <b>Education</b>
+                        </strong>
+
+                        <small>
+                            Learn & Grow
+                        </small>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =================================================
+                     MEDICAL
+                ================================================= -->
+
+                <a href="{% url 'medical' %}" 
+                   class="network-label label-medical">
+
+                    <div class="network-icon">
+                        ✚
+                    </div>
+
+                    <div>
+
+                        <strong>
+                           <b> Medical
+                        </strong>
+
+                        <small>
+                            Connect
+                        </small>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =================================================
+                     PROFILE
+                ================================================= -->
+
+                <a href="/profile/"
+                   class="network-label label-profile">
+
+                    <div class="network-icon">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Profile
+                        </strong>
+
+                        <small>
+                            Your Space
+                        </small>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =================================================
+                     HOME
+                ================================================= -->
+
+                <a href="/"
+                   class="network-label label-home">
+
+                    <div class="network-icon">
+                        🏠
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Home
+                        </strong>
+
+                        <small>
+                            You are here
+                        </small>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =================================================
+                     EVENTS
+                ================================================= -->
+
+                <a href="/events/"
+                   class="network-label label-events">
+
+                    <div class="network-icon">
+                        ✦
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Events
+                        </strong>
+
+                        <small>
+                            What's happening
+                        </small>
+
+                    </div>
+
+                </a>
+
+
+                <!-- =================================================
+                     CHALLENGES
+                ================================================= -->
+
+                <a href="/challenges/"
+                   class="network-label label-challenges">
+
+                    <div class="network-icon">
+                        🎯
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Challenges
+                        </strong>
+
+                        <small>
+                            Take the challenge
+                        </small>
+
+                    </div>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<section class="vibe-wall-section" id="vibe">
+
+    <div class="vibe-wall-content">
+
+        <div class="vibe-wall-left">
+            <span class="section-number"> DISCOVER</span>
+
+            <div class="section-line"></div>
+
+            <h2>
+                Find your
+                <span>vibe.</span>
+            </h2>
+
+            <p>
+                Not everyone fits in one box.
+                Explore interests, passions and
+                communities that feel like you.
+            </p>
+
+            <a href="#people" class="vibe-btn">
+                Explore your vibe
+                <span>↗</span>
+            </a>
+        </div>
+
+
+        <div class="vibe-wall-right">
+
+            <div class="vibe-word creative">CREATIVE</div>
+
+            <div class="vibe-word tech">TECH</div>
+
+            <div class="vibe-word music">MUSIC</div>
+
+            <div class="vibe-word gaming">GAMING</div>
+
+            <div class="vibe-word startups">STARTUPS</div>
+
+            <div class="vibe-word fitness">FITNESS</div>
+
+            <div class="vibe-word content">CONTENT</div>
+
+            <div class="vibe-word design">DESIGN</div>
+
+            <div class="vibe-word travel">TRAVEL</div>
+
+            <div class="vibe-word business">BUSINESS</div>
+
+            <div class="vibe-small-text">
+                PICK WHAT<br>
+                FEELS LIKE YOU
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="people-section" id="people">
+
+    <div class="people-header">
+
+        <div>
+            <span class="people-label"> CONNECT</span>
+
+            <div class="people-line"></div>
+
+            <h2>
+                Meet your
+                <span>Ally.</span>
+            </h2>
+        </div>
+
+        <p class="people-intro">
+            Same interests. Different stories.
+            Find people who make your world
+            a little more interesting.
+        </p>
+
+    </div>
+
+
+    <div class="people-stage">
+
+        <!-- PERSON 01 -->
+        <div class="person person-one">
+            <div class="person-photo">
+                <img src="{% static 'images/Person-1.png' %}" alt="Creative profile">
+            </div>
+
+            <div class="person-info">
+                <strong>Creative minds</strong>
+                <span>Design · Art · Content</span>
+            </div>
+        </div>
+
+
+        <!-- PERSON 02 -->
+        <div class="person person-two">
+            <div class="person-photo">
+                <img src="{% static 'images/Person-2.png' %}" alt="Tech profile">
+            </div>
+
+            <div class="person-info">
+                <strong>Tech people</strong>
+                <span>Code · AI · Startups</span>
+            </div>
+        </div>
+
+
+        <!-- PERSON 03 -->
+        <div class="person person-three">
+            <div class="person-photo">
+                <img src="{% static 'images/Person-4.png' %}" alt="Music profile">
+            </div>
+
+            <div class="person-info">
+                <strong>Music lovers</strong>
+                <span>Music · Events · Vibes</span>
+            </div>
+        </div>
+
+
+        <!-- CENTER MESSAGE -->
+        <div class="people-center">
+
+            <div class="people-dot">✦</div>
+
+            <span>YOUR KIND<br>OF PEOPLE</span>
+
+            <div class="people-arrow">↗</div>
+
+        </div>
+
+
+        <!-- PERSON 04 -->
+        <div class="person person-four">
+            <div class="person-photo">
+                <img src="{% static 'images/Person-3.png' %}" alt="Fitness profile">
+            </div>
+
+            <div class="person-info">
+                <strong>Active souls</strong>
+                <span>Fitness · Travel · Life</span>
+            </div>
+        </div>
+
+
+        <!-- PERSON 05 -->
+        <div class="person person-five">
+            <div class="person-photo">
+                <img src="{% static 'images/Person-5.png' %}" alt="Business profile">
+            </div>
+
+            <div class="person-info">
+                <strong>Future builders</strong>
+                <span>Business · Ideas · Growth</span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="people-bottom">
+
+        <span>01 — FIND YOUR Ally</span>
+        <span>02 — FIND YOUR VIBE</span>
+        <span class="active">03 — MEET YOUR Ally</span>
+
+    </div>
+
+</section>
+<!-- =========================
+     SECTION 04 — WHAT'S HAPPENING
+========================= -->
+
+<section class="events-section" id="events">
+
+    <div class="events-top">
+
+        <div>
+            <span class="events-label">EXPERIENCE</span>
+
+            <div class="events-line"></div>
+
+            <h2>
+                What's
+                <span>happening?</span>
+            </h2>
+        </div>
+
+        <p>
+            Don't just scroll through life.
+            Go somewhere. Meet someone.
+            Make something happen.
+        </p>
+
+    </div>
+
+
+    <!-- MOVING TEXT -->
+
+    <div class="events-marquee">
+        <div class="marquee-track">
+            <span>MEET</span>
+            <i>✦</i>
+            <span>CREATE</span>
+            <i>✦</i>
+            <span>PLAY</span>
+            <i>✦</i>
+            <span>EXPLORE</span>
+            <i>✦</i>
+            <span>CONNECT</span>
+            <i>✦</i>
+            <span>MEET</span>
+            <i>✦</i>
+            <span>CREATE</span>
+            <i>✦</i>
+            <span>PLAY</span>
+            <i>✦</i>
+            <span>EXPLORE</span>
+            <i>✦</i>
+        </div>
+    </div>
+
+
+    <!-- EVENTS -->
+
+    <div class="event-list">
+
+        <!-- EVENT 01 -->
+
+        <a href="#" class="event-row">
+
+            <div class="event-number">01</div>
+
+            <div class="event-date">
+                <strong>12</strong>
+                <span>SEP</span>
+            </div>
+
+            <div class="event-main">
+                <span class="event-type">CREATIVE</span>
+                <h3>Design & Create</h3>
+                <p>
+                    A space for designers, artists
+                    and creative minds.
+                </p>
+            </div>
+
+            <div class="event-location">
+                <span>📍</span>
+                <strong>Haldwani</strong>
+            </div>
+
+            <div class="event-arrow">↗</div>
+
+        </a>
+
+
+        <!-- EVENT 02 -->
+
+        <a href="#" class="event-row">
+
+            <div class="event-number">02</div>
+
+            <div class="event-date">
+                <strong>18</strong>
+                <span>SEP</span>
+            </div>
+
+            <div class="event-main">
+                <span class="event-type">TECH</span>
+                <h3>Build Something</h3>
+                <p>
+                    Code, ideas and people who
+                    love building things.
+                </p>
+            </div>
+
+            <div class="event-location">
+                <span>📍</span>
+                <strong>Online</strong>
+            </div>
+
+            <div class="event-arrow">↗</div>
+
+        </a>
+
+
+        <!-- EVENT 03 -->
+
+        <a href="#" class="event-row">
+
+            <div class="event-number">03</div>
+
+            <div class="event-date">
+                <strong>24</strong>
+                <span>SEP</span>
+            </div>
+
+            <div class="event-main">
+                <span class="event-type">MUSIC</span>
+                <h3>Feel The Vibe</h3>
+                <p>
+                    Music, conversations and
+                    good people.
+                </p>
+            </div>
+
+            <div class="event-location">
+                <span>📍</span>
+                <strong>Dehradun</strong>
+            </div>
+
+            <div class="event-arrow">↗</div>
+
+        </a>
+
+
+        <!-- EVENT 04 -->
+
+        <a href="#" class="event-row">
+
+            <div class="event-number">04</div>
+
+            <div class="event-date">
+                <strong>30</strong>
+                <span>SEP</span>
+            </div>
+
+            <div class="event-main">
+                <span class="event-type">COMMUNITY</span>
+                <h3>Meet Your Ally</h3>
+                <p>
+                    Meet new people and discover
+                    new perspectives.
+                </p>
+            </div>
+
+            <div class="event-location">
+                <span>📍</span>
+                <strong>Delhi</strong>
+            </div>
+
+            <div class="event-arrow">↗</div>
+
+        </a>
+
+    </div>
+
+
+    <div class="events-footer">
+
+        <span>MORE EXPERIENCES</span>
+
+        <a href="#">
+            View all events
+            <b>↗</b>
+        </a>
+
+    </div>
+
+</section>
+<!-- =========================
+     SECTION 05 — JOIN GENZZ
+========================= -->
+
+<section class="final-section" id="join">
+
+    <div class="final-bg-text">GENZ</div>
+
+    <div class="final-inner">
+
+        <!-- TOP -->
+        <div class="final-top">
+            <span> JOIN THE MOVEMENT</span>
+            <span>YOUR SPACE • YOUR PEOPLE • YOUR VIBE</span>
+        </div>
+
+
+        <!-- MAIN -->
+        <div class="final-main">
+
+            <div class="final-heading">
+
+                <div class="final-small">
+                    READY?
+                </div>
+
+                <h2>
+                    Find your
+                    <br>
+                    <em>Ally.</em>
+                </h2>
+                <br>
+                <p>
+                    A space for ideas, interests,
+                    conversations and people
+                    who just get you.
+                </p>
+
+            </div>
+
+
+            
+
+            <a href="#" class="final-circle">
+
+                <div class="circle-inner">
+                    <span class="circle-arrow">↗</span>
+                    <strong>JOIN<br>GENZ</strong>
+                </div>
+
+                <div class="circle-text">
+                    <span>JOIN GENZ • JOIN GENZ • JOIN GENZ • </span>
+                </div>
+
+            </a>
+
+        </div>
+
+
+        
+
+        <div class="final-strip">
+
+            <div class="final-logo">
+                <img src="{% static 'images/image.png' %}" alt="GEN Z">
+            </div>
+
+            <div class="final-links">
+                <a href="#">About</a>
+                <a href="#">Community</a>
+                <a href="#">Events</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <div class="final-copy">
+                © 2026 GENZ
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+/* =====================================================
+   MENU
+===================================================== */
+
+const menuButton =
+    document.getElementById(
+        "menuButton"
+    );
+
+const mobileMenu =
+    document.getElementById(
+        "mobileMenu"
+    );
+
+
+menuButton.addEventListener(
+    "click",
+    function () {
+
+        menuButton.classList.toggle(
+            "open"
+        );
+
+        mobileMenu.classList.toggle(
+            "show"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   CLOSE MOBILE MENU
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".mobile-menu a"
+    )
+    .forEach(
+        function(link) {
+
+            link.addEventListener(
+                "click",
+                function() {
+
+                    menuButton.classList.remove(
+                        "open"
+                    );
+
+                    mobileMenu.classList.remove(
+                        "show"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =========================
+       ELEMENTS
+    ========================= */
+
+    const menuButton = document.getElementById("menuButton");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    const searchButton = document.getElementById("searchButton");
+    const searchOverlay = document.getElementById("searchOverlay");
+    const searchClose = document.getElementById("searchClose");
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+
+
+    /* =========================
+       SEARCH DATA
+    ========================= */
+
+    const searchData = [
+
+        {
+            name: "Creative",
+            type: "Vibe",
+            icon: "🎨",
+            url: "#vibe"
+        },
+
+        {
+            name: "Tech",
+            type: "Vibe",
+            icon: "💻",
+            url: "#vibe"
+        },
+
+        {
+            name: "Music",
+            type: "Vibe",
+            icon: "🎵",
+            url: "#vibe"
+        },
+
+        {
+            name: "Gaming",
+            type: "Vibe",
+            icon: "🎮",
+            url: "#vibe"
+        },
+
+        {
+            name: "Startups",
+            type: "Vibe",
+            icon: "🚀",
+            url: "#vibe"
+        },
+
+        {
+            name: "Fitness",
+            type: "Vibe",
+            icon: "🏃",
+            url: "#vibe"
+        },
+
+        {
+            name: "Content",
+            type: "Vibe",
+            icon: "📸",
+            url: "#vibe"
+        },
+
+        {
+            name: "Design",
+            type: "Vibe",
+            icon: "✨",
+            url: "#vibe"
+        },
+
+        {
+            name: "Travel",
+            type: "Vibe",
+            icon: "✈️",
+            url: "#vibe"
+        },
+
+        {
+            name: "Business",
+            type: "Vibe",
+            icon: "💼",
+            url: "#vibe"
+        },
+
+        {
+            name: "Meet Your Mate",
+            type: "Community",
+            icon: "👥",
+            url: "#people"
+        },
+
+        {
+            name: "What's Happening",
+            type: "Events",
+            icon: "📅",
+            url: "#events"
+        },
+
+        {
+            name: "Challenges",
+            type: "Experience",
+            icon: "🎯",
+            url: "#challenges"
+        }
+
+    ];
+
+
+    /* =========================
+       MENU
+    ========================= */
+
+    if (menuButton && mobileMenu) {
+
+        menuButton.addEventListener("click", function () {
+
+            mobileMenu.classList.toggle("active");
+            menuButton.classList.toggle("active");
+
+            // Close search
+            if (searchOverlay) {
+                searchOverlay.classList.remove("active");
+            }
+
+        });
+
+
+        /* =========================
+           MENU LINK CLICK
+        ========================= */
+
+        document.querySelectorAll(".mobile-menu a")
+            .forEach(function (link) {
+
+                link.addEventListener("click", function () {
+
+                    mobileMenu.classList.remove("active");
+                    menuButton.classList.remove("active");
+
+                });
+
+            });
+
+    }
+
+
+    /* =========================
+       SEARCH OPEN
+    ========================= */
+
+    if (searchButton && searchOverlay && searchInput) {
+
+        searchButton.addEventListener("click", function () {
+
+            searchOverlay.classList.add("active");
+
+            // Close menu
+            if (mobileMenu) {
+                mobileMenu.classList.remove("active");
+            }
+
+            if (menuButton) {
+                menuButton.classList.remove("active");
+            }
+
+            // Focus search
+            setTimeout(function () {
+                searchInput.focus();
+            }, 200);
+
+        });
+
+    }
+
+
+    /* =========================
+       SEARCH CLOSE
+    ========================= */
+
+    if (searchClose && searchOverlay && searchInput) {
+
+        searchClose.addEventListener("click", function () {
+
+            searchOverlay.classList.remove("active");
+
+            searchInput.value = "";
+
+            showSearchPlaceholder();
+
+        });
+
+    }
+
+
+    /* =========================
+       SEARCH PLACEHOLDER
+    ========================= */
+
+    function showSearchPlaceholder() {
+
+        if (!searchResults) return;
+
+        searchResults.innerHTML = `
+            <div class="search-placeholder">
+                <span>✦</span>
+                <p>Start typing to explore GENZZ</p>
+            </div>
+        `;
+
+    }
+
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    if (searchInput && searchResults) {
+
+        searchInput.addEventListener("input", function () {
+
+            const query =
+                this.value.trim().toLowerCase();
+
+
+            /* EMPTY SEARCH */
+
+            if (!query) {
+
+                showSearchPlaceholder();
+
+                return;
+            }
+
+
+            /* FILTER RESULTS */
+
+            const results = searchData.filter(function (item) {
+
+                return (
+                    item.name.toLowerCase().includes(query) ||
+                    item.type.toLowerCase().includes(query)
+                );
+
+            });
+
+
+            /* NO RESULTS */
+
+            if (!results.length) {
+
+                searchResults.innerHTML = `
+                    <div class="no-results">
+                        No results found for
+                        "<strong>${query}</strong>"
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            /* SHOW RESULTS */
+
+            searchResults.innerHTML = results.map(function (item) {
+
+                return `
+
+                    <a
+                        href="${item.url}"
+                        class="search-result"
+                    >
+
+                        <div class="search-result-icon">
+                            ${item.icon}
+                        </div>
+
+                        <div class="search-result-content">
+
+                            <strong>
+                                ${item.name}
+                            </strong>
+
+                            <small>
+                                ${item.type}
+                            </small>
+
+                        </div>
+
+                    </a>
+
+                `;
+
+            }).join("");
+
+        });
+
+
+        /* =========================
+           SEARCH RESULT CLICK
+        ========================= */
+
+        searchResults.addEventListener("click", function (e) {
+
+            const result =
+                e.target.closest(".search-result");
+
+            if (!result) return;
+
+
+            const target =
+                result.getAttribute("href");
+
+
+            /* CLOSE SEARCH */
+
+            if (searchOverlay) {
+                searchOverlay.classList.remove("active");
+            }
+
+
+            /* CLEAR SEARCH */
+
+            searchInput.value = "";
+
+
+            /* SCROLL TO SECTION */
+
+            if (target) {
+
+                setTimeout(function () {
+
+                    const section =
+                        document.querySelector(target);
+
+                    if (section) {
+
+                        section.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+
+                    }
+
+                }, 150);
+
+            }
+
+        });
+
+    }
+
+
+    /* =========================
+       CLICK OUTSIDE SEARCH
+    ========================= */
+
+    if (searchOverlay) {
+
+        searchOverlay.addEventListener("click", function (e) {
+
+            if (e.target === searchOverlay) {
+
+                searchOverlay.classList.remove("active");
+
+                if (searchInput) {
+                    searchInput.value = "";
+                }
+
+                showSearchPlaceholder();
+
+            }
+
+        });
+
+    }
+
+
+    /* =========================
+       ESC KEY
+    ========================= */
+
+    document.addEventListener("keydown", function (e) {
+
+        if (e.key === "Escape") {
+
+            if (searchOverlay) {
+                searchOverlay.classList.remove("active");
+            }
+
+            if (mobileMenu) {
+                mobileMenu.classList.remove("active");
+            }
+
+            if (menuButton) {
+                menuButton.classList.remove("active");
+            }
+
+            if (searchInput) {
+                searchInput.value = "";
+            }
+
+            showSearchPlaceholder();
+
+        }
+
+    });
+
+
+    
+
+});
+</script>
+
+
+</body>
+
+</html>

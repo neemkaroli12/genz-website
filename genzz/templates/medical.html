@@ -1,0 +1,1026 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical | GEN-Z Group</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: #f8f2f8;
+            color: #241d2b;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 78px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            border-bottom: 1px solid #eee5ef;
+        }
+
+        .logo img {
+            width: 190px;
+            height: auto;
+            display: block;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .back-btn {
+            color: #5e035a;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .menu-btn {
+            width: 45px;
+            height: 45px;
+            border: 1px solid #eaddea;
+            border-radius: 50%;
+            background: white;
+            color: #5e035a;
+            font-size: 21px;
+            cursor: pointer;
+        }
+
+        /* HERO */
+
+        .hero {
+            width: 88%;
+            max-width: 1280px;
+            margin: 28px auto 0;
+            min-height: 430px;
+            border-radius: 32px;
+            padding: 55px;
+            background: #5e035a;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 50%;
+            right: -80px;
+            top: -100px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 50%;
+            right: 80px;
+            bottom: -150px;
+        }
+
+        .hero-content {
+            max-width: 620px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 15px;
+            border-radius: 30px;
+            background: rgba(255,255,255,.13);
+            border: 1px solid rgba(255,255,255,.2);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(38px, 5vw, 65px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: #e8a8e5;
+        }
+
+        .hero p {
+            color: #ead9eb;
+            font-size: 16px;
+            line-height: 1.8;
+            max-width: 520px;
+        }
+
+        .hero-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 28px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            background: white;
+            color: #5e035a;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* FLOATING HEALTH CARD */
+
+        .health-orbit {
+            position: absolute;
+            right: 7%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 330px;
+            height: 330px;
+            z-index: 1;
+        }
+
+        .orbit-circle {
+            position: absolute;
+            inset: 20px;
+            border: 1px dashed rgba(255,255,255,.35);
+            border-radius: 50%;
+        }
+
+        .health-center {
+            position: absolute;
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            background: white;
+            color: #5e035a;
+            left: 92px;
+            top: 92px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,.15);
+        }
+
+        .health-center .heart {
+            font-size: 35px;
+            margin-bottom: 5px;
+        }
+
+        .health-center strong {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 18px;
+        }
+
+        .health-center small {
+            color: #8b7890;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            color: #241d2b;
+            border-radius: 16px;
+            padding: 13px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,.12);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .floating-card span {
+            font-size: 20px;
+        }
+
+        .float-one {
+            top: 5px;
+            right: 0;
+        }
+
+        .float-two {
+            bottom: 20px;
+            left: 0;
+        }
+
+        .float-three {
+            top: 135px;
+            right: -25px;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 88%;
+            max-width: 1280px;
+            margin: 55px auto;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 22px;
+        }
+
+        .section-heading h2 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 30px;
+            letter-spacing: -.5px;
+        }
+
+        .section-heading p {
+            color: #8a7d8e;
+            font-size: 14px;
+            margin-top: 7px;
+        }
+
+        .section-link {
+            color: #5e035a;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        /* BENTO TOPICS */
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr 1fr;
+            grid-template-rows: 190px 190px;
+            gap: 18px;
+            margin-bottom: 65px;
+        }
+
+        .topic-card {
+            border-radius: 24px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: .25s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .topic-card h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 22px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .topic-card p {
+            font-size: 13px;
+            line-height: 1.7;
+            max-width: 250px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .topic-card .big-icon {
+            position: absolute;
+            right: 25px;
+            bottom: 15px;
+            font-size: 75px;
+            opacity: .8;
+        }
+
+        .topic-card .arrow {
+            position: absolute;
+            right: 25px;
+            top: 25px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .topic-main {
+            grid-row: span 2;
+            background: #e8d7e9;
+            color: #5e035a;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .topic-main h3 {
+            font-size: 30px;
+            max-width: 230px;
+        }
+
+        .topic-main p {
+            color: #765d78;
+        }
+
+        .topic-main .big-icon {
+            font-size: 125px;
+            right: 20px;
+            bottom: 0;
+        }
+
+        .topic-white {
+            background: white;
+            border: 1px solid #eee5ef;
+        }
+
+        .topic-white p {
+            color: #807686;
+        }
+
+        .topic-pink {
+            background: #f4dce9;
+            color: #7c235d;
+        }
+
+        .topic-pink p {
+            color: #96627f;
+        }
+
+        .topic-dark {
+            background: #241d2b;
+            color: white;
+        }
+
+        .topic-dark p {
+            color: #cfc3d2;
+        }
+
+        /* DAILY CHECK-IN */
+
+        .checkin {
+            background: white;
+            border: 1px solid #eee5ef;
+            border-radius: 25px;
+            padding: 28px;
+            margin-bottom: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .checkin-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .checkin-icon {
+            width: 62px;
+            height: 62px;
+            border-radius: 18px;
+            background: #eee2f0;
+            display: grid;
+            place-items: center;
+            font-size: 30px;
+        }
+
+        .checkin h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 21px;
+            margin-bottom: 6px;
+        }
+
+        .checkin p {
+            color: #817687;
+            font-size: 13px;
+        }
+
+        .checkin-btn {
+            border: none;
+            background: #5e035a;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        /* RESOURCES */
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .resource-card {
+            background: white;
+            border: 1px solid #eee5ef;
+            border-radius: 22px;
+            padding: 25px;
+            min-height: 245px;
+            display: flex;
+            flex-direction: column;
+            transition: .25s;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(94,3,90,.08);
+        }
+
+        .resource-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            background: #eee2f0;
+            display: grid;
+            place-items: center;
+            font-size: 24px;
+            margin-bottom: 22px;
+        }
+
+        .resource-label {
+            color: #5e035a;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            margin-bottom: 12px;
+        }
+
+        .resource-card h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .resource-card p {
+            color: #817687;
+            font-size: 13px;
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        .resource-link {
+            color: #5e035a;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 22px;
+        }
+
+        /* EMERGENCY / NOTICE */
+
+        .notice {
+            margin-top: 55px;
+            padding: 30px;
+            border-radius: 25px;
+            background: #f0e3f1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .notice-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .notice-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            background: white;
+            display: grid;
+            place-items: center;
+            font-size: 25px;
+        }
+
+        .notice h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .notice p {
+            color: #806d83;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .notice a {
+            color: #5e035a;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8a7d8e;
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .health-orbit {
+                opacity: .35;
+                right: -20px;
+            }
+
+            .topic-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+
+            .topic-main {
+                grid-row: span 1;
+            }
+
+            .resource-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                height: 70px;
+                padding: 0 5%;
+            }
+
+            .logo img {
+                width: 145px;
+            }
+
+            .nav-right {
+                gap: 12px;
+            }
+
+            .back-btn {
+                font-size: 12px;
+            }
+
+            .hero {
+                width: 92%;
+                min-height: 470px;
+                padding: 35px 25px;
+                border-radius: 25px;
+                align-items: flex-start;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .health-orbit {
+                transform: scale(.65);
+                transform-origin: bottom right;
+                right: -35px;
+                bottom: -25px;
+                top: auto;
+            }
+
+            .container {
+                width: 92%;
+                margin: 40px auto;
+            }
+
+            .section-heading {
+                display: block;
+            }
+
+            .section-link {
+                display: inline-block;
+                margin-top: 12px;
+            }
+
+            .topic-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            .topic-card,
+            .topic-main {
+                min-height: 190px;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkin {
+                display: block;
+            }
+
+            .checkin-btn {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .notice {
+                display: block;
+            }
+
+            .notice a {
+                display: inline-block;
+                margin-top: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="logo">
+            <img src="{% static 'images/image.png' %}" alt="GEN Z Group">
+        </a>
+
+        <div class="nav-right">
+            <a href="{% url 'home' %}" class="back-btn">
+                ← Back to Home
+            </a>
+
+            
+        </div>
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-tag">
+                <span>✦</span> MEDICAL & WELLNESS
+            </div>
+
+            <h1>
+                Take care of<br>
+                your <span>whole self.</span>
+            </h1>
+
+            <p>
+                Your body, your mind, your everyday habits.
+                Explore simple health resources and discover
+                small ways to feel better.
+            </p>
+
+            <a href="#topics" class="hero-button">
+                Explore your health <span>↓</span>
+            </a>
+
+        </div>
+
+        <div class="health-orbit">
+
+            <div class="orbit-circle"></div>
+
+            <div class="health-center">
+                <div class="heart">♡</div>
+                <strong>Your Wellness</strong>
+                <small>starts with you</small>
+            </div>
+
+            <div class="floating-card float-one">
+                <span>🧠</span>
+                Mind
+            </div>
+
+            <div class="floating-card float-two">
+                <span>🥗</span>
+                Nourish
+            </div>
+
+            <div class="floating-card float-three">
+                <span>🌙</span>
+                Rest
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <main class="container">
+
+        <!-- TOPICS -->
+
+        <div class="section-heading" id="topics">
+            <div>
+                <h2>Find your balance.</h2>
+                <p>Small habits. Better everyday.</p>
+            </div>
+
+            <a href="https://www.who.int/india/health-topics"
+               target="_blank"
+               class="section-link">
+                Explore all topics ↗
+            </a>
+        </div>
+
+
+        <div class="topic-grid">
+
+            <a href="https://www.who.int/news-room/feature-stories/mental-well-being-resources-for-the-public"
+               target="_blank"
+               class="topic-card topic-main">
+
+                <div>
+                    <span class="arrow">↗</span>
+                    <h3>Understand your mind.</h3>
+                    <p>
+                        Learn about mental well-being,
+                        emotions and healthy ways to cope.
+                    </p>
+                </div>
+
+                <div class="big-icon">🧠</div>
+
+            </a>
+
+
+            <a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet"
+               target="_blank"
+               class="topic-card topic-white">
+
+                <span class="arrow">↗</span>
+                <h3>Eat well.</h3>
+                <p>Discover the basics of balanced nutrition.</p>
+                <div class="big-icon">🥗</div>
+
+            </a>
+
+
+            <a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity"
+               target="_blank"
+               class="topic-card topic-pink">
+
+                <span class="arrow">↗</span>
+                <h3>Move more.</h3>
+                <p>Explore the importance of daily movement.</p>
+                <div class="big-icon">🏃</div>
+
+            </a>
+
+
+            <a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity"
+               target="_blank"
+               class="topic-card topic-dark">
+
+                <span class="arrow">↗</span>
+                <h3>Make time to rest.</h3>
+                <p>Understand why sleep and recovery matter.</p>
+                <div class="big-icon">🌙</div>
+
+            </a>
+
+
+            <a href="https://www.who.int/india/health-topics"
+               target="_blank"
+               class="topic-card topic-white">
+
+                <span class="arrow">↗</span>
+                <h3>Know your health.</h3>
+                <p>Explore trusted health information.</p>
+                <div class="big-icon">🩺</div>
+
+            </a>
+
+        </div>
+
+
+        <!-- DAILY CHECK-IN -->
+
+        <div class="checkin">
+
+            <div class="checkin-left">
+                <div class="checkin-icon">✨</div>
+
+                <div>
+                    <h3>How are you feeling today?</h3>
+                    <p>A small check-in can help you understand yourself better.</p>
+                </div>
+            </div>
+
+            <button class="checkin-btn" onclick="showCheckin()">
+                Check in →
+            </button>
+
+        </div>
+
+
+        <!-- RESOURCES -->
+
+        <div class="section-heading">
+            <div>
+                <h2>Explore & learn.</h2>
+                <p>Simple information for everyday wellness.</p>
+            </div>
+        </div>
+
+
+        <div class="resource-grid">
+
+            <a href="https://www.who.int/news-room/feature-stories/mental-well-being-resources-for-the-public"
+               target="_blank"
+               class="resource-card">
+
+                <div class="resource-icon">🧠</div>
+                <span class="resource-label">MENTAL WELLNESS</span>
+
+                <h3>Understanding your mind</h3>
+
+                <p>
+                    Explore mental well-being, stress management
+                    and ways to seek support.
+                </p>
+
+                <span class="resource-link">Read resource ↗</span>
+
+            </a>
+
+
+            <a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet"
+               target="_blank"
+               class="resource-card">
+
+                <div class="resource-icon">🥗</div>
+                <span class="resource-label">NUTRITION</span>
+
+                <h3>Build better eating habits</h3>
+
+                <p>
+                    Learn the basics of a balanced diet
+                    and healthy food choices.
+                </p>
+
+                <span class="resource-link">Explore guide ↗</span>
+
+            </a>
+
+
+            <a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity"
+               target="_blank"
+               class="resource-card">
+
+                <div class="resource-icon">🏃</div>
+                <span class="resource-label">MOVEMENT</span>
+
+                <h3>Make movement a habit</h3>
+
+                <p>
+                    Understand how regular physical activity
+                    supports overall health.
+                </p>
+
+                <span class="resource-link">Read resource ↗</span>
+
+            </a>
+
+
+            <a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity"
+               target="_blank"
+               class="resource-card">
+
+                <div class="resource-icon">🌙</div>
+                <span class="resource-label">REST & SLEEP</span>
+
+                <h3>Why rest matters</h3>
+
+                <p>
+                    Discover the role of sleep and recovery
+                    in a healthy lifestyle.
+                </p>
+
+                <span class="resource-link">Learn more ↗</span>
+
+            </a>
+
+
+            <a href="https://www.who.int/india/health-topics"
+               target="_blank"
+               class="resource-card">
+
+                <div class="resource-icon">🩺</div>
+                <span class="resource-label">HEALTH AWARENESS</span>
+
+                <h3>Know your health</h3>
+
+                <p>
+                    Explore trusted information about common
+                    health topics and prevention.
+                </p>
+
+                <span class="resource-link">Explore topics ↗</span>
+
+            </a>
+
+
+            <a href="https://www.who.int/news-room/feature-stories/mental-well-being-resources-for-the-public"
+               target="_blank"
+               class="resource-card">
+
+                <div class="resource-icon">💜</div>
+                <span class="resource-label">SELF CARE</span>
+
+                <h3>Give yourself a little space</h3>
+
+                <p>
+                    Learn simple ways to support your
+                    mental well-being every day.
+                </p>
+
+                <span class="resource-link">Open resource ↗</span>
+
+            </a>
+
+        </div>
+
+
+        <!-- NOTICE -->
+
+        <div class="notice">
+
+            <div class="notice-left">
+                <div class="notice-icon">♡</div>
+
+                <div>
+                    <h3>Your health deserves attention.</h3>
+                    <p>
+                        These resources are for learning and awareness.
+                        For personal medical concerns, consult a qualified
+                        healthcare professional.
+                    </p>
+                </div>
+            </div>
+
+            <a href="https://www.who.int/india/health-topics"
+               target="_blank">
+                Visit trusted resources ↗
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        © 2026 GEN-Z Group. Learn. Grow. Stay Well.
+    </footer>
+
+
+    <script>
+        function showCheckin() {
+            alert(
+                "Take a moment for yourself ✨\n\n" +
+                "How are you feeling today?\n" +
+                "Happy • Okay • Stressed • Tired"
+            );
+        }
+    </script>
+
+</body>
+</html>

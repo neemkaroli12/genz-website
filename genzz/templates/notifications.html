@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Notifications</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #FFF9FC;
+        }
+
+        .notifications-page {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #5E035A;
+        }
+
+        .back-btn,
+        .read-all {
+            border: none;
+            background: #5E035A;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .notification {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            background: white;
+            border: 1px solid #EDE5EE;
+            border-radius: 14px;
+            margin-bottom: 10px;
+        }
+
+        .notification.unread {
+            background: #F8F0F8;
+            border-color: #C98BC5;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #EEE2F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .notification small {
+            color: #777;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 50px;
+            color: #777;
+            background: white;
+            border-radius: 15px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="notifications-page">
+
+    <div class="header">
+
+        <h1>
+            Notifications 🔔
+        </h1>
+
+        <div>
+
+            <a
+                href="{% url 'join_dashboard' %}"
+                class="back-btn"
+            >
+                Back
+            </a>
+
+            {% if unread_count > 0 %}
+
+            <button
+                class="read-all"
+                onclick="markAllRead()"
+            >
+                Mark all read
+            </button>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    {% for notification in notifications %}
+
+    <div
+        class="notification
+        {% if not notification.is_read %}
+            unread
+        {% endif %}"
+        data-id="{{ notification.id }}"
+    >
+
+        <div class="notification-icon">
+
+            {% if notification.notification_type == "message" %}
+                💬
+            {% elif notification.notification_type == "follow" %}
+                👤
+            {% elif notification.notification_type == "like" %}
+                ❤️
+            {% else %}
+                🔔
+            {% endif %}
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                {{ notification.message }}
+            </strong>
+
+            <small>
+                {{ notification.created_at|timesince }}
+                ago
+            </small>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="empty">
+
+        <h3>
+            No notifications yet 🔔
+        </h3>
+
+        <p>
+            You're all caught up!
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+<script>
+
+    function getCookie(name) {
+
+        let value = null;
+
+        if (document.cookie) {
+
+            document.cookie
+                .split(";")
+                .forEach(function(cookie) {
+
+                    cookie =
+                        cookie.trim();
+
+                    if (
+                        cookie.startsWith(
+                            name + "="
+                        )
+                    ) {
+
+                        value =
+                            decodeURIComponent(
+                                cookie.substring(
+                                    name.length + 1
+                                )
+                            );
+
+                    }
+
+                });
+
+        }
+
+        return value;
+    }
+
+
+    function markAllRead() {
+
+        fetch(
+            "{% url 'mark_all_notifications_read' %}",
+            {
+                method: "POST",
+
+                headers: {
+                    "X-CSRFToken":
+                        getCookie("csrftoken"),
+
+                    "X-Requested-With":
+                        "XMLHttpRequest"
+                }
+            }
+        )
+
+        .then(
+            response =>
+                response.json()
+        )
+
+        .then(
+            data => {
+
+                if (data.success) {
+
+                    document
+                        .querySelectorAll(
+                            ".notification.unread"
+                        )
+                        .forEach(
+                            notification => {
+
+                                notification.classList
+                                    .remove("unread");
+
+                            }
+                        );
+
+                }
+
+            }
+        );
+
+    }
+
+</script>
+
+</body>
+
+</html>

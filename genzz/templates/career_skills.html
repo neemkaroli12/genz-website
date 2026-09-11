@@ -1,0 +1,691 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Skills | Group</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: #f8f2f8;
+            color: #241d2b;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .navbar {
+            height: 76px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            border-bottom: 1px solid #eee5ef;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #5e035a;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: #5e035a;
+            color: white;
+            display: grid;
+            place-items: center;
+            font-size: 20px;
+        }
+
+        .back-btn {
+            color: #5e035a;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .hero {
+            padding: 65px 7% 45px;
+            background: linear-gradient(135deg, #eee2f0, #faf6fb);
+        }
+
+        .tag {
+            display: inline-block;
+            background: white;
+            color: #5e035a;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(34px, 5vw, 58px);
+            line-height: 1.1;
+            max-width: 700px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 span {
+            color: #5e035a;
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: #6d6472;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .layout {
+            width: 86%;
+            max-width: 1250px;
+            margin: 45px auto;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 28px;
+        }
+
+        .section-title {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .module-card {
+            background: white;
+            border: 1px solid #eee5ef;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: .25s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(94, 3, 90, .08);
+        }
+
+        .module-top {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .module-number {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: #eee2f0;
+            color: #5e035a;
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+        }
+
+        .module-info {
+            flex: 1;
+        }
+
+        .module-info h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 19px;
+            margin-bottom: 5px;
+        }
+
+        .module-info p {
+            color: #807686;
+            font-size: 13px;
+        }
+
+        .toggle-btn {
+            border: none;
+            background: #f8f2f8;
+            color: #5e035a;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .module-content {
+            display: none;
+            padding: 22px 0 0 62px;
+        }
+
+        .module-card.active .module-content {
+            display: block;
+        }
+
+        .module-content ul {
+            padding-left: 18px;
+            color: #6d6472;
+            line-height: 2;
+            font-size: 14px;
+        }
+
+        .module-content li::marker {
+            color: #5e035a;
+        }
+
+        .study-btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 11px 16px;
+            border-radius: 10px;
+            background: #5e035a;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .complete-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 15px;
+            border: 1px solid #d9c4db;
+            border-radius: 10px;
+            background: white;
+            color: #5e035a;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .complete-btn.completed {
+            background: #5e035a;
+            color: white;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 25px;
+            height: fit-content;
+        }
+
+        .progress-card,
+        .resource-card {
+            background: white;
+            border: 1px solid #eee5ef;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .progress-card h3,
+        .resource-card h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 20px;
+            margin-bottom: 18px;
+        }
+
+        .progress-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: #5e035a;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: #eee2f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #5e035a;
+            border-radius: 20px;
+            transition: .3s;
+        }
+
+        .progress-text {
+            margin-top: 12px;
+            color: #817687;
+            font-size: 13px;
+        }
+
+        .resource-card a {
+            display: block;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0eaf1;
+            color: #5e035a;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .resource-card a:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 20px;
+            color: #8a7d8e;
+            font-size: 13px;
+        }
+
+        @media (max-width: 850px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .hero {
+                padding: 45px 5% 35px;
+            }
+
+            .layout {
+                width: 90%;
+                margin: 30px auto;
+            }
+
+            .module-card {
+                padding: 18px;
+            }
+
+            .module-content {
+                padding-left: 0;
+            }
+
+            .module-top {
+                align-items: flex-start;
+            }
+
+            .module-info h3 {
+                font-size: 16px;
+            }
+
+            .module-info p {
+                font-size: 12px;
+            }
+        }
+        .logo img {
+
+    width: 190px;
+
+    height: auto;
+
+    display: block;
+}
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="logo">
+            <img src="{% static 'images/image.png' %}"
+                 alt="GEN Z Group">
+        </a>
+
+        <a href="{% url 'education' %}" class="back-btn">
+            ← Back to Education
+        </a>
+    </nav>
+
+    <section class="hero">
+        <span class="tag">CAREER DEVELOPMENT</span>
+
+        <h1>
+            Build Your <span>Career Skills</span>
+        </h1>
+
+        <p>
+            Learn practical skills that help you prepare for internships,
+            interviews, freelancing and your first professional opportunity.
+        </p>
+    </section>
+
+    <main class="layout">
+
+        <section>
+            <h2 class="section-title">Learning Modules</h2>
+
+            <!-- Module 1 -->
+            <div class="module-card">
+                <div class="module-top">
+                    <div class="module-number">01</div>
+
+                    <div class="module-info">
+                        <h3>Resume / CV Building</h3>
+                        <p>Create a professional resume that stands out.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleModule(this)">+</button>
+                </div>
+
+                <div class="module-content">
+                    <ul>
+                        <li>Understand the structure of a good resume.</li>
+                        <li>Write a strong career objective.</li>
+                        <li>Highlight your skills and projects.</li>
+                        <li>Avoid common resume mistakes.</li>
+                    </ul>
+
+                    <a href="https://www.canva.com/create/resumes/" target="_blank" class="study-btn">
+                        Open Study Material ↗
+                    </a>
+
+                    <br>
+
+                    <button class="complete-btn" onclick="completeModule(0, this)">
+                        Mark as Completed
+                    </button>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="module-card">
+                <div class="module-top">
+                    <div class="module-number">02</div>
+
+                    <div class="module-info">
+                        <h3>Interview Preparation</h3>
+                        <p>Prepare confidently for technical and HR interviews.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleModule(this)">+</button>
+                </div>
+
+                <div class="module-content">
+                    <ul>
+                        <li>Learn how to introduce yourself.</li>
+                        <li>Prepare common HR questions.</li>
+                        <li>Practice technical interview questions.</li>
+                        <li>Learn interview body language.</li>
+                    </ul>
+
+                    <a href="https://www.indeed.com/career-advice/interviewing" target="_blank" class="study-btn">
+                        Open Study Material ↗
+                    </a>
+
+                    <br>
+
+                    <button class="complete-btn" onclick="completeModule(1, this)">
+                        Mark as Completed
+                    </button>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="module-card">
+                <div class="module-top">
+                    <div class="module-number">03</div>
+
+                    <div class="module-info">
+                        <h3>Communication Skills</h3>
+                        <p>Improve your confidence and professional communication.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleModule(this)">+</button>
+                </div>
+
+                <div class="module-content">
+                    <ul>
+                        <li>Improve speaking and listening skills.</li>
+                        <li>Learn professional email writing.</li>
+                        <li>Practice group discussions.</li>
+                        <li>Build confidence while presenting.</li>
+                    </ul>
+
+                    <a href="https://learnenglish.britishcouncil.org/" target="_blank" class="study-btn">
+                        Open Study Material ↗
+                    </a>
+
+                    <br>
+
+                    <button class="complete-btn" onclick="completeModule(2, this)">
+                        Mark as Completed
+                    </button>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="module-card">
+                <div class="module-top">
+                    <div class="module-number">04</div>
+
+                    <div class="module-info">
+                        <h3>LinkedIn Profile</h3>
+                        <p>Build a professional online presence.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleModule(this)">+</button>
+                </div>
+
+                <div class="module-content">
+                    <ul>
+                        <li>Create an attractive LinkedIn headline.</li>
+                        <li>Write a professional About section.</li>
+                        <li>Add projects, skills and certifications.</li>
+                        <li>Learn how to connect with professionals.</li>
+                    </ul>
+
+                    <a href="https://www.linkedin.com/help/linkedin/answer/a507663" target="_blank" class="study-btn">
+                        Open Study Material ↗
+                    </a>
+
+                    <br>
+
+                    <button class="complete-btn" onclick="completeModule(3, this)">
+                        Mark as Completed
+                    </button>
+                </div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="module-card">
+                <div class="module-top">
+                    <div class="module-number">05</div>
+
+                    <div class="module-info">
+                        <h3>Freelancing Basics</h3>
+                        <p>Understand how to start working independently.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleModule(this)">+</button>
+                </div>
+
+                <div class="module-content">
+                    <ul>
+                        <li>Understand how freelancing works.</li>
+                        <li>Choose your service and niche.</li>
+                        <li>Create a portfolio of your work.</li>
+                        <li>Learn client communication basics.</li>
+                    </ul>
+
+                    <a href="https://www.upwork.com/resources/how-to-become-a-freelancer" target="_blank" class="study-btn">
+                        Open Study Material ↗
+                    </a>
+
+                    <br>
+
+                    <button class="complete-btn" onclick="completeModule(4, this)">
+                        Mark as Completed
+                    </button>
+                </div>
+            </div>
+
+            <!-- Module 6 -->
+            <div class="module-card">
+                <div class="module-top">
+                    <div class="module-number">06</div>
+
+                    <div class="module-info">
+                        <h3>Career Roadmap</h3>
+                        <p>Plan your next steps and career goals.</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleModule(this)">+</button>
+                </div>
+
+                <div class="module-content">
+                    <ul>
+                        <li>Identify your career interests.</li>
+                        <li>Set short-term and long-term goals.</li>
+                        <li>Build a practical learning plan.</li>
+                        <li>Track your progress and achievements.</li>
+                    </ul>
+
+                    <a href="https://nationalcareers.service.gov.uk/careers-advice" target="_blank" class="study-btn">
+                        Open Study Material ↗
+                    </a>
+
+                    <br>
+
+                    <button class="complete-btn" onclick="completeModule(5, this)">
+                        Mark as Completed
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <aside class="sidebar">
+
+            <div class="progress-card">
+                <h3>Your Progress</h3>
+
+                <div class="progress-number" id="progressNumber">0%</div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+                <p class="progress-text" id="progressText">
+                    0 of 6 modules completed
+                </p>
+            </div>
+
+            <div class="resource-card">
+                <h3>Career Resources</h3>
+
+                <a href="https://www.canva.com/create/resumes/" target="_blank">
+                    Resume Templates ↗
+                </a>
+
+                <a href="https://www.indeed.com/career-advice/interviewing" target="_blank">
+                    Interview Preparation ↗
+                </a>
+
+                <a href="https://learnenglish.britishcouncil.org/" target="_blank">
+                    Communication Practice ↗
+                </a>
+
+                <a href="https://www.linkedin.com/" target="_blank">
+                    LinkedIn ↗
+                </a>
+
+                <a href="https://www.upwork.com/" target="_blank">
+                    Freelancing ↗
+                </a>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <footer>
+        © 2026 Group. Learn skills. Build your future.
+    </footer>
+
+    <script>
+        const totalModules = 6;
+        let completedModules = JSON.parse(
+            localStorage.getItem("completedCareerModules") || "[]"
+        );
+
+        function toggleModule(button) {
+            const card = button.closest(".module-card");
+            card.classList.toggle("active");
+
+            button.textContent = card.classList.contains("active") ? "−" : "+";
+        }
+
+        function completeModule(index, button) {
+            if (completedModules.includes(index)) {
+                completedModules = completedModules.filter(item => item !== index);
+                button.textContent = "Mark as Completed";
+                button.classList.remove("completed");
+            } else {
+                completedModules.push(index);
+                button.textContent = "✓ Completed";
+                button.classList.add("completed");
+            }
+
+            localStorage.setItem(
+                "completedCareerModules",
+                JSON.stringify(completedModules)
+            );
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const percentage = Math.round(
+                (completedModules.length / totalModules) * 100
+            );
+
+            document.getElementById("progressNumber").textContent =
+                percentage + "%";
+
+            document.getElementById("progressFill").style.width =
+                percentage + "%";
+
+            document.getElementById("progressText").textContent =
+                completedModules.length +
+                " of " +
+                totalModules +
+                " modules completed";
+
+            document.querySelectorAll(".complete-btn").forEach((button, index) => {
+                if (completedModules.includes(index)) {
+                    button.textContent = "✓ Completed";
+                    button.classList.add("completed");
+                } else {
+                    button.textContent = "Mark as Completed";
+                    button.classList.remove("completed");
+                }
+            });
+        }
+
+        updateProgress();
+    </script>
+
+</body>
+</html>

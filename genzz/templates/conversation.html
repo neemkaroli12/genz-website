@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Chat with {{ other_member.name }}
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #FFF9FC;
+        }
+
+        .chat-wrapper {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            border: 1px solid #EDE5EE;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 18px 20px;
+            background: #5E035A;
+            color: white;
+        }
+
+        .chat-header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .chat-body {
+            padding: 20px;
+            height: 500px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .message.sent {
+            justify-content: flex-end;
+        }
+
+        .bubble {
+            max-width: 70%;
+            padding: 11px 15px;
+            border-radius: 15px;
+            background: #EEE2F0;
+        }
+
+        .sent .bubble {
+            background: #5E035A;
+            color: white;
+        }
+
+        .time {
+            display: block;
+            font-size: 9px;
+            margin-top: 5px;
+            opacity: .7;
+        }
+
+        .chat-form {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            border-top: 1px solid #EDE5EE;
+        }
+
+        .chat-form input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .chat-form button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #5E035A;
+            color: white;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="chat-wrapper">
+
+
+    <div class="chat-header">
+
+        <a href="{% url 'messages' %}">
+            ← Messages
+        </a>
+
+        <h3>
+            {{ other_member.name }}
+        </h3>
+
+    </div>
+
+
+    <div
+        class="chat-body"
+        id="chatBody"
+    >
+
+        {% for message in messages %}
+
+        <div
+            class="message
+            {% if message.sender.id == member.id %}
+                sent
+            {% endif %}"
+        >
+
+            <div class="bubble">
+
+                {{ message.content }}
+
+                <span class="time">
+                    {{ message.created_at|date:"d M, h:i A" }}
+                </span>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p style="text-align:center;color:#777;">
+            No messages yet. Say hello 👋
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+
+    <form
+        class="chat-form"
+        id="messageForm"
+    >
+
+        {% csrf_token %}
+
+        <input
+            type="text"
+            id="messageInput"
+            placeholder="Type a message..."
+            autocomplete="off"
+        >
+
+        <button type="submit">
+            Send
+        </button>
+
+    </form>
+
+</div>
+
+
+<script>
+
+    const form =
+        document.getElementById("messageForm");
+
+    const input =
+        document.getElementById("messageInput");
+
+    const chatBody =
+        document.getElementById("chatBody");
+
+
+    form.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+            const content =
+                input.value.trim();
+
+            if (!content) {
+                return;
+            }
+
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                "receiver_id",
+                "{{ other_member.id }}"
+            );
+
+            formData.append(
+                "content",
+                content
+            );
+
+
+            fetch(
+                "{% url 'send_message' %}",
+                {
+                    method: "POST",
+
+                    body: formData,
+
+                    headers: {
+                        "X-CSRFToken":
+                            document.querySelector(
+                                "[name=csrfmiddlewaretoken]"
+                            ).value,
+
+                        "X-Requested-With":
+                            "XMLHttpRequest"
+                    }
+                }
+            )
+
+            .then(
+                response =>
+                    response.json()
+            )
+
+            .then(
+                data => {
+
+                    if (data.success) {
+
+                        const message =
+                            document.createElement(
+                                "div"
+                            );
+
+                        message.className =
+                            "message sent";
+
+
+                        message.innerHTML = `
+                            <div class="bubble">
+                                ${escapeHtml(data.message)}
+                                <span class="time">
+                                    Just now
+                                </span>
+                            </div>
+                        `;
+
+
+                        chatBody.appendChild(
+                            message
+                        );
+
+
+                        input.value = "";
+
+                        chatBody.scrollTop =
+                            chatBody.scrollHeight;
+
+                    } else {
+
+                        alert(
+                            data.message ||
+                            "Message failed"
+                        );
+
+                    }
+
+                }
+            )
+
+            .catch(
+                error => {
+
+                    console.error(error);
+
+                    alert(
+                        "Something went wrong"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    function escapeHtml(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
+    }
+
+
+    chatBody.scrollTop =
+        chatBody.scrollHeight;
+
+</script>
+
+</body>
+
+</html> 

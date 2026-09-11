@@ -1,0 +1,222 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Messages</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #FFF9FC;
+            color: #282229;
+        }
+
+        .messages-page {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .messages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .messages-header h1 {
+            color: #5E035A;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: #5E035A;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 10px;
+        }
+
+        .messages-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+        }
+
+        .people-panel,
+        .chat-panel {
+            background: white;
+            border: 1px solid #EDE5EE;
+            border-radius: 18px;
+            padding: 20px;
+        }
+
+        .people-panel h3 {
+            margin-bottom: 15px;
+        }
+
+        .person {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .person:hover {
+            background: #EEE2F0;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                #5E035A,
+                #C98BC5
+            );
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .person strong {
+            display: block;
+        }
+
+        .person small {
+            color: #777;
+        }
+
+        .chat-empty {
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #777;
+        }
+
+        @media(max-width: 700px) {
+
+            .messages-layout {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="messages-page">
+
+    <div class="messages-header">
+
+        <h1>Messages 💬</h1>
+
+        <a
+            href="{% url 'join_dashboard' %}"
+            class="back-btn"
+        >
+            Back
+        </a>
+
+    </div>
+
+
+    <div class="messages-layout">
+
+
+        <div class="people-panel">
+
+            <h3>Your People</h3>
+
+            {% for person in people %}
+
+            <a
+                href="{% url 'conversation' person.id %}"
+                style="text-decoration:none;color:inherit;"
+            >
+
+                <div class="person">
+
+                    <div class="avatar">
+                        {{ person.name|first|upper }}
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            {{ person.name }}
+                        </strong>
+
+                        <small>
+                            {{ person.city }}
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+            {% empty %}
+
+            <p>No people available.</p>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="chat-panel">
+
+            <div class="chat-empty">
+
+                <div>
+
+                    <h2>
+                        Select someone 💬
+                    </h2>
+
+                    <p>
+                        Choose a person to start chatting.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

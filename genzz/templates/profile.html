@@ -1,0 +1,910 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ member.name }} — GENZ</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #fafafa;
+            color: #171717;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .navbar {
+            height: 64px;
+            background: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo img {
+            width: 125px;
+            display: block;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            color: #222;
+        }
+
+        .nav-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #5e035a, #c13584);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 935px;
+            margin: auto;
+            padding: 42px 20px 70px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 70px;
+            padding: 0 30px 45px;
+        }
+
+        .photo-section {
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .profile-photo,
+        .avatar-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+            outline: 3px solid #c13584;
+            display: block;
+        }
+
+        .avatar-large {
+            background: linear-gradient(135deg, #5e035a, #c13584);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 58px;
+            font-weight: 800;
+        }
+
+        .change-photo {
+            margin-top: 18px;
+        }
+
+        .change-photo label {
+            display: inline-block;
+            background: #f1f1f1;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .change-photo input {
+            display: none;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .profile-name {
+            font-size: 25px;
+            font-weight: 500;
+        }
+
+        .edit-btn {
+            border: none;
+            background: #5e035a;
+            color: #fff;
+            padding: 9px 22px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .edit-btn:hover {
+            background: #430341;
+        }
+
+        .more-btn {
+            border: none;
+            background: transparent;
+            font-size: 23px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 38px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            display: flex;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        .stat strong {
+            font-weight: 700;
+        }
+
+        .bio h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .bio p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #444;
+            max-width: 430px;
+        }
+
+        .location {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: #f0e5f0;
+            color: #5e035a;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .highlights {
+            display: flex;
+            gap: 25px;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 0 30px 35px;
+        }
+
+        .highlight {
+            border: none;
+            background: transparent;
+            text-align: center;
+            color: #171717;
+            padding: 0;
+        }
+
+        .highlight-circle {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            border: 1px solid #cfcfcf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            background: #fff;
+            transition: 0.3s;
+        }
+
+        .highlight:hover .highlight-circle {
+            transform: scale(1.08);
+            border-color: #5e035a;
+        }
+
+        .highlight span {
+            display: block;
+            font-size: 11px;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .tabs {
+            height: 55px;
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            border-bottom: 1px solid #dbdbdb;
+        }
+
+        .tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #777;
+            border-top: 1px solid transparent;
+        }
+
+        .tab.active {
+            color: #171717;
+            border-top-color: #171717;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .post-card {
+            aspect-ratio: 1 / 1;
+            background: #eee;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .post-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .text-post {
+            width: 100%;
+            height: 100%;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            word-break: break-word;
+            font-size: 16px;
+            line-height: 1.5;
+            background: #f0e5f0;
+            color: #5e035a;
+            font-weight: 600;
+        }
+
+        .post-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            color: #fff;
+            opacity: 0;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .post-card:hover .post-overlay {
+            opacity: 1;
+        }
+
+        .empty-posts {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 20px;
+            color: #777;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .empty-posts h3 {
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .bottom-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 35px;
+        }
+
+        .delete-btn {
+            border: 1px solid #e1e1e1;
+            background: #fff;
+            color: #d11a2a;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .highlight-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .highlight-modal.show {
+            display: flex;
+        }
+
+        .highlight-box {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            animation: popup 0.25s ease;
+        }
+
+        @keyframes popup {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close-highlight {
+            position: absolute;
+            top: 10px;
+            right: 16px;
+            border: none;
+            background: transparent;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .modal-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .highlight-box h2 {
+            color: #5e035a;
+            margin-bottom: 18px;
+        }
+
+        .modal-text {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #555;
+            white-space: pre-line;
+        }
+
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .modal-tags span {
+            background: #f0e5f0;
+            color: #5e035a;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 0 18px;
+            }
+
+            .container {
+                padding: 25px 0 50px;
+            }
+
+            .profile-header {
+                gap: 25px;
+                padding: 0 18px 30px;
+            }
+
+            .profile-photo,
+            .avatar-large {
+                width: 90px;
+                height: 90px;
+            }
+
+            .avatar-large {
+                font-size: 35px;
+            }
+
+            .profile-top {
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .profile-name {
+                font-size: 20px;
+                width: 100%;
+            }
+
+            .edit-btn {
+                padding: 8px 15px;
+            }
+
+            .stats {
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+
+            .stat {
+                display: block;
+                text-align: center;
+                font-size: 12px;
+            }
+
+            .stat strong {
+                display: block;
+                font-size: 14px;
+            }
+
+            .bio h3 {
+                font-size: 13px;
+            }
+
+            .bio p {
+                font-size: 12px;
+            }
+
+            .change-photo label {
+                padding: 6px 9px;
+                font-size: 10px;
+            }
+
+            .highlights {
+                padding: 0 18px 25px;
+                gap: 18px;
+                overflow-x: auto;
+            }
+
+            .highlight-circle {
+                width: 62px;
+                height: 62px;
+                font-size: 23px;
+            }
+
+            .tabs {
+                gap: 35px;
+            }
+
+            .posts-grid {
+                gap: 2px;
+            }
+
+            .post-overlay {
+                font-size: 11px;
+                gap: 8px;
+            }
+
+            .text-post {
+                padding: 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <img src="{% static 'images/image.png' %}" alt="GEN Z Group">
+        </a>
+
+        <div class="nav-right">
+            <a href="{% url 'join_dashboard' %}" class="nav-icon">⌂</a>
+            <a href="{% url 'logout' %}" class="nav-icon">⇥</a>
+
+            <div class="nav-avatar">
+                {{ member.name|first|upper }}
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <section class="profile-header">
+
+            <div class="photo-section">
+
+                {% if member.profile_photo %}
+                    <img
+                        src="{{ member.profile_photo.url }}"
+                        alt="{{ member.name }}"
+                        class="profile-photo"
+                        id="profilePreview"
+                    >
+                {% else %}
+                    <div class="avatar-large" id="profileAvatar">
+                        {{ member.name|first|upper }}
+                    </div>
+                {% endif %}
+
+                <form
+                    method="POST"
+                    action="{% url 'change_photo' %}"
+                    enctype="multipart/form-data"
+                    class="change-photo"
+                >
+                    {% csrf_token %}
+
+                    <label for="profile_photo">
+                        📷 Change Photo
+                    </label>
+
+                    <input
+                        type="file"
+                        name="profile_photo"
+                        id="profile_photo"
+                        accept="image/*"
+                        onchange="previewPhoto(event)"
+                    >
+                </form>
+
+            </div>
+
+            <div class="profile-info">
+
+                <div class="profile-top">
+                    <h1 class="profile-name">
+                        {{ member.name }}
+                    </h1>
+
+                    <a href="{% url 'edit_profile' %}" class="edit-btn">
+                        Edit Profile
+                    </a>
+
+                    <button class="more-btn" type="button">
+                        ⋯
+                    </button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <strong>{{ post_count|default:0 }}</strong>
+                        <span>posts</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>{{ follower_count|default:0 }}</strong>
+                        <span>followers</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>{{ following_count|default:0 }}</strong>
+                        <span>following</span>
+                    </div>
+                </div>
+
+                <div class="bio">
+                    <h3>{{ member.name }}</h3>
+
+                    {% if member.about %}
+                        <p>{{ member.about }}</p>
+                    {% else %}
+                        <p>Creating memories, meeting people and enjoying life ✨</p>
+                    {% endif %}
+
+                    {% if member.city %}
+                        <div class="location">
+                            📍 {{ member.city }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if interests %}
+                    <div class="tags">
+                        {% for interest in interests %}
+                            <span class="tag">{{ interest }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            </div>
+        </section>
+
+        <!-- HIGHLIGHTS -->
+        <section class="highlights">
+
+            <button
+                type="button"
+                class="highlight"
+                onclick="openHighlight('interests')"
+            >
+                <div class="highlight-circle">✨</div>
+                <span>Interests</span>
+            </button>
+
+            <button
+                type="button"
+                class="highlight"
+                onclick="openHighlight('about')"
+            >
+                <div class="highlight-circle">💜</div>
+                <span>About Me</span>
+            </button>
+
+            <button
+                type="button"
+                class="highlight"
+                onclick="openHighlight('world')"
+            >
+                <div class="highlight-circle">🌍</div>
+                <span>My World</span>
+            </button>
+
+        </section>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <div class="tab active">
+                ▦ <span>POSTS</span>
+            </div>
+
+            <div class="tab">
+                🎞 <span>REELS</span>
+            </div>
+
+            <div class="tab">
+                👤 <span>TAGGED</span>
+            </div>
+        </div>
+
+        <!-- POSTS -->
+        <section class="posts-grid">
+
+            {% for post in posts %}
+
+                <div class="post-card">
+
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="Post">
+
+                    {% elif post.photo %}
+                        <img src="{{ post.photo.url }}" alt="Post">
+
+                    {% else %}
+                        <div class="text-post">
+                            {{ post.content|default:"" }}
+                        </div>
+                    {% endif %}
+
+                    <div class="post-overlay">
+                        <span>♡ {{ post.likes_count|default:0 }}</span>
+                        <span>💬 {{ post.comments_count|default:0 }}</span>
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="empty-posts">
+                    <div class="empty-icon">📸</div>
+                    <h3>No Posts Yet</h3>
+                    <p>When you share photos, they will appear here.</p>
+                </div>
+
+            {% endfor %}
+
+        </section>
+
+        <!-- HIGHLIGHT MODAL -->
+        <div id="highlightModal" class="highlight-modal">
+
+            <div class="highlight-box">
+
+                <button
+                    type="button"
+                    class="close-highlight"
+                    onclick="closeHighlight()"
+                >
+                    ×
+                </button>
+
+                <div id="highlightIcon" class="modal-icon"></div>
+
+                <h2 id="highlightTitle"></h2>
+
+                <div id="highlightContent"></div>
+
+            </div>
+
+        </div>
+
+        <!-- DELETE PROFILE -->
+        <div class="bottom-actions">
+
+            <form
+                method="POST"
+                action="{% url 'delete_profile' %}"
+                onsubmit="return confirm('Are you sure you want to delete your profile?');"
+            >
+                {% csrf_token %}
+
+                <button type="submit" class="delete-btn">
+                    Delete Profile
+                </button>
+            </form>
+
+        </div>
+
+    </main>
+
+    <script>
+        function previewPhoto(event) {
+            const file = event.target.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                let image = document.getElementById("profilePreview");
+
+                if (image) {
+                    image.src = e.target.result;
+                    return;
+                }
+
+                const avatar = document.getElementById("profileAvatar");
+
+                if (avatar) {
+                    const newImage = document.createElement("img");
+
+                    newImage.src = e.target.result;
+                    newImage.className = "profile-photo";
+                    newImage.id = "profilePreview";
+
+                    avatar.replaceWith(newImage);
+                }
+            };
+
+            reader.readAsDataURL(file);
+
+            event.target.closest("form").submit();
+        }
+
+        function openHighlight(type) {
+            const modal = document.getElementById("highlightModal");
+            const title = document.getElementById("highlightTitle");
+            const icon = document.getElementById("highlightIcon");
+            const content = document.getElementById("highlightContent");
+
+            if (type === "interests") {
+                title.innerText = "My Interests";
+                icon.innerText = "✨";
+
+                content.innerHTML = `
+                    {% if interests %}
+                        <div class="modal-tags">
+                            {% for interest in interests %}
+                                <span>{{ interest }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="modal-text">
+                            No interests added yet.
+                        </p>
+                    {% endif %}
+                `;
+            }
+
+            if (type === "about") {
+                title.innerText = "About Me";
+                icon.innerText = "💜";
+
+                content.innerHTML = `
+                    <p class="modal-text">
+                        {% if member.about %}
+                            {{ member.about }}
+                        {% else %}
+                            Creating memories, meeting people and enjoying life ✨
+                        {% endif %}
+                    </p>
+                `;
+            }
+
+            if (type === "world") {
+                title.innerText = "My World";
+                icon.innerText = "🌍";
+
+                content.innerHTML = `
+                    <p class="modal-text">
+                        My world, my people, my memories and everything
+                        that makes me happy. ✨
+                    </p>
+                `;
+            }
+
+            modal.classList.add("show");
+        }
+
+        function closeHighlight() {
+            document
+                .getElementById("highlightModal")
+                .classList.remove("show");
+        }
+
+        document
+            .getElementById("highlightModal")
+            .addEventListener("click", function (event) {
+                if (event.target === event.currentTarget) {
+                    closeHighlight();
+                }
+            });
+    </script>
+
+</body>
+</html>
