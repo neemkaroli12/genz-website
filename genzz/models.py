@@ -154,8 +154,10 @@ class EventRegistration(models.Model):
         related_name="registrations"
     )
 
+    # FIX 3: pehle settings.AUTH_USER_MODEL (Django User) tha,
+    # lekin app mein login GenzMember se hota hai
     member = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        GenzMember,
         on_delete=models.CASCADE,
         related_name="event_registrations"
     )
@@ -322,4 +324,3 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.message
-    

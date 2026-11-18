@@ -90,7 +90,7 @@ class EventRegistrationAdmin(admin.ModelAdmin):
 
     search_fields = (
         "event__title",
-        "member__username",
+        "member__name",      # FIX: pehle member__username tha, ab member GenzMember hai
     )
 
     readonly_fields = (

@@ -94,6 +94,14 @@ urlpatterns = [
    ),
    path("medical/", views.medical, name="medical"),
    path("events/", views.events, name="events"),
+
+   # FIX 2: ye path missing tha, events.html isi ko use karta hai
+   path(
+    "events/<int:event_id>/register/",
+    views.register_event,
+    name="register_event"
+   ),
+
    path("challenges/", views.challenges, name="challenges"),
    path(
     "challenges/detail/",

@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.views.decorators.http import require_POST
+from django.http import JsonResponse   # FIX 1: ye import missing tha
 
 from django.utils import timezone
 from .models import (
@@ -135,7 +136,7 @@ def join(request):
         ] = member.id
 
 
-        return redirect("home")
+        return redirect("join_dashboard")
 
 
     return render(
@@ -552,13 +553,9 @@ def delete_profile(request):
         return redirect("home")
 
 
-    return render(
-        request,
-        "delete_profile.html",
-        {
-            "member": member
-        }
-    )
+    # FIX 3: delete_profile.html template exist nahi karta tha.
+    # Delete ka form profile page par hai (POST), isliye GET par wapas bhej do.
+    return redirect("profile")
 
 
 # =========================================
@@ -710,7 +707,7 @@ def join_dashboard(request):
     ).count()
 
     registered_events = EventRegistration.objects.filter(
-        member=request.user
+        member=member            # FIX 2: pehle member=request.user tha
     ).select_related("event")
 
     context = {
