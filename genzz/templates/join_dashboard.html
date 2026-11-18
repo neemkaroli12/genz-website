@@ -552,54 +552,113 @@
             }
 
         }
+        
 
         @media (max-width: 700px) {
 
-            .sidebar {
-                display: none;
-            }
+    .dashboard {
+        display: block;
+        padding-bottom: 75px;
+    }
 
-            .main {
-                width: 100%;
-                margin-left: 0;
-                padding: 20px;
-            }
+    /* Mobile Sidebar */
+    .sidebar {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: auto;
 
-            .topbar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
-            }
+        width: 100%;
+        height: 65px;
 
-            .search-box {
-                width: 100%;
-            }
+        padding: 8px 15px;
 
-            .top-actions {
-                justify-content: flex-end;
-            }
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
 
-            .welcome {
-                padding: 25px;
-            }
+        border-right: none;
+        border-bottom: 1px solid var(--border);
 
-            .welcome h1 {
-                font-size: 24px;
-            }
+        z-index: 100;
+    }
 
-            .welcome-art {
-                font-size: 45px;
-            }
+    /* Logo */
+    .logo {
+        margin: 0;
+        padding: 0;
+    }
 
-            .create-top {
-                align-items: flex-start;
-            }
+    .logo-mark {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
 
-            .post-actions {
-                flex-wrap: wrap;
-            }
+    .logo-text {
+        font-size: 20px;
+    }
 
-        }
+    /* Navigation Menu */
+    .menu-label,
+    .sidebar-bottom {
+        display: none;
+    }
+
+    .nav-menu {
+        flex-direction: row;
+        gap: 5px;
+    }
+
+    .nav-item {
+        padding: 10px;
+        font-size: 0;
+        gap: 0;
+    }
+
+    .nav-icon {
+        font-size: 20px;
+    }
+
+    /* Main Content */
+    .main {
+        width: 100%;
+        margin: 0;
+        padding: 85px 15px 20px;
+    }
+
+    .topbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .welcome {
+        padding: 22px;
+    }
+
+    .welcome h1 {
+        font-size: 24px;
+    }
+
+    .welcome-art {
+        font-size: 40px;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .post-actions {
+        flex-wrap: wrap;
+    }
+}
         .notification-btn {
     position: relative;
     display: flex;
