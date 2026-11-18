@@ -13,6 +13,7 @@ from .models import (
     GenzMember,
     Post,
     Follow,
+    FollowRequest,
     PostLike,
     Message,
     Notification,
@@ -416,6 +417,152 @@ def toggle_follow(request, member_id):
         "is_following": is_following,
         "followers_count": followers_count
     })
+
+@require_POST
+def send_follow_request(request, member_id):
+
+    sender_id = request.session.get("genz_member_id")
+
+    if not sender_id:
+        return JsonResponse(
+            {"success": False, "message": "Please login first"},
+            status=401
+        )
+
+    sender = get_object_or_404(GenzMember, id=sender_id)
+    receiver = get_object_or_404(GenzMember, id=member_id)
+
+    if sender.id == receiver.id:
+        return JsonResponse({
+            "success": False,
+            "message": "You cannot follow yourself"
+        })
+
+    if Follow.objects.filter(
+        follower=sender,
+        following=receiver
+    ).exists():
+        return JsonResponse({
+            "success": True,
+            "status": "following",
+            "message": "Already following"
+        })
+
+    follow_request, created = FollowRequest.objects.get_or_create(
+        sender=sender,
+        receiver=receiver,
+        defaults={"status": "pending"}
+    )
+
+    if not created:
+
+        if follow_request.status == "pending":
+            return JsonResponse({
+                "success": True,
+                "status": "pending",
+                "message": "Request already sent"
+            })
+
+        if follow_request.status == "accepted":
+            return JsonResponse({
+                "success": True,
+                "status": "following"
+            })
+
+        follow_request.status = "pending"
+        follow_request.save(update_fields=["status"])
+
+    Notification.objects.create(
+        recipient=receiver,
+        sender=sender,
+        notification_type="follow_request",
+        message=f"{sender.name} sent you a follow request"
+    )
+
+    return JsonResponse({
+        "success": True,
+        "status": "pending",
+        "message": "Follow request sent successfully"
+    })
+
+@require_POST
+def accept_follow_request(request, request_id):
+
+    member_id = request.session.get("genz_member_id")
+
+    if not member_id:
+        return JsonResponse({"success": False}, status=401)
+
+    follow_request = get_object_or_404(
+        FollowRequest,
+        id=request_id,
+        receiver_id=member_id,
+        status="pending"
+    )
+
+    follow_request.status = "accepted"
+    follow_request.save(update_fields=["status"])
+
+    Follow.objects.get_or_create(
+        follower=follow_request.sender,
+        following=follow_request.receiver
+    )
+
+    Notification.objects.create(
+        recipient=follow_request.sender,
+        sender=follow_request.receiver,
+        notification_type="follow_accepted",
+        message=f"{follow_request.receiver.name} accepted your follow request"
+    )
+
+    return JsonResponse({
+        "success": True,
+        "message": "Follow request accepted"
+    })
+
+@require_POST
+def reject_follow_request(request, request_id):
+
+    member_id = request.session.get("genz_member_id")
+
+    if not member_id:
+        return JsonResponse({"success": False}, status=401)
+
+    follow_request = get_object_or_404(
+        FollowRequest,
+        id=request_id,
+        receiver_id=member_id,
+        status="pending"
+    )
+
+    follow_request.status = "rejected"
+    follow_request.save(update_fields=["status"])
+
+    return JsonResponse({
+        "success": True,
+        "message": "Follow request rejected"
+    })
+@require_POST
+def cancel_follow_request(request, request_id):
+
+    member_id = request.session.get("genz_member_id")
+
+    if not member_id:
+        return JsonResponse({"success": False}, status=401)
+
+    follow_request = get_object_or_404(
+        FollowRequest,
+        id=request_id,
+        sender_id=member_id,
+        status="pending"
+    )
+
+    follow_request.delete()
+
+    return JsonResponse({
+        "success": True,
+        "message": "Follow request cancelled"
+    })
 # =========================================
 # CHANGE PHOTO
 # =========================================
@@ -689,14 +836,11 @@ def join_dashboard(request):
     if not member_id:
         return redirect("login")
 
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    member = get_object_or_404(GenzMember, id=member_id)
 
     posts = Post.objects.filter(
         member=member
-    )
+    ).order_by("-created_at")
 
     followers_count = Follow.objects.filter(
         following=member
@@ -707,8 +851,34 @@ def join_dashboard(request):
     ).count()
 
     registered_events = EventRegistration.objects.filter(
-        member=member            # FIX 2: pehle member=request.user tha
+        member=member
     ).select_related("event")
+
+    # Incoming follow requests
+    received_follow_requests = FollowRequest.objects.filter(
+        receiver=member,
+        status="pending"
+    ).select_related("sender")
+
+    # Already following people
+    following_ids = Follow.objects.filter(
+        follower=member
+    ).values_list("following_id", flat=True)
+
+    # Pending sent requests
+    pending_sent_ids = FollowRequest.objects.filter(
+        sender=member,
+        status="pending"
+    ).values_list("receiver_id", flat=True)
+
+    # Suggested people
+    people = GenzMember.objects.exclude(
+        id=member.id
+    ).exclude(
+        id__in=following_ids
+    ).exclude(
+        id__in=pending_sent_ids
+    ).order_by("-created_at")[:8]
 
     context = {
         "member": member,
@@ -716,6 +886,8 @@ def join_dashboard(request):
         "followers_count": followers_count,
         "following_count": following_count,
         "registered_events": registered_events,
+        "received_follow_requests": received_follow_requests,
+        "people": people,
     }
 
     return render(
@@ -723,14 +895,6 @@ def join_dashboard(request):
         "join_dashboard.html",
         context
     )
-def get_current_member(request):
-    member_id = request.session.get("genz_member_id")
-
-    if not member_id:
-        return None
-
-    return get_object_or_404(GenzMember, id=member_id)
-
 # =========================================
 # MESSAGES
 # =========================================

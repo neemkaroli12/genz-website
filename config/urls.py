@@ -171,6 +171,30 @@ urlpatterns = [
         views.mark_all_notifications_read,
         name="mark_all_notifications_read"
     ),
+    # Follow Request URLs
+    path(
+        "follow/request/<int:member_id>/",
+        views.send_follow_request,
+        name="send_follow_request"
+    ),
+
+    path(
+        "follow/accept/<int:request_id>/",
+        views.accept_follow_request,
+        name="accept_follow_request"
+    ),
+
+    path(
+        "follow/reject/<int:request_id>/",
+        views.reject_follow_request,
+        name="reject_follow_request"
+    ),
+
+    path(
+        "follow/cancel/<int:request_id>/",
+        views.cancel_follow_request,
+        name="cancel_follow_request"
+    ),
 ]
 
 

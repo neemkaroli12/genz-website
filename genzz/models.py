@@ -231,6 +231,47 @@ class Follow(models.Model):
     def __str__(self):
         return f"{self.follower.name} follows {self.following.name}"
 
+class FollowRequest(models.Model):
+
+    STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("accepted", "Accepted"),
+        ("rejected", "Rejected"),
+    ]
+
+    sender = models.ForeignKey(
+        GenzMember,
+        on_delete=models.CASCADE,
+        related_name="sent_follow_requests"
+    )
+
+    receiver = models.ForeignKey(
+        GenzMember,
+        on_delete=models.CASCADE,
+        related_name="received_follow_requests"
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="pending"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["sender", "receiver"],
+                name="unique_follow_request"
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.sender.name} → {self.receiver.name}"
 
 class PostLike(models.Model):
     post = models.ForeignKey(
