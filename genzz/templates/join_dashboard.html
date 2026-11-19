@@ -1907,87 +1907,46 @@
     ===================================================== */
 
     function followPerson(button) {
-
-        const memberId =
-            button.dataset.memberId;
+        const memberId = button.dataset.memberId;
 
         if (!memberId) {
-
-            showToast(
-                "Member not found"
-            );
-
+            showToast("Member not found");
             return;
         }
 
+        button.disabled = true;
 
-        fetch(
-            `/profile/${memberId}/follow/`,
-            {
-                method: "POST",
-
-                headers: {
-                    "X-CSRFToken":
-                        getCookie("csrftoken"),
-
-                    "X-Requested-With":
-                        "XMLHttpRequest"
-                }
+        fetch(`/follow/request/${memberId}/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                "X-Requested-With": "XMLHttpRequest"
             }
-        )
-
-        .then(function (response) {
-
-            return response.json();
-
         })
-
-        .then(function (data) {
-
+        .then(response => response.json())
+        .then(data => {
             if (!data.success) {
-
-                showToast(
-                    data.message ||
-                    "Something went wrong"
-                );
-
+                showToast(data.message || "Something went wrong");
                 return;
             }
 
-
-            button.textContent =
-                data.following
-                    ? "Following"
-                    : "Follow";
-
-
-            button.classList.toggle(
-                "following",
-                data.following
-            );
-
-
-            showToast(
-                data.following
-                    ? "Following now ✨"
-                    : "Unfollowed"
-            );
-
+            if (data.status === "pending") {
+                button.textContent = "Request Sent";
+                button.classList.add("following");
+                showToast("Follow request sent!");
+            } else if (data.status === "following") {
+                button.textContent = "Following";
+                button.classList.add("following");
+                showToast("Already following");
+            }
         })
-
-        .catch(function (error) {
-
-            console.error(
-                "Follow error:",
-                error
-            );
-
-            showToast(
-                "Something went wrong"
-            );
-
+        .catch(error => {
+            console.error("Follow request error:", error);
+            showToast("Something went wrong");
+        })
+        .finally(() => {
+            button.disabled = false;
         });
-
     }
 
 
