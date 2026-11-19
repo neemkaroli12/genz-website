@@ -75,6 +75,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .notification strong {
@@ -84,6 +85,43 @@
 
         .notification small {
             color: #777;
+        }
+
+        /* Accept / Reject buttons */
+
+        .follow-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .follow-actions button {
+            border: none;
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-accept {
+            background: #7B2D8E;
+            color: white;
+        }
+
+        .btn-reject {
+            background: #EEE2F0;
+            color: #444;
+        }
+
+        .follow-actions button:disabled {
+            opacity: .6;
+            cursor: default;
+        }
+
+        .follow-result {
+            margin-top: 10px;
+            font-weight: 600;
+            color: #7B2D8E;
         }
 
         .empty {
@@ -136,10 +174,7 @@
     {% for notification in notifications %}
 
     <div
-        class="notification
-        {% if not notification.is_read %}
-            unread
-        {% endif %}"
+        class="notification {% if not notification.is_read %}unread{% endif %}"
         data-id="{{ notification.id }}"
     >
 
@@ -151,6 +186,10 @@
                 👤
             {% elif notification.notification_type == "like" %}
                 ❤️
+            {% elif notification.notification_type == "follow_request" %}
+                🙋
+            {% elif notification.notification_type == "follow_accepted" %}
+                ✅
             {% else %}
                 🔔
             {% endif %}
@@ -168,6 +207,25 @@
                 {{ notification.created_at|timesince }}
                 ago
             </small>
+
+            {% if notification.notification_type == "follow_request" and notification.request_id %}
+            <div class="follow-actions" data-request-id="{{ notification.request_id }}">
+                <button
+                    type="button"
+                    class="btn-accept"
+                    onclick="respondFollow(this, 'accept')"
+                >
+                    Accept
+                </button>
+                <button
+                    type="button"
+                    class="btn-reject"
+                    onclick="respondFollow(this, 'reject')"
+                >
+                    Reject
+                </button>
+            </div>
+            {% endif %}
 
         </div>
 
@@ -204,22 +262,12 @@
                 .split(";")
                 .forEach(function(cookie) {
 
-                    cookie =
-                        cookie.trim();
+                    cookie = cookie.trim();
 
-                    if (
-                        cookie.startsWith(
-                            name + "="
-                        )
-                    ) {
-
-                        value =
-                            decodeURIComponent(
-                                cookie.substring(
-                                    name.length + 1
-                                )
-                            );
-
+                    if (cookie.startsWith(name + "=")) {
+                        value = decodeURIComponent(
+                            cookie.substring(name.length + 1)
+                        );
                     }
 
                 });
@@ -238,47 +286,75 @@
                 method: "POST",
 
                 headers: {
-                    "X-CSRFToken":
-                        getCookie("csrftoken"),
-
-                    "X-Requested-With":
-                        "XMLHttpRequest"
+                    "X-CSRFToken": getCookie("csrftoken"),
+                    "X-Requested-With": "XMLHttpRequest"
                 }
             }
         )
+        .then(response => response.json())
+        .then(data => {
 
-        .then(
-            response =>
-                response.json()
-        )
+            if (data.success) {
 
-        .then(
-            data => {
-
-                if (data.success) {
-
-                    document
-                        .querySelectorAll(
-                            ".notification.unread"
-                        )
-                        .forEach(
-                            notification => {
-
-                                notification.classList
-                                    .remove("unread");
-
-                            }
-                        );
-
-                }
+                document
+                    .querySelectorAll(".notification.unread")
+                    .forEach(notification => {
+                        notification.classList.remove("unread");
+                    });
 
             }
-        );
 
+        });
+
+    }
+
+
+    function respondFollow(button, action) {
+
+        const box = button.closest(".follow-actions");
+        const requestId = box.dataset.requestId;
+        const card = button.closest(".notification");
+
+        const urls = {
+            accept: "/follow/accept/" + requestId + "/",
+            reject: "/follow/reject/" + requestId + "/"
+        };
+
+        box.querySelectorAll("button").forEach(b => b.disabled = true);
+
+        fetch(urls[action], {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if (!data.success) {
+                alert(data.message || "Something went wrong");
+                box.querySelectorAll("button").forEach(b => b.disabled = false);
+                return;
+            }
+
+            const result = document.createElement("div");
+            result.className = "follow-result";
+            result.textContent = action === "accept"
+                ? "Request accepted ✅"
+                : "Request rejected";
+
+            box.replaceWith(result);
+            card.classList.remove("unread");
+
+        })
+        .catch(() => {
+            alert("Something went wrong");
+            box.querySelectorAll("button").forEach(b => b.disabled = false);
+        });
     }
 
 </script>
 
 </body>
-
 </html>

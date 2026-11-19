@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.views.decorators.http import require_POST
-from django.http import JsonResponse   # FIX 1: ye import missing tha
+from django.http import JsonResponse
 
 from django.utils import timezone
 from .models import (
@@ -18,6 +18,8 @@ from .models import (
     Message,
     Notification,
 )
+
+
 # =========================================
 # HOME
 # =========================================
@@ -31,16 +33,10 @@ def home(request):
     if member_id:
 
         try:
-            member = GenzMember.objects.get(
-                id=member_id
-            )
+            member = GenzMember.objects.get(id=member_id)
 
         except GenzMember.DoesNotExist:
-
-            request.session.pop(
-                "genz_member_id",
-                None
-            )
+            request.session.pop("genz_member_id", None)
 
     return render(
         request,
@@ -66,84 +62,46 @@ def join(request):
         age = request.POST.get("age")
         city = request.POST.get("city")
 
-        interests = request.POST.getlist(
-            "interests"
-        )
+        interests = request.POST.getlist("interests")
+        looking_for = request.POST.getlist("looking_for")
 
-        looking_for = request.POST.getlist(
-            "looking_for"
-        )
+        about = request.POST.get("about", "")
 
-        about = request.POST.get(
-            "about",
-            ""
-        )
-
-        profile_photo = request.FILES.get(
-            "profile_photo"
-        )
-
+        profile_photo = request.FILES.get("profile_photo")
 
         # EMAIL ALREADY EXISTS
 
-        if GenzMember.objects.filter(
-            email=email
-        ).exists():
+        if GenzMember.objects.filter(email=email).exists():
 
             return render(
                 request,
                 "join.html",
                 {
-                    "error":
-                    "This email is already registered. Please login."
+                    "error": "This email is already registered. Please login."
                 }
             )
-
 
         # CREATE MEMBER
 
         member = GenzMember.objects.create(
-
             name=name,
-
             email=email,
-
-            password=make_password(
-                password
-            ),
-
+            password=make_password(password),
             age=int(age),
-
             city=city,
-
             profile_photo=profile_photo,
-
-            interests=", ".join(
-                interests
-            ),
-
-            looking_for=", ".join(
-                looking_for
-            ),
-
+            interests=", ".join(interests),
+            looking_for=", ".join(looking_for),
             about=about
         )
 
-
         # LOGIN USER
 
-        request.session[
-            "genz_member_id"
-        ] = member.id
-
+        request.session["genz_member_id"] = member.id
 
         return redirect("join_dashboard")
 
-
-    return render(
-        request,
-        "join.html"
-    )
+    return render(request, "join.html")
 
 
 # =========================================
@@ -154,20 +112,11 @@ def login_view(request):
 
     if request.method == "POST":
 
-        email = request.POST.get(
-            "email"
-        )
-
-        password = request.POST.get(
-            "password"
-        )
-
+        email = request.POST.get("email")
+        password = request.POST.get("password")
 
         try:
-
-            member = GenzMember.objects.get(
-                email=email
-            )
+            member = GenzMember.objects.get(email=email)
 
         except GenzMember.DoesNotExist:
 
@@ -175,40 +124,27 @@ def login_view(request):
                 request,
                 "login.html",
                 {
-                    "error":
-                    "Email or password is incorrect."
+                    "error": "Email or password is incorrect."
                 }
             )
 
-
         # CHECK PASSWORD
 
-        if check_password(
-            password,
-            member.password
-        ):
+        if check_password(password, member.password):
 
-            request.session[
-                "genz_member_id"
-            ] = member.id
+            request.session["genz_member_id"] = member.id
 
             return redirect("home")
-
 
         return render(
             request,
             "login.html",
             {
-                "error":
-                "Email or password is incorrect."
+                "error": "Email or password is incorrect."
             }
         )
 
-
-    return render(
-        request,
-        "login.html"
-    )
+    return render(request, "login.html")
 
 
 # =========================================
@@ -221,10 +157,7 @@ def profile(request):
     if not member_id:
         return redirect("login")
 
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    member = get_object_or_404(GenzMember, id=member_id)
 
     interests = [
         item.strip()
@@ -259,11 +192,9 @@ def profile(request):
         "following_count": following_count,
     }
 
-    return render(
-        request,
-        "profile.html",
-        context
-    )
+    return render(request, "profile.html", context)
+
+
 @require_POST
 def create_post(request):
     member_id = request.session.get("genz_member_id")
@@ -274,10 +205,7 @@ def create_post(request):
             status=401
         )
 
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    member = get_object_or_404(GenzMember, id=member_id)
 
     content = request.POST.get("content", "").strip()
     image = request.FILES.get("image")
@@ -306,10 +234,7 @@ def delete_post(request, post_id):
     member_id = request.session.get("genz_member_id")
 
     if not member_id:
-        return JsonResponse(
-            {"success": False},
-            status=401
-        )
+        return JsonResponse({"success": False}, status=401)
 
     post = get_object_or_404(
         Post,
@@ -330,20 +255,10 @@ def toggle_like(request, post_id):
     member_id = request.session.get("genz_member_id")
 
     if not member_id:
-        return JsonResponse(
-            {"success": False},
-            status=401
-        )
+        return JsonResponse({"success": False}, status=401)
 
-    post = get_object_or_404(
-        Post,
-        id=post_id
-    )
-
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    post = get_object_or_404(Post, id=post_id)
+    member = get_object_or_404(GenzMember, id=member_id)
 
     like = PostLike.objects.filter(
         post=post,
@@ -372,10 +287,7 @@ def toggle_follow(request, member_id):
     current_member_id = request.session.get("genz_member_id")
 
     if not current_member_id:
-        return JsonResponse(
-            {"success": False},
-            status=401
-        )
+        return JsonResponse({"success": False}, status=401)
 
     if int(current_member_id) == int(member_id):
         return JsonResponse({
@@ -383,15 +295,8 @@ def toggle_follow(request, member_id):
             "message": "You cannot follow yourself"
         })
 
-    follower = get_object_or_404(
-        GenzMember,
-        id=current_member_id
-    )
-
-    following = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    follower = get_object_or_404(GenzMember, id=current_member_id)
+    following = get_object_or_404(GenzMember, id=member_id)
 
     follow = Follow.objects.filter(
         follower=follower,
@@ -417,6 +322,11 @@ def toggle_follow(request, member_id):
         "is_following": is_following,
         "followers_count": followers_count
     })
+
+
+# =========================================
+# FOLLOW REQUESTS
+# =========================================
 
 @require_POST
 def send_follow_request(request, member_id):
@@ -485,6 +395,7 @@ def send_follow_request(request, member_id):
         "message": "Follow request sent successfully"
     })
 
+
 @require_POST
 def accept_follow_request(request, request_id):
 
@@ -508,6 +419,14 @@ def accept_follow_request(request, request_id):
         following=follow_request.receiver
     )
 
+    # Receiver ki follow_request notification ko read mark karo
+    Notification.objects.filter(
+        recipient_id=member_id,
+        sender=follow_request.sender,
+        notification_type="follow_request"
+    ).update(is_read=True)
+
+    # Sender ko batao ki request accept ho gayi
     Notification.objects.create(
         recipient=follow_request.sender,
         sender=follow_request.receiver,
@@ -519,6 +438,7 @@ def accept_follow_request(request, request_id):
         "success": True,
         "message": "Follow request accepted"
     })
+
 
 @require_POST
 def reject_follow_request(request, request_id):
@@ -538,10 +458,18 @@ def reject_follow_request(request, request_id):
     follow_request.status = "rejected"
     follow_request.save(update_fields=["status"])
 
+    Notification.objects.filter(
+        recipient_id=member_id,
+        sender=follow_request.sender,
+        notification_type="follow_request"
+    ).update(is_read=True)
+
     return JsonResponse({
         "success": True,
         "message": "Follow request rejected"
     })
+
+
 @require_POST
 def cancel_follow_request(request, request_id):
 
@@ -557,51 +485,46 @@ def cancel_follow_request(request, request_id):
         status="pending"
     )
 
+    # Receiver ki purani notification hata do
+    Notification.objects.filter(
+        recipient=follow_request.receiver,
+        sender=follow_request.sender,
+        notification_type="follow_request"
+    ).delete()
+
     follow_request.delete()
 
     return JsonResponse({
         "success": True,
         "message": "Follow request cancelled"
     })
+
+
 # =========================================
 # CHANGE PHOTO
 # =========================================
 
 def change_photo(request):
 
-    member_id = request.session.get(
-        "genz_member_id"
-    )
+    member_id = request.session.get("genz_member_id")
 
     if not member_id:
-
         return redirect("login")
 
-
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
-
+    member = get_object_or_404(GenzMember, id=member_id)
 
     if request.method == "POST":
 
-        new_photo = request.FILES.get(
-            "profile_photo"
-        )
+        new_photo = request.FILES.get("profile_photo")
 
         if new_photo:
 
             if member.profile_photo:
-
-                member.profile_photo.delete(
-                    save=False
-                )
+                member.profile_photo.delete(save=False)
 
             member.profile_photo = new_photo
 
             member.save()
-
 
     return redirect("profile")
 
@@ -617,10 +540,7 @@ def edit_profile(request):
     if not member_id:
         return redirect("login")
 
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    member = get_object_or_404(GenzMember, id=member_id)
 
     if request.method == "POST":
 
@@ -664,44 +584,26 @@ def edit_profile(request):
 
 def delete_profile(request):
 
-    member_id = request.session.get(
-        "genz_member_id"
-    )
+    member_id = request.session.get("genz_member_id")
 
     if not member_id:
-
         return redirect("login")
 
-
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
-
+    member = get_object_or_404(GenzMember, id=member_id)
 
     if request.method == "POST":
 
         if member.profile_photo:
-
-            member.profile_photo.delete(
-                save=False
-            )
-
+            member.profile_photo.delete(save=False)
 
         member.delete()
 
-
-        request.session.pop(
-            "genz_member_id",
-            None
-        )
-
+        request.session.pop("genz_member_id", None)
 
         return redirect("home")
 
-
-    # FIX 3: delete_profile.html template exist nahi karta tha.
-    # Delete ka form profile page par hai (POST), isliye GET par wapas bhej do.
+    # delete_profile.html template exist nahi karta,
+    # isliye GET par wapas profile par bhej do.
     return redirect("profile")
 
 
@@ -711,27 +613,38 @@ def delete_profile(request):
 
 def logout_profile(request):
 
-    request.session.pop(
-        "genz_member_id",
-        None
-    )
+    request.session.pop("genz_member_id", None)
 
     return redirect("home")
+
+
+# =========================================
+# STATIC PAGES
+# =========================================
 
 def education(request):
     return render(request, "education.html")
 
+
 def frontend_course(request):
     return render(request, "frontend_course.html")
+
 
 def uiux_course(request):
     return render(request, "uiux_course.html")
 
+
 def career_skills(request):
     return render(request, "career_skills.html")
 
+
 def medical(request):
     return render(request, "medical.html")
+
+
+# =========================================
+# EVENTS
+# =========================================
 
 def events(request):
 
@@ -778,10 +691,7 @@ def register_event(request, event_id):
     if not member_id:
         return redirect("login")
 
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    member = get_object_or_404(GenzMember, id=member_id)
 
     event = get_object_or_404(
         Event,
@@ -793,17 +703,11 @@ def register_event(request, event_id):
         return redirect("events")
 
     if event.event_date < timezone.localdate():
-        messages.error(
-            request,
-            "This event has already ended."
-        )
+        messages.error(request, "This event has already ended.")
         return redirect("events")
 
     if event.is_full:
-        messages.error(
-            request,
-            "Sorry, this event is full."
-        )
+        messages.error(request, "Sorry, this event is full.")
         return redirect("events")
 
     registration, created = EventRegistration.objects.get_or_create(
@@ -824,11 +728,22 @@ def register_event(request, event_id):
 
     return redirect("events")
 
+
+# =========================================
+# CHALLENGES
+# =========================================
+
 def challenges(request):
     return render(request, "challenges.html")
 
+
 def challenge_detail(request):
     return render(request, "challenge_detail.html")
+
+
+# =========================================
+# JOIN DASHBOARD
+# =========================================
 
 def join_dashboard(request):
     member_id = request.session.get("genz_member_id")
@@ -890,11 +805,9 @@ def join_dashboard(request):
         "people": people,
     }
 
-    return render(
-        request,
-        "join_dashboard.html",
-        context
-    )
+    return render(request, "join_dashboard.html", context)
+
+
 # =========================================
 # MESSAGES
 # =========================================
@@ -906,14 +819,9 @@ def messages_view(request):
     if not member_id:
         return redirect("login")
 
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    member = get_object_or_404(GenzMember, id=member_id)
 
-    people = GenzMember.objects.exclude(
-        id=member.id
-    )
+    people = GenzMember.objects.exclude(id=member.id)
 
     unread_messages = Message.objects.filter(
         receiver=member,
@@ -933,22 +841,14 @@ def messages_view(request):
 
 def conversation_view(request, member_id):
 
-    current_member_id = request.session.get(
-        "genz_member_id"
-    )
+    current_member_id = request.session.get("genz_member_id")
 
     if not current_member_id:
         return redirect("login")
 
-    member = get_object_or_404(
-        GenzMember,
-        id=current_member_id
-    )
+    member = get_object_or_404(GenzMember, id=current_member_id)
 
-    other_member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    other_member = get_object_or_404(GenzMember, id=member_id)
 
     if member.id == other_member.id:
         return redirect("messages")
@@ -961,17 +861,13 @@ def conversation_view(request, member_id):
         receiver=member
     )
 
-    messages_list = messages_list.order_by(
-        "created_at"
-    )
+    messages_list = messages_list.order_by("created_at")
 
     Message.objects.filter(
         sender=other_member,
         receiver=member,
         is_read=False
-    ).update(
-        is_read=True
-    )
+    ).update(is_read=True)
 
     return render(
         request,
@@ -987,9 +883,7 @@ def conversation_view(request, member_id):
 @require_POST
 def send_message(request):
 
-    member_id = request.session.get(
-        "genz_member_id"
-    )
+    member_id = request.session.get("genz_member_id")
 
     if not member_id:
         return JsonResponse(
@@ -1000,19 +894,11 @@ def send_message(request):
             status=401
         )
 
-    sender = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    sender = get_object_or_404(GenzMember, id=member_id)
 
-    receiver_id = request.POST.get(
-        "receiver_id"
-    )
+    receiver_id = request.POST.get("receiver_id")
 
-    content = request.POST.get(
-        "content",
-        ""
-    ).strip()
+    content = request.POST.get("content", "").strip()
 
     if not receiver_id:
         return JsonResponse({
@@ -1026,10 +912,7 @@ def send_message(request):
             "message": "Message cannot be empty"
         })
 
-    receiver = get_object_or_404(
-        GenzMember,
-        id=receiver_id
-    )
+    receiver = get_object_or_404(GenzMember, id=receiver_id)
 
     if sender.id == receiver.id:
         return JsonResponse({
@@ -1054,9 +937,7 @@ def send_message(request):
         "success": True,
         "message": message.content,
         "message_id": message.id,
-        "created_at": message.created_at.strftime(
-            "%d %b, %I:%M %p"
-        )
+        "created_at": message.created_at.strftime("%d %b, %I:%M %p")
     })
 
 
@@ -1066,25 +947,33 @@ def send_message(request):
 
 def notifications_view(request):
 
-    member_id = request.session.get(
-        "genz_member_id"
-    )
+    member_id = request.session.get("genz_member_id")
 
     if not member_id:
         return redirect("login")
 
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    member = get_object_or_404(GenzMember, id=member_id)
 
-    notifications = Notification.objects.filter(
-        recipient=member
-    )
+    notifications = Notification.objects.filter(recipient=member)
 
-    unread_count = notifications.filter(
-        is_read=False
-    ).count()
+    unread_count = notifications.filter(is_read=False).count()
+
+    # pending requests: {sender_id: request_id}
+    pending_requests = {
+        fr.sender_id: fr.id
+        for fr in FollowRequest.objects.filter(
+            receiver=member,
+            status="pending"
+        )
+    }
+
+    notifications = list(notifications.select_related("sender"))
+
+    for item in notifications:
+        if item.notification_type == "follow_request":
+            item.request_id = pending_requests.get(item.sender_id)
+        else:
+            item.request_id = None
 
     return render(
         request,
@@ -1098,27 +987,14 @@ def notifications_view(request):
 
 
 @require_POST
-def mark_notification_read(
-    request,
-    notification_id
-):
+def mark_notification_read(request, notification_id):
 
-    member_id = request.session.get(
-        "genz_member_id"
-    )
+    member_id = request.session.get("genz_member_id")
 
     if not member_id:
-        return JsonResponse(
-            {
-                "success": False
-            },
-            status=401
-        )
+        return JsonResponse({"success": False}, status=401)
 
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    member = get_object_or_404(GenzMember, id=member_id)
 
     notification = get_object_or_404(
         Notification,
@@ -1128,63 +1004,39 @@ def mark_notification_read(
 
     notification.is_read = True
 
-    notification.save(
-        update_fields=["is_read"]
-    )
+    notification.save(update_fields=["is_read"])
 
-    return JsonResponse({
-        "success": True
-    })
+    return JsonResponse({"success": True})
 
 
 @require_POST
 def mark_all_notifications_read(request):
 
-    member_id = request.session.get(
-        "genz_member_id"
-    )
+    member_id = request.session.get("genz_member_id")
 
     if not member_id:
-        return JsonResponse(
-            {
-                "success": False
-            },
-            status=401
-        )
+        return JsonResponse({"success": False}, status=401)
 
-    member = get_object_or_404(
-        GenzMember,
-        id=member_id
-    )
+    member = get_object_or_404(GenzMember, id=member_id)
 
     Notification.objects.filter(
         recipient=member,
         is_read=False
-    ).update(
-        is_read=True
-    )
+    ).update(is_read=True)
 
-    return JsonResponse({
-        "success": True
-    })
+    return JsonResponse({"success": True})
 
 
 def notification_count(request):
 
-    member_id = request.session.get(
-        "genz_member_id"
-    )
+    member_id = request.session.get("genz_member_id")
 
     if not member_id:
-        return JsonResponse({
-            "count": 0
-        })
+        return JsonResponse({"count": 0})
 
     count = Notification.objects.filter(
         recipient_id=member_id,
         is_read=False
     ).count()
 
-    return JsonResponse({
-        "count": count
-    })
+    return JsonResponse({"count": count})

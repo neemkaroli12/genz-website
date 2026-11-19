@@ -76,47 +76,55 @@ urlpatterns = [
         views.logout_profile,
         name="logout"
     ),
+
     path("education/", views.education, name="education"),
+
     path(
         "education/frontend/",
         views.frontend_course,
         name="frontend_course"
     ),
+
     path(
-    "education/uiux/",
-    views.uiux_course,
-    name="uiux_course"
-   ),
-   path(
-    "education/career-skills/",
-    views.career_skills,
-    name="career_skills"
-   ),
-   path("medical/", views.medical, name="medical"),
-   path("events/", views.events, name="events"),
-
-   # FIX 2: ye path missing tha, events.html isi ko use karta hai
-   path(
-    "events/<int:event_id>/register/",
-    views.register_event,
-    name="register_event"
-   ),
-
-   path("challenges/", views.challenges, name="challenges"),
-   path(
-    "challenges/detail/",
-    views.challenge_detail,
-    name="challenge_detail"
+        "education/uiux/",
+        views.uiux_course,
+        name="uiux_course"
     ),
+
+    path(
+        "education/career-skills/",
+        views.career_skills,
+        name="career_skills"
+    ),
+
+    path("medical/", views.medical, name="medical"),
+
+    path("events/", views.events, name="events"),
+
+    path(
+        "events/<int:event_id>/register/",
+        views.register_event,
+        name="register_event"
+    ),
+
+    path("challenges/", views.challenges, name="challenges"),
+
+    path(
+        "challenges/detail/",
+        views.challenge_detail,
+        name="challenge_detail"
+    ),
+
     path(
         "join-dashboard/",
         views.join_dashboard,
         name="join_dashboard"
     ),
+
     path(
-    "profile/post/create/",
-    views.create_post,
-    name="create_post"
+        "profile/post/create/",
+        views.create_post,
+        name="create_post"
     ),
 
     path(
@@ -136,6 +144,7 @@ urlpatterns = [
         views.toggle_follow,
         name="toggle_follow"
     ),
+
     path(
         "messages/",
         views.messages_view,
@@ -154,6 +163,8 @@ urlpatterns = [
         name="send_message"
     ),
 
+    # Notifications
+
     path(
         "notifications/",
         views.notifications_view,
@@ -171,7 +182,15 @@ urlpatterns = [
         views.mark_all_notifications_read,
         name="mark_all_notifications_read"
     ),
+
+    path(
+        "notifications/count/",
+        views.notification_count,
+        name="notification_count"
+    ),
+
     # Follow Request URLs
+
     path(
         "follow/request/<int:member_id>/",
         views.send_follow_request,
